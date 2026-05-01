@@ -784,41 +784,27 @@ if(scissorEl && window.innerWidth > 768){
 
 <script>
 (function(){
-  var audio    = document.getElementById('bgMusic');
-  var btn      = document.getElementById('musicBtn');
-  var started  = false;
+  var audio = document.getElementById('bgMusic');
+  var btn   = document.getElementById('musicBtn');
 
   audio.volume = 0.35;
-  audio.muted  = false;
+  audio.muted  = true;
+  audio.play().catch(function(){});
 
-  function startMusic() {
-    if (started) return;
-    started = true;
-    var p = audio.play();
-    if (p !== undefined) {
-      p.then(function(){ btn.classList.add('playing'); })
-       .catch(function(e){ console.log('Audio blocked:', e); started = false; });
-    } else {
-      btn.classList.add('playing');
-    }
-  }
-
-  // Attach to every possible first-interaction event
-  ['touchstart','touchmove','mousedown','wheel','scroll','keydown','pointerdown'].forEach(function(evt) {
-    window.addEventListener(evt, function handler() {
-      window.removeEventListener(evt, handler);
-      startMusic();
-    }, { once: true, passive: true, capture: true });
-  });
+  // First click anywhere unmutes
+  document.addEventListener('click', function() {
+    audio.muted = false;
+    btn.classList.add('playing');
+  }, { once: true });
 
   window.toggleMusic = function() {
-    if (!started) { startMusic(); return; }
     if (audio.paused) {
+      audio.muted = false;
       audio.play();
       btn.classList.add('playing');
     } else {
-      audio.pause();
-      btn.classList.remove('playing');
+      audio.muted = !audio.muted;
+      btn.classList.toggle('playing', !audio.muted);
     }
   };
 })();
