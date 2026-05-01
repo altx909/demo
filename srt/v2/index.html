@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>SRT Barbershop — Straight Razor Touch</title>
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Kaushan+Script&family=Rubik+Dirt&family=Permanent+Marker&family=Barlow:ital,wght@0,300;0,400;0,500;1,300&family=Barlow+Condensed:wght@300;400;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Kaushan+Script&family=Permanent+Marker&family=Barlow:ital,wght@0,300;0,400;0,500;1,300&family=Barlow+Condensed:wght@300;400;600;700&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
 :root{
@@ -18,7 +18,7 @@
 html{scroll-behavior:smooth;}
 body{background:var(--b);color:var(--w);font-family:var(--fb);overflow-x:hidden;cursor:none;}
 
-/* SCISSOR CURSOR — closed blades */
+/* SCISSOR CURSOR */
 .cursor-wrap{position:fixed;pointer-events:none;z-index:99999;transform:translate(-50%,-50%);}
 .cursor-svg{width:36px;height:36px;transition:transform 0.12s ease;}
 
@@ -65,31 +65,16 @@ nav.scrolled{height:60px;background:rgba(8,8,8,0.97);}
 .sparkle::after{width:100%;height:2px;top:50%;transform:translateY(-50%);}
 @keyframes sparklePop{0%{opacity:0;transform:scale(0) rotate(0deg);}40%{opacity:1;transform:scale(1.4) rotate(45deg);}100%{opacity:0;transform:scale(0) rotate(90deg);}}
 
-/* DRIP from R */
-.r-drip-wrap{position:relative;display:inline-block;}
-.drip-svg{position:absolute;left:50%;transform:translateX(-50%);top:85%;width:clamp(12px,1.5vw,20px);height:clamp(40px,6vw,80px);overflow:visible;pointer-events:none;}
-.drip-path{stroke-dasharray:120;stroke-dashoffset:120;animation:dripDown 1.4s 0.5s ease-out forwards;}
-.drip-drop{opacity:0;animation:dripDropShow 0.3s 1.7s ease-out forwards;}
-@keyframes dripDown{to{stroke-dashoffset:0;}}
-@keyframes dripDropShow{to{opacity:1;}}
-
-/* GRAFFITI BANNER */
-.graf-spray{position:absolute;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 600 120' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='spray'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4'/%3E%3CfeColorMatrix type='matrix' values='0 0 0 0 0.48 0 0 0 0 0.75 0 0 0 0 0.94 0 0 0 0.06 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23spray)'/%3E%3C/svg%3E");pointer-events:none;opacity:0.7;}
-.graf-text{font-family:'Permanent Marker',cursive;font-size:clamp(40px,7vw,96px);color:transparent;-webkit-text-stroke:1.5px rgba(123,191,239,0.5);letter-spacing:8px;text-transform:uppercase;white-space:nowrap;text-align:center;position:relative;z-index:1;line-height:1;padding:0 48px;}
-.graf-text em{color:var(--blue);-webkit-text-stroke:0px;font-style:normal;opacity:0.85;}
-.graf-sub{font-family:'Permanent Marker',cursive;font-size:clamp(14px,2vw,22px);color:rgba(123,191,239,0.25);letter-spacing:12px;text-transform:uppercase;text-align:center;margin-top:8px;position:relative;z-index:1;}
-
 .hero-right-col{text-align:right;padding-top:48px;max-width:260px;display:flex;flex-direction:column;gap:20px;}
 .hero-tagline{font-family:var(--fc);font-size:12px;font-weight:300;letter-spacing:2px;text-transform:uppercase;color:var(--m);line-height:1.8;}
 .hero-actions{display:flex;flex-direction:column;gap:12px;align-items:flex-end;}
 
-/* BUTTON GLOW + SHINE */
+/* BUTTONS */
 .btn-solid{font-family:var(--fc);font-size:11px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--b);background:var(--blue);padding:15px 30px;display:inline-block;text-decoration:none;position:relative;overflow:hidden;animation:btnPulse 3s ease-in-out infinite;}
 @keyframes btnPulse{0%,100%{box-shadow:0 0 0 0 rgba(123,191,239,0);}50%{box-shadow:0 0 22px 4px rgba(123,191,239,0.45),0 0 40px 8px rgba(123,191,239,0.15);}}
 .btn-solid::after{content:'';position:absolute;top:0;left:-100%;width:60%;height:100%;background:linear-gradient(to right,transparent,rgba(255,255,255,0.35),transparent);transform:skewX(-20deg);animation:shine 3s ease-in-out infinite 1.5s;}
 @keyframes shine{0%,100%{left:-100%;}50%{left:160%;}}
 .btn-solid:hover{opacity:0.9;transform:translateY(-1px);}
-
 .btn-line{font-family:var(--fc);font-size:11px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--blue);border:1px solid rgba(123,191,239,0.3);padding:15px 30px;display:inline-block;transition:all 0.25s;text-decoration:none;position:relative;overflow:hidden;animation:linePulse 3s ease-in-out infinite 1s;}
 @keyframes linePulse{0%,100%{border-color:rgba(123,191,239,0.3);}50%{border-color:rgba(123,191,239,0.7);box-shadow:0 0 14px rgba(123,191,239,0.2),inset 0 0 14px rgba(123,191,239,0.05);}}
 .btn-line:hover{border-color:var(--blue);background:var(--bg);}
@@ -107,26 +92,24 @@ nav.scrolled{height:60px;background:rgba(8,8,8,0.97);}
 .tick-dot{width:4px;height:4px;background:rgba(8,8,8,0.25);border-radius:50%;flex-shrink:0;}
 @keyframes tick{from{transform:translateX(0)}to{transform:translateX(-50%)}}
 
+/* GRAFFITI BANNER */
+.graf-banner{position:relative;padding:64px 0;overflow:hidden;background:url('images/graf-wall.jpg') center/cover no-repeat;border-top:1px solid rgba(255,255,255,0.04);border-bottom:1px solid rgba(255,255,255,0.04);}
+.graf-banner::before{content:'';position:absolute;inset:0;background:rgba(8,8,8,0.78);z-index:0;}
+.graf-spray{position:absolute;inset:0;z-index:1;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 600 120' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='spray'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4'/%3E%3CfeColorMatrix type='matrix' values='0 0 0 0 0.48 0 0 0 0 0.75 0 0 0 0 0.94 0 0 0 0.04 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23spray)'/%3E%3C/svg%3E");pointer-events:none;opacity:0.6;}
+.graf-text{font-family:'Permanent Marker',cursive;font-size:clamp(40px,7vw,96px);color:transparent;-webkit-text-stroke:1.5px rgba(123,191,239,0.45);letter-spacing:8px;text-transform:uppercase;white-space:nowrap;text-align:center;position:relative;z-index:2;line-height:1;padding:0 48px;}
+.graf-text em{color:var(--blue);-webkit-text-stroke:0px;font-style:normal;opacity:0.9;}
+.graf-sub{font-family:'Permanent Marker',cursive;font-size:clamp(13px,1.8vw,20px);color:rgba(123,191,239,0.22);letter-spacing:12px;text-transform:uppercase;text-align:center;margin-top:12px;position:relative;z-index:2;}
+
 /* SERVICES */
-.svc-section{padding:120px 56px;background:url('images/graf-wall.jpg') center/cover no-repeat fixed;position:relative;overflow:hidden;}
-.svc-section::before{content:'';position:absolute;inset:0;background:rgba(8,8,8,0.92);z-index:0;}
-.svc-section::after{content:'';position:absolute;top:0;left:56px;right:56px;height:1px;background:linear-gradient(to right,transparent,rgba(123,191,239,0.2) 40%,rgba(123,191,239,0.2) 60%,transparent);z-index:1;}
+.svc-section{padding:120px 56px;background:var(--s);position:relative;overflow:hidden;}
+.svc-section::before{content:'';position:absolute;top:0;left:56px;right:56px;height:1px;background:linear-gradient(to right,transparent,rgba(123,191,239,0.2) 40%,rgba(123,191,239,0.2) 60%,transparent);z-index:1;}
 .svc-header{display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:72px;padding-bottom:48px;border-bottom:1px solid rgba(255,255,255,0.04);position:relative;z-index:1;}
 .svc-heading{font-family:var(--fd);font-size:clamp(64px,9vw,130px);line-height:0.9;color:var(--w);}
 .svc-heading em{color:var(--blue);font-style:normal;}
 .svc-intro{font-family:var(--fc);font-size:12px;font-weight:300;letter-spacing:2px;text-transform:uppercase;color:var(--m);max-width:180px;text-align:right;line-height:1.9;}
-
-/* SERVICE ROW WITH BORDER GLOW */
-.svc-row{display:grid;grid-template-columns:72px 1fr 1fr auto;gap:48px;align-items:start;padding:36px 0;border-bottom:1px solid rgba(255,255,255,0.05);position:relative;transition:border-color 0.4s;}
-.svc-row-inner{position:absolute;inset:-1px;border-radius:3px;opacity:0;transition:opacity 0.4s;background:var(--bghover);box-shadow:none;}
-.svc-row:hover .svc-row-inner{opacity:1;}
-
-/* ROTATING BORDER GLOW on hover */
 .svc-row{display:grid;grid-template-columns:72px 1fr 1fr auto;gap:48px;align-items:start;padding:36px 0;border-bottom:1px solid rgba(255,255,255,0.05);position:relative;z-index:1;transition:border-color 0.4s;}
-.svc-row:hover::after{opacity:1;animation:rotateBorder 2.5s linear infinite;}
-@keyframes rotateBorder{to{--angle:360deg;}}
-@property --angle{syntax:'<angle>';initial-value:0deg;inherits:false;}
-
+.svc-row-inner{position:absolute;inset:-1px;border-radius:3px;opacity:0;transition:opacity 0.4s;background:var(--bghover);}
+.svc-row:hover .svc-row-inner{opacity:1;}
 .svc-row:hover{border-bottom-color:rgba(123,191,239,0.3);}
 .svc-n{font-family:var(--fd);font-size:72px;color:rgba(123,191,239,0.06);line-height:1;transition:color 0.4s;position:relative;z-index:1;}
 .svc-row:hover .svc-n{color:rgba(123,191,239,0.22);}
@@ -148,7 +131,7 @@ nav.scrolled{height:60px;background:rgba(8,8,8,0.97);}
 .team-strip{display:flex;gap:10px;align-items:flex-end;}
 .tc{position:relative;overflow:hidden;background:var(--panel);flex-shrink:0;}
 .tc img{display:block;width:100%;height:100%;object-fit:cover;object-position:center 25%;transition:transform 0.5s ease;}
-.tc:hover img{transform:scale(1.02);}
+.tc:hover img{transform:scale(1.03);}
 .tc-info{position:absolute;bottom:0;left:0;right:0;padding:48px 16px 18px;background:linear-gradient(to top,rgba(8,8,8,1) 0%,rgba(8,8,8,0.5) 60%,transparent 100%);}
 .tc-name{font-family:var(--fd);font-size:26px;letter-spacing:1px;color:var(--w);}
 .tc-role{font-family:var(--fc);font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--blue);margin-top:3px;}
@@ -262,6 +245,8 @@ footer{background:var(--b);border-top:1px solid var(--bd);padding:0;}
   .hero-actions{align-items:flex-start;}
   .hero-meta{flex-wrap:wrap;gap:24px;}
   .hmi{flex:1 1 40%;padding-right:0;border-right:none;margin-right:0;}
+  .graf-text{font-size:clamp(28px,8vw,52px);letter-spacing:4px;white-space:normal;text-align:center;padding:0 20px;}
+  .graf-sub{letter-spacing:4px;font-size:12px;}
   .svc-section{padding:80px 20px;}
   .svc-heading{font-size:clamp(56px,13vw,90px);}
   .svc-row{grid-template-columns:48px 1fr;gap:20px;}
@@ -269,6 +254,7 @@ footer{background:var(--b);border-top:1px solid var(--bd);padding:0;}
   .svc-book{display:none;}
   .svc-header{flex-direction:column;align-items:flex-start;gap:16px;}
   .svc-intro{text-align:left;max-width:100%;}
+  .svc-section::before{left:20px;right:20px;}
   .team-section{padding:80px 20px;}
   .team-strip{overflow-x:auto;padding-bottom:16px;}
   .tc1,.tc2,.tc3,.tc4,.tc5{width:160px;}
@@ -276,22 +262,21 @@ footer{background:var(--b);border-top:1px solid var(--bd);padding:0;}
   .booking{padding:80px 20px;}
   .bk-grid{grid-template-columns:1fr;}
   .bk-heading{font-size:clamp(48px,12vw,80px);}
+  .booking::after{font-size:120px;right:-20px;}
   .reviews{padding:80px 20px;}
+  .reviews::before{font-size:150px;}
   .rev-item{grid-template-columns:40px 1fr;gap:16px;}
   .rev-stars{display:none;}
   .rev-badge{align-items:flex-start;}
   .insta{padding:80px 20px;}
+  .insta-top{flex-direction:column;align-items:flex-start;gap:16px;}
+  .insta-right{text-align:left;}
   .collage{grid-template-columns:repeat(2,1fr);grid-template-rows:auto;gap:4px;}
   .ct1,.ct2,.ct3,.ct4,.ct5,.ct6,.ct7,.ct8,.ct9,.ct10,.ct11{grid-column:span 1;grid-row:span 1;height:120px;}
   .ft-masthead{padding:40px 20px 28px;}
   .ft-columns{grid-template-columns:1fr 1fr;gap:32px;padding:32px 20px;}
   .ft-bottom{padding:16px 20px;flex-direction:column;gap:8px;text-align:center;}
-  .svc-section::before{left:20px;right:20px;}
-  .booking::after{font-size:120px;right:-20px;}
-  .reviews::before{font-size:150px;}
   .team-section::after{font-size:140px;}
-  .insta-top{flex-direction:column;align-items:flex-start;gap:16px;}
-  .insta-right{text-align:left;}
 }
 @media(max-width:480px){
   .hero-title{font-size:72px;}
@@ -307,20 +292,14 @@ footer{background:var(--b);border-top:1px solid var(--bd);padding:0;}
 </head>
 <body>
 
-<!-- SCISSOR CURSOR — closed blades, looks like real scissors -->
+<!-- SCISSOR CURSOR -->
 <div class="cursor-wrap" id="cur">
   <svg class="cursor-svg" id="curSvg" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <!-- Top blade -->
     <path d="M6 8 C6 8 8 6 11 7 C14 8 15 11 15 11 L38 20 L34 22 Z" fill="#7BBFEF" opacity="0.9"/>
-    <!-- Bottom blade -->
     <path d="M6 20 C6 20 8 22 11 21 C14 20 15 17 15 17 L38 8 L34 6 Z" fill="#7BBFEF" opacity="0.9"/>
-    <!-- Screw/pivot point -->
     <circle cx="15" cy="14" r="2.5" fill="#080808" stroke="#7BBFEF" stroke-width="1"/>
-    <!-- Top handle ring -->
     <circle cx="8" cy="8" r="5" stroke="#7BBFEF" stroke-width="1.5" fill="none"/>
-    <!-- Bottom handle ring -->
     <circle cx="8" cy="20" r="5" stroke="#7BBFEF" stroke-width="1.5" fill="none"/>
-    <!-- Handle inner dots -->
     <circle cx="8" cy="8" r="1.5" fill="#7BBFEF" opacity="0.5"/>
     <circle cx="8" cy="20" r="1.5" fill="#7BBFEF" opacity="0.5"/>
   </svg>
@@ -446,11 +425,11 @@ footer{background:var(--b);border-top:1px solid var(--bd);padding:0;}
   <div class="team-eyebrow reveal">Behind the Chair</div>
   <div class="team-heading reveal">THE<br>TEAM</div>
   <div class="team-strip">
-    <div class="tc tc1 reveal"><img src="images/DSC00892.jpg" alt="Diar K."><div class="tc-info"><div class="tc-name">Diar K.</div><div class="tc-role">Master Barber &amp; Founder</div></div></div>
-    <div class="tc tc2 reveal" style="transition-delay:0.1s"><img src="images/IMG_2843-1.jpg" alt="Finch"><div class="tc-info"><div class="tc-name">Finch</div><div class="tc-role">Barber</div></div></div>
-    <div class="tc tc3 reveal" style="transition-delay:0.2s"><img src="images/IMG_0876-2-567x1024.jpg" alt="Nash Y."><div class="tc-info"><div class="tc-name">Nash Y.</div><div class="tc-role">Barber</div></div></div>
-    <div class="tc tc4 reveal" style="transition-delay:0.3s"><img src="images/DSC00912.jpg" alt="Maddie L."><div class="tc-info"><div class="tc-name">Maddie L.</div><div class="tc-role">Stylist</div></div></div>
-    <div class="tc tc5 reveal" style="transition-delay:0.4s"><img src="images/IMG_0408-1-scaled.jpg" alt="Efrem A."><div class="tc-info"><div class="tc-name">Efrem A.</div><div class="tc-role">Barber</div></div></div>
+    <div class="tc tc1 reveal"><img src="images/DSC00892.jpg" alt="Diar K." style="object-position:50% 30%;"><div class="tc-info"><div class="tc-name">Diar K.</div><div class="tc-role">Master Barber &amp; Founder</div></div></div>
+    <div class="tc tc2 reveal" style="transition-delay:0.1s"><img src="images/IMG_2843-1.jpg" alt="Finch" style="object-position:50% 25%;"><div class="tc-info"><div class="tc-name">Finch</div><div class="tc-role">Barber</div></div></div>
+    <div class="tc tc3 reveal" style="transition-delay:0.2s"><img src="images/IMG_0876-2-567x1024.jpg" alt="Nash Y." style="object-position:50% 15%;"><div class="tc-info"><div class="tc-name">Nash Y.</div><div class="tc-role">Barber</div></div></div>
+    <div class="tc tc4 reveal" style="transition-delay:0.3s"><img src="images/DSC00912.jpg" alt="Maddie L." style="object-position:50% 20%;"><div class="tc-info"><div class="tc-name">Maddie L.</div><div class="tc-role">Stylist</div></div></div>
+    <div class="tc tc5 reveal" style="transition-delay:0.4s"><img src="images/IMG_0408-1-scaled.jpg" alt="Efrem A." style="object-position:50% 15%;"><div class="tc-info"><div class="tc-name">Efrem A.</div><div class="tc-role">Barber</div></div></div>
   </div>
 </section>
 
@@ -520,7 +499,7 @@ footer{background:var(--b);border-top:1px solid var(--bd);padding:0;}
   <div class="rev-item reveal">
     <div class="rev-num">03</div>
     <div class="rev-body">
-      <p class="rev-text">"Diar takes his time every single time. Easily the best barber in the city — been coming for years, staff are always friendly and the quality never drops."</p>
+      <p class="rev-text">"Diar takes his time every single time. Easily the best barber in the city — been coming for years, staff are always friendly and quality never drops."</p>
       <div class="rev-author">Omair K.</div>
     </div>
     <div class="rev-stars"><div class="rev-star"></div><div class="rev-star"></div><div class="rev-star"></div><div class="rev-star"></div><div class="rev-star"></div></div>
@@ -612,7 +591,6 @@ footer{background:var(--b);border-top:1px solid var(--bd);padding:0;}
 </footer>
 
 <script>
-// SCISSOR CURSOR
 const cur = document.getElementById('cur');
 const curSvg = document.getElementById('curSvg');
 let px=window.innerWidth/2, py=window.innerHeight/2;
@@ -627,12 +605,10 @@ document.addEventListener('mousemove', e => {
   cur.style.top = e.clientY + 'px';
 });
 
-// NAV SCROLL
 window.addEventListener('scroll', () => {
   document.getElementById('nav').classList.toggle('scrolled', window.scrollY > 60);
 }, {passive:true});
 
-// SCROLL REVEAL
 const observer = new IntersectionObserver(entries => {
   entries.forEach(e => {
     if(e.isIntersecting){ e.target.classList.add('visible'); observer.unobserve(e.target); }
@@ -640,13 +616,11 @@ const observer = new IntersectionObserver(entries => {
 }, {threshold: 0.1});
 document.querySelectorAll('.reveal,.reveal-left,.reveal-right').forEach(el => observer.observe(el));
 
-// HERO PARALLAX
 window.addEventListener('scroll', () => {
   const img = document.getElementById('heroImg');
   if(img) img.style.transform = 'translateY(' + (window.scrollY * 0.28) + 'px)';
 }, {passive:true});
 
-// SPARKLE on BARBER text — fires every 5s
 function createSparkle(host){
   const count = 6;
   for(let i=0; i<count; i++){
@@ -656,19 +630,13 @@ function createSparkle(host){
     const x = Math.random()*100;
     const y = -20 + Math.random()*140;
     const delay = Math.random()*0.6;
-    s.style.cssText = `
-      left:${x}%;top:${y}%;
-      width:${size}px;height:${size}px;
-      animation:sparklePop 0.8s ${delay}s ease-out forwards;
-    `;
+    s.style.cssText = `left:${x}%;top:${y}%;width:${size}px;height:${size}px;animation:sparklePop 0.8s ${delay}s ease-out forwards;`;
     host.appendChild(s);
     setTimeout(() => s.remove(), (delay + 0.85) * 1000);
   }
 }
-
 const sparkleHost = document.getElementById('sparkleHost');
 if(sparkleHost){
-  // Fire once after 2s, then every 5s
   setTimeout(() => {
     createSparkle(sparkleHost);
     setInterval(() => createSparkle(sparkleHost), 5000);
