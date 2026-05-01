@@ -98,7 +98,7 @@ nav.scrolled{height:60px;background:rgba(8,8,8,0.97);}
 .svc-section::before{content:'';position:absolute;top:0;left:56px;right:56px;height:1px;background:linear-gradient(to right,transparent,rgba(123,191,239,0.2) 40%,rgba(123,191,239,0.2) 60%,transparent);z-index:1;}
 
 /* GIANT SCISSOR ART — desktop only, drops from banner */
-.scissor-art{position:absolute;right:6%;top:-320px;width:300px;height:300px;pointer-events:none;z-index:3;opacity:0;filter:grayscale(1) contrast(1.15) brightness(0.85);will-change:transform,opacity;transition:none;}
+.scissor-art{position:absolute;right:12%;top:-420px;width:420px;height:420px;pointer-events:none;z-index:3;opacity:0;filter:grayscale(1) contrast(1.15) brightness(1);will-change:transform,opacity;transition:none;}
 .scissor-art img{width:100%;height:100%;object-fit:contain;display:block;transform:rotate(135deg);}
 
 .svc-header{display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:72px;padding-bottom:48px;border-bottom:1px solid rgba(255,255,255,0.05);position:relative;z-index:2;}
@@ -685,7 +685,7 @@ if(scissorEl && window.innerWidth > 768){
 
     const currentTop = -320 + (progress * (320 + restingY));
     scissorEl.style.top = currentTop + 'px';
-    scissorEl.style.opacity = (progress * 0.82).toString();
+    scissorEl.style.opacity = (progress * 1).toString();
 
     // Zone 3: past services — keep stuck at resting position
     if(svcRect.bottom < 0){
