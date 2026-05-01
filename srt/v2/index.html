@@ -794,14 +794,23 @@ if(scissorEl && window.innerWidth > 768){
   // Try to start playback immediately (muted)
   audio.play().catch(function(){});
 
-  // Unlock on first scroll
-  window.addEventListener('scroll', function onFirstScroll() {
-    window.removeEventListener('scroll', onFirstScroll);
-    audio.muted = false;
+  // Unlock on first interaction — touchstart fires before scroll on mobile
+  // mousedown fires before click on desktop — both are reliable
+  function unlock() {
+    if (unlocked) return;
     unlocked = true;
+    audio.muted = false;
     btn.classList.add('playing');
     audio.play().catch(function(){});
-  }, { passive: true });
+    window.removeEventListener('touchstart', unlock);
+    window.removeEventListener('mousedown',  unlock);
+    window.removeEventListener('scroll',     unlock);
+    window.removeEventListener('keydown',    unlock);
+  }
+  window.addEventListener('touchstart', unlock, { passive: true });
+  window.addEventListener('mousedown',  unlock, { passive: true });
+  window.addEventListener('scroll',     unlock, { passive: true });
+  window.addEventListener('keydown',    unlock, { passive: true });
 
   window.toggleMusic = function() {
     if (audio.paused) {
