@@ -97,8 +97,8 @@ nav.scrolled{height:60px;background:rgba(8,8,8,0.97);}
 .svc-section{padding:140px 56px;background:var(--s);position:relative;overflow:hidden;}
 .svc-section::before{content:'';position:absolute;top:0;left:56px;right:56px;height:1px;background:linear-gradient(to right,transparent,rgba(123,191,239,0.2) 40%,rgba(123,191,239,0.2) 60%,transparent);z-index:1;}
 
-/* GIANT SCISSOR ART — desktop only */
-.scissor-art{position:fixed;right:0;top:50%;transform:translateY(-50%) translateX(100%);width:520px;height:520px;pointer-events:none;z-index:3;opacity:0;filter:grayscale(1) contrast(1.2) brightness(0.9);will-change:transform,opacity;}
+/* GIANT SCISSOR ART — desktop only, drops from banner */
+.scissor-art{position:absolute;right:6%;top:-320px;width:300px;height:300px;pointer-events:none;z-index:3;opacity:0;filter:grayscale(1) contrast(1.15) brightness(0.85);will-change:transform,opacity;transition:none;}
 .scissor-art img{width:100%;height:100%;object-fit:contain;display:block;}
 
 .svc-header{display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:72px;padding-bottom:48px;border-bottom:1px solid rgba(255,255,255,0.05);position:relative;z-index:2;}
@@ -653,47 +653,45 @@ function createSparkle(host){
 const sh=document.getElementById('sparkleHost');
 if(sh){setTimeout(()=>{createSparkle(sh);setInterval(()=>createSparkle(sh),5000);},2000);}
 
-// SCISSOR PARALLAX — travels from off-screen right on hero, lands at services
-const scissorArt = document.getElementById('scissorArt');
-if(scissorArt && window.innerWidth > 768){
-  const heroSection = document.getElementById('home');
+// SCISSOR — drops down from graffiti banner into services section
+const scissorEl = document.getElementById('scissorArt');
+if(scissorEl && window.innerWidth > 768){
+  const grafBanner = document.querySelector('.graf-banner');
   const svcSection = document.getElementById('services');
 
+  // Final resting Y relative to svc-section top (where it stops)
+  const restingY = 40; // px from top of services section
+
   window.addEventListener('scroll', () => {
-    const heroBottom = heroSection.getBoundingClientRect().bottom;
-    const svcTop = svcSection.getBoundingClientRect().top;
-    const svcBottom = svcSection.getBoundingClientRect().bottom;
+    if(!grafBanner || !svcSection) return;
+
+    const bannerBottom = grafBanner.getBoundingClientRect().bottom;
+    const svcRect = svcSection.getBoundingClientRect();
     const vh = window.innerHeight;
 
-    // Zone 1: hero still visible — scissor fully hidden right
-    if(heroBottom > vh * 0.5){
-      scissorArt.style.transform = 'translateY(-50%) translateX(100%)';
-      scissorArt.style.opacity = '0';
+    // Zone 1: Banner still above viewport fold — scissor hidden above
+    if(bannerBottom > vh * 0.6){
+      scissorEl.style.top = '-320px';
+      scissorEl.style.opacity = '0';
       return;
     }
 
-    // Zone 2: between hero and services — scissor travels in
-    if(svcTop > 0){
-      // progress 0 = just left hero, 1 = services top at viewport top
-      const totalTravel = svcTop + (vh * 0.5 - heroBottom);
-      const traveled = (vh * 0.5 - heroBottom);
-      const progress = Math.min(Math.max(traveled / totalTravel, 0), 1);
-      const translateX = (1 - progress) * 100; // 100% to 0%
-      scissorArt.style.transform = `translateY(-50%) translateX(${translateX}%)`;
-      scissorArt.style.opacity = (progress * 0.88).toString();
-      return;
-    }
+    // Zone 2: scrolling through services — scissor drops in
+    // svcRect.top goes from ~vh down to negative as we scroll
+    // We want scissor to travel from -320px to restingY px
+    const scrollEntry = vh * 0.6 - bannerBottom; // how far past trigger
+    const totalDrop = 320 + restingY; // total distance to travel
+    const progress = Math.min(Math.max(scrollEntry / (totalDrop * 1.4), 0), 1);
 
-    // Zone 3: inside services section — scissor stays at final resting position
-    if(svcTop <= 0 && svcBottom > 0){
-      scissorArt.style.transform = 'translateY(-50%) translateX(0%)';
-      scissorArt.style.opacity = '0.88';
-      return;
-    }
+    const currentTop = -320 + (progress * (320 + restingY));
+    scissorEl.style.top = currentTop + 'px';
+    scissorEl.style.opacity = (progress * 0.82).toString();
 
-    // Zone 4: past services — hide again
-    scissorArt.style.transform = 'translateY(-50%) translateX(100%)';
-    scissorArt.style.opacity = '0';
+    // Zone 3: past services — keep stuck at resting position
+    if(svcRect.bottom < 0){
+      scissorEl.style.top = restingY + 'px';
+      scissorEl.style.opacity = '0';
+    }
   }, {passive:true});
 }
 </script>
