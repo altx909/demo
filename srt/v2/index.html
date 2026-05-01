@@ -787,40 +787,35 @@ if(scissorEl && window.innerWidth > 768){
   var audio    = document.getElementById('bgMusic');
   var btn      = document.getElementById('musicBtn');
   var unlocked = false;
-
   audio.volume = 0.35;
-  audio.muted  = true;
 
-  // Try to start playback immediately (muted)
-  audio.play().catch(function(){});
-
-  // Unlock on first interaction — touchstart fires before scroll on mobile
-  // mousedown fires before click on desktop — both are reliable
+  // Don't call audio.play() here — browser blocks it without a user gesture.
+  // Instead wait for the FIRST real interaction, then start with sound.
   function unlock() {
     if (unlocked) return;
     unlocked = true;
     audio.muted = false;
-    btn.classList.add('playing');
-    audio.play().catch(function(){});
+    audio.play().then(function() {
+      btn.classList.add('playing');
+    }).catch(function(){});
     window.removeEventListener('touchstart', unlock);
     window.removeEventListener('mousedown',  unlock);
-    window.removeEventListener('scroll',     unlock);
+    window.removeEventListener('wheel',      unlock);
     window.removeEventListener('keydown',    unlock);
   }
   window.addEventListener('touchstart', unlock, { passive: true });
   window.addEventListener('mousedown',  unlock, { passive: true });
-  window.addEventListener('scroll',     unlock, { passive: true });
+  window.addEventListener('wheel',      unlock, { passive: true });
   window.addEventListener('keydown',    unlock, { passive: true });
 
   window.toggleMusic = function() {
+    if (!unlocked) { unlock(); return; }
     if (audio.paused) {
-      audio.muted = false;
       audio.play();
       btn.classList.add('playing');
-      unlocked = true;
     } else {
-      audio.muted = !audio.muted;
-      btn.classList.toggle('playing', !audio.muted);
+      audio.pause();
+      btn.classList.remove('playing');
     }
   };
 })();
