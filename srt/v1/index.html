@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SRT Barbershop — Mockup</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Kaushan+Script&family=Barlow:wght@300;400;500;600&family=Barlow+Condensed:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+  :root {
+    --black: #0f0e0d;
+    --charcoal: #1a1917;
+    --dark: #242220;
+    --mid: #2e2c29;
+    --gold: #AD9586;
+    --gold-light: #c4afa3;
+    --gold-dim: #8a7268;
+    --white: #f5f2ed;
+    --muted: #9a9589;
+    --border: rgba(201,168,76,0.18);
+    --ff-display: 'Bebas Neue', sans-serif;
+    --ff-condensed: 'Barlow Condensed', sans-serif;
+    --ff-body: 'Barlow', sans-serif;
+  }
+  body { background: var(--black); color: var(--white); font-family: var(--ff-body); font-weight: 400; line-height: 1.6; overflow-x: hidden; }
+
+  /* NAV */
+  nav { display: flex; align-items: center; justify-content: space-between; padding: 0 64px; height: 80px; background: var(--black); border-bottom: 1px solid var(--border); }
+  .nav-logo { font-family: var(--ff-display); font-size: 32px; letter-spacing: 4px; color: var(--gold); }
+  .nav-links { display: flex; gap: 40px; list-style: none; }
+  .nav-links a { font-family: var(--ff-condensed); font-size: 13px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; color: var(--muted); text-decoration: none; }
+  .nav-cta { font-family: var(--ff-condensed); font-size: 13px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--black); background: var(--gold); border: none; padding: 12px 28px; text-decoration: none; display: inline-block; }
+
+  /* HERO */
+  @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Kaushan+Script&family=Barlow:wght@300;400;500;600&family=Barlow+Condensed:wght@400;600;700&display=swap');
+
+.hero { min-height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 80px 64px; position: relative; overflow: hidden; }
+.hero-bg-img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center top; filter: brightness(0.28) contrast(1.15); }
+.hero-overlay { position: absolute; inset: 0; background: linear-gradient(to bottom, rgba(15,14,13,0.3) 0%, rgba(15,14,13,0.55) 100%); }
+.hero-content { position: relative; z-index: 2; display: flex; flex-direction: column; align-items: center; }
+.hero-script { font-family: 'Kaushan Script', cursive; font-size: clamp(48px, 6vw, 80px); color: #AD9586; line-height: 1.1; margin-bottom: 4px; text-shadow: 0 2px 24px rgba(0,0,0,0.6); }
+.hero-title { font-family: 'Bebas Neue', sans-serif; font-size: clamp(80px, 14vw, 180px); line-height: 0.9; letter-spacing: 4px; color: var(--white); margin-bottom: 20px; text-shadow: 0 4px 32px rgba(0,0,0,0.5); }
+.hero-sub { font-family: 'Barlow Condensed', sans-serif; font-size: 16px; font-weight: 400; letter-spacing: 3px; text-transform: uppercase; color: var(--muted); margin-bottom: 40px; }
+.hero-actions { display: flex; gap: 16px; flex-wrap: wrap; justify-content: center; }
+/* LOCATION SLIDER */
+.loc-slider { display: grid; grid-template-columns: 1fr 1fr; height: 520px; position: relative; overflow: hidden; }
+.loc-panel { position: relative; overflow: hidden; cursor: pointer; }
+.loc-panel img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center; filter: brightness(0.35) contrast(1.1); transition: filter 0.6s ease, transform 0.6s ease; }
+.loc-panel:hover img { filter: brightness(0.55) contrast(1.1); transform: scale(1.04); }
+.loc-panel-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(15,14,13,0.95) 0%, rgba(15,14,13,0.2) 60%, transparent 100%); transition: opacity 0.4s ease; }
+.loc-panel-content { position: absolute; bottom: 0; left: 0; right: 0; padding: 44px 48px; z-index: 2; }
+.loc-tag { font-family: var(--ff-condensed); font-size: 10px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; color: var(--black); background: #AD9586; padding: 4px 12px; display: inline-block; margin-bottom: 14px; }
+.loc-panel-title { font-family: var(--ff-display); font-size: 56px; letter-spacing: 2px; color: var(--white); line-height: 1; margin-bottom: 8px; transition: color 0.3s; }
+.loc-panel:hover .loc-panel-title { color: #AD9586; }
+.loc-panel-address { font-family: var(--ff-condensed); font-size: 14px; letter-spacing: 2px; text-transform: uppercase; color: var(--muted); margin-bottom: 28px; }
+.loc-btn { font-family: var(--ff-condensed); font-size: 13px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; background: #AD9586; color: var(--black); padding: 14px 32px; text-decoration: none; display: inline-block; opacity: 0; transform: translateY(10px); transition: opacity 0.4s ease, transform 0.4s ease; }
+.loc-panel:hover .loc-btn { opacity: 1; transform: translateY(0); }
+.loc-divider { position: absolute; top: 0; bottom: 0; left: calc(50% - 0.5px); width: 1px; background: rgba(173,149,134,0.15); z-index: 10; pointer-events: none; }
+  .btn-primary { font-family: var(--ff-condensed); font-size: 13px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; background: var(--gold); color: var(--black); border: none; padding: 16px 36px; text-decoration: none; display: inline-block; }
+  .btn-secondary { font-family: var(--ff-condensed); font-size: 13px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; background: transparent; color: var(--white); border: 1px solid rgba(245,242,237,0.25); padding: 16px 36px; text-decoration: none; display: inline-block; }
+
+  /* SECTIONS */
+  section { padding: 100px 64px; }
+  .section-label { font-family: var(--ff-condensed); font-size: 11px; font-weight: 600; letter-spacing: 4px; text-transform: uppercase; color: var(--gold); margin-bottom: 14px; display: flex; align-items: center; gap: 12px; }
+  .section-label::before { content: ''; display: block; width: 24px; height: 1px; background: var(--gold); }
+  .section-title { font-family: var(--ff-display); font-size: 80px; line-height: 1; letter-spacing: 1px; color: var(--white); margin-bottom: 56px; }
+
+  /* SERVICES */
+  .services-section { background: var(--charcoal); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+  .services-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: var(--border); border: 1px solid var(--border); }
+  .service-card { background: var(--dark); padding: 40px 32px; position: relative; }
+  .service-card::after { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 2px; background: var(--gold); transform: scaleX(0); transform-origin: left; }
+  .service-num { font-family: var(--ff-display); font-size: 52px; color: rgba(201,168,76,0.12); line-height: 1; margin-bottom: 16px; }
+  .service-name { font-family: var(--ff-condensed); font-size: 22px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: var(--white); margin-bottom: 16px; }
+  .service-items { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+  .service-items li { font-size: 14px; color: var(--muted); padding-left: 14px; position: relative; line-height: 1.4; }
+  .service-items li::before { content: '—'; position: absolute; left: 0; color: var(--gold-dim); font-size: 10px; top: 3px; }
+  .service-book { display: inline-block; margin-top: 28px; font-family: var(--ff-condensed); font-size: 12px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--gold); text-decoration: none; border-bottom: 1px solid var(--gold-dim); padding-bottom: 2px; }
+
+  /* TEAM */
+  .team-section { background: var(--black); }
+  .team-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; }
+  .team-card { position: relative; overflow: hidden; background: var(--dark); }
+  .team-card-img { width: 100%; aspect-ratio: 3/4; object-fit: cover; object-position: center top; display: block; filter: grayscale(20%) contrast(1.1) brightness(0.88); }
+  .team-card-overlay { padding: 20px 18px 18px; background: var(--dark); border-top: 1px solid var(--border); }
+  .team-name { font-family: var(--ff-display); font-size: 24px; letter-spacing: 1px; color: var(--white); display: block; }
+  .team-role { font-family: var(--ff-condensed); font-size: 11px; letter-spacing: 2px; text-transform: uppercase; color: var(--gold); margin-top: 4px; display: block; }
+
+  /* LOCATIONS */
+  .locations-section { background: var(--charcoal); border-top: 1px solid var(--border); }
+  .locations-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--border); border: 1px solid var(--border); }
+  .location-card { background: var(--dark); padding: 52px 44px; }
+  .location-tag { display: inline-block; font-family: var(--ff-condensed); font-size: 10px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; color: var(--black); background: var(--gold); padding: 5px 14px; margin-bottom: 28px; }
+  .location-name { font-family: var(--ff-display); font-size: 52px; letter-spacing: 1px; color: var(--white); line-height: 1; margin-bottom: 28px; }
+  .location-detail { display: flex; flex-direction: column; gap: 12px; margin-bottom: 36px; }
+  .location-row { display: flex; gap: 14px; align-items: flex-start; }
+  .location-row-label { font-family: var(--ff-condensed); font-size: 11px; letter-spacing: 2px; text-transform: uppercase; color: var(--gold); min-width: 64px; padding-top: 2px; }
+  .location-row-val { color: var(--muted); font-size: 14px; line-height: 1.5; }
+  .hours-grid { display: flex; flex-direction: column; }
+  .hours-row { display: flex; justify-content: space-between; font-size: 13px; padding: 9px 0; border-bottom: 1px solid rgba(201,168,76,0.08); }
+  .hours-day { color: var(--muted); }
+  .hours-time { color: var(--white); font-weight: 500; }
+  .hours-closed { color: var(--gold-dim); }
+  .location-btn { display: inline-block; margin-top: 36px; font-family: var(--ff-condensed); font-size: 13px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; background: var(--gold); color: var(--black); padding: 16px 36px; text-decoration: none; }
+
+  /* TESTIMONIALS */
+  .testimonials-section { background: var(--black); }
+  .testimonials-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  .testimonial-card { background: var(--charcoal); border: 1px solid var(--border); padding: 32px; }
+  .testimonial-quote-mark { font-family: var(--ff-display); font-size: 72px; color: var(--gold-dim); line-height: 0.6; margin-bottom: 20px; opacity: 0.45; }
+  .testimonial-text { font-size: 14px; color: var(--muted); line-height: 1.75; margin-bottom: 24px; font-style: italic; }
+  .testimonial-author { font-family: var(--ff-condensed); font-size: 12px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--gold); }
+
+  /* INSTAGRAM */
+  .instagram-section { background: var(--charcoal); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+  .insta-header { display: flex; align-items: flex-end; justify-content: space-between; margin-bottom: 32px; }
+  .insta-handle { font-family: var(--ff-condensed); font-size: 15px; font-weight: 600; letter-spacing: 2px; color: var(--muted); }
+  .insta-handle span { color: var(--gold); }
+  .insta-follow { font-family: var(--ff-condensed); font-size: 12px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--gold); text-decoration: none; border-bottom: 1px solid var(--gold-dim); padding-bottom: 2px; display: block; margin-top: 6px; }
+  .insta-grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 6px; }
+  .insta-tile { aspect-ratio: 1; overflow: hidden; position: relative; background: var(--dark); }
+  .insta-tile img { width: 100%; height: 100%; object-fit: cover; object-position: center top; display: block; filter: grayscale(15%) brightness(0.82); }
+  .insta-footer { margin-top: 24px; text-align: center; }
+  .btn-outline { font-family: var(--ff-condensed); font-size: 13px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; background: transparent; color: var(--white); border: 1px solid rgba(245,242,237,0.2); padding: 14px 36px; text-decoration: none; display: inline-block; }
+
+  /* FOOTER */
+  footer { background: var(--black); border-top: 1px solid var(--border); padding: 72px 64px 48px; }
+  .footer-top { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 56px; margin-bottom: 56px; }
+  .footer-logo { font-family: var(--ff-display); font-size: 48px; letter-spacing: 4px; color: var(--gold); margin-bottom: 14px; display: block; }
+  .footer-tagline { font-family: var(--ff-condensed); font-size: 12px; letter-spacing: 3px; text-transform: uppercase; color: var(--muted); margin-bottom: 28px; }
+  .footer-socials { display: flex; gap: 10px; }
+  .social-pill { font-family: var(--ff-condensed); font-size: 11px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--muted); border: 1px solid rgba(154,149,137,0.2); padding: 7px 16px; text-decoration: none; }
+  .footer-col-title { font-family: var(--ff-condensed); font-size: 11px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; color: var(--gold); margin-bottom: 22px; }
+  .footer-links { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+  .footer-links li { font-size: 13px; color: var(--muted); line-height: 1.5; }
+  .footer-links .highlight { color: var(--white); }
+  .footer-bottom { display: flex; justify-content: space-between; align-items: flex-start; padding-top: 36px; border-top: 1px solid var(--border); gap: 48px; }
+  .footer-copy { font-family: var(--ff-condensed); font-size: 11px; letter-spacing: 2px; text-transform: uppercase; color: var(--muted); opacity: 0.45; white-space: nowrap; }
+  .policy-text { font-family: var(--ff-condensed); font-size: 12px; color: var(--muted); opacity: 0.4; max-width: 420px; text-align: right; line-height: 1.6; }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <span class="nav-logo">SRT</span>
+  <ul class="nav-links">
+    <li><a href="#">Services</a></li>
+    <li><a href="#">Team</a></li>
+    <li><a href="#">Locations</a></li>
+    <li><a href="#">Laser</a></li>
+  </ul>
+  <a href="#" class="nav-cta">Book Now</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <img class="hero-bg-img" src="images/DSC00834-scaled.jpg" alt="SRT Barbershop">
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <div class="hero-script">Straight Razor Touch</div>
+    <div class="hero-title">BARBERSHOP</div>
+    <div class="hero-sub">Saskatoon's Premiere Traditional Barbershop</div>
+    <div class="hero-actions">
+      <a href="https://getsquire.com/booking/book/srt-barbershop-ltd-saskatoon" class="btn-primary">Book Evergreen SQ</a>
+      <a href="https://getsquire.com/booking/book/srt-barber-and-elite-laser-saskatoon" class="btn-secondary">Book Willowgrove SQ</a>
+    </div>
+  </div>
+</section>
+
+<!-- LOCATION SLIDER -->
+<div class="loc-slider">
+  <div class="loc-panel active" id="panel-evergreen">
+    <img src="images/a4485047-b872-418d-b602-e7c0fe72ad5f.jpeg" alt="Evergreen SQ">
+    <div class="loc-panel-overlay"></div>
+    <div class="loc-panel-content">
+      <span class="loc-tag">Location 01</span>
+      <div class="loc-panel-title">Evergreen SQ</div>
+      <div class="loc-panel-address">20–211 Evergreen SQ., Saskatoon</div>
+      <a href="https://getsquire.com/booking/book/srt-barbershop-ltd-saskatoon" class="loc-btn">Book This Location</a>
+    </div>
+  </div>
+  <div class="loc-panel" id="panel-willowgrove">
+    <img src="images/eb993417-30ac-4d26-a7f2-8b0c46e3fac4.jpeg" alt="Willowgrove SQ">
+    <div class="loc-panel-overlay"></div>
+    <div class="loc-panel-content">
+      <span class="loc-tag">Location 02</span>
+      <div class="loc-panel-title">Willowgrove SQ</div>
+      <div class="loc-panel-address">106–419 Willowgrove SQ., Saskatoon</div>
+      <a href="https://getsquire.com/booking/book/srt-barber-and-elite-laser-saskatoon" class="loc-btn">Book This Location</a>
+    </div>
+  </div>
+  <div class="loc-divider"></div>
+</div>
+</div>
+
+<!-- SERVICES -->
+<section class="services-section">
+  <div class="section-label">What We Do</div>
+  <div class="section-title">Services</div>
+  <div class="services-grid">
+
+    <div class="service-card">
+      <div class="service-num">01</div>
+      <div class="service-name">Haircut</div>
+      <ul class="service-items">
+        <li>Cut &amp; Style</li>
+        <li>Haircut, Wash &amp; Style</li>
+        <li>Head Hot Towel Shave</li>
+        <li>Buzz Cut</li>
+        <li>Boys (Age 0–12)</li>
+        <li>SRT Special</li>
+      </ul>
+      <a href="#" class="service-book">Book Now →</a>
+    </div>
+
+    <div class="service-card">
+      <div class="service-num">02</div>
+      <div class="service-name">Beard</div>
+      <ul class="service-items">
+        <li>Beard Trim</li>
+        <li>Razor Work</li>
+        <li>Beard Hot Towel Shave</li>
+      </ul>
+      <a href="#" class="service-book">Book Now →</a>
+    </div>
+
+    <div class="service-card">
+      <div class="service-num">03</div>
+      <div class="service-name">Women's</div>
+      <ul class="service-items">
+        <li>Cut — Long, Medium &amp; Short</li>
+        <li>Girls (Age 0–12)</li>
+        <li>Colour, Highlights &amp; Balayage</li>
+        <li>Brow Wax &amp; Facial</li>
+        <li>Facial Cleanser</li>
+      </ul>
+      <a href="#" class="service-book">Book Now →</a>
+    </div>
+
+    <div class="service-card">
+      <div class="service-num">04</div>
+      <div class="service-name">Men's Colour</div>
+      <ul class="service-items">
+        <li>Camo — Grey Coverage</li>
+        <li>Permanent Colour</li>
+      </ul>
+      <a href="#" class="service-book">Book Now →</a>
+    </div>
+
+  </div>
+</section>
+
+<!-- TEAM -->
+<section class="team-section">
+  <div class="section-label">Behind the Chair</div>
+  <div class="section-title">The Team</div>
+  <div class="team-grid">
+
+    <div class="team-card">
+      <img class="team-card-img" src="images/DSC00892.jpg" alt="Diar K.">
+      <div class="team-card-overlay">
+        <span class="team-name">Diar K.</span>
+        <span class="team-role">Master Barber &amp; Founder</span>
+      </div>
+    </div>
+
+    <div class="team-card">
+      <img class="team-card-img" src="images/IMG_2843-1.jpg" alt="Finch">
+      <div class="team-card-overlay">
+        <span class="team-name">Finch</span>
+        <span class="team-role">Barber</span>
+      </div>
+    </div>
+
+    <div class="team-card">
+      <img class="team-card-img" src="images/IMG_0876-2-567x1024.jpg" alt="Nash Y.">
+      <div class="team-card-overlay">
+        <span class="team-name">Nash Y.</span>
+        <span class="team-role">Barber</span>
+      </div>
+    </div>
+
+    <div class="team-card">
+      <img class="team-card-img" src="images/DSC00912.jpg" alt="Maddie L.">
+      <div class="team-card-overlay">
+        <span class="team-name">Maddie L.</span>
+        <span class="team-role">Stylist</span>
+      </div>
+    </div>
+
+    <div class="team-card">
+      <img class="team-card-img" src="images/IMG_0408-1-scaled.jpg" alt="Efrem A.">
+      <div class="team-card-overlay">
+        <span class="team-name">Efrem A.</span>
+        <span class="team-role">Barber</span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- LOCATIONS -->
+<section class="locations-section">
+  <div class="section-label">Find Us</div>
+  <div class="section-title">Locations</div>
+  <div class="locations-grid">
+
+    <div class="location-card">
+      <span class="location-tag">Location 01</span>
+      <div class="location-name">Evergreen SQ</div>
+      <div class="location-detail">
+        <div class="location-row">
+          <span class="location-row-label">Address</span>
+          <span class="location-row-val">20–211 Evergreen SQ., Saskatoon, SK</span>
+        </div>
+        <div class="location-row">
+          <span class="location-row-label">Phone</span>
+          <span class="location-row-val">1 (306) 952-6415</span>
+        </div>
+        <div class="location-row">
+          <span class="location-row-label">Email</span>
+          <span class="location-row-val">srtbarbershop@gmail.com</span>
+        </div>
+      </div>
+      <div class="hours-grid">
+        <div class="hours-row"><span class="hours-day">Monday – Friday</span><span class="hours-time">9:00 AM – 7:30 PM</span></div>
+        <div class="hours-row"><span class="hours-day">Saturday</span><span class="hours-time">9:00 AM – 6:00 PM</span></div>
+        <div class="hours-row"><span class="hours-day">Sunday</span><span class="hours-closed">Closed</span></div>
+      </div>
+      <a href="https://getsquire.com/booking/book/srt-barbershop-ltd-saskatoon" class="location-btn">Book This Location</a>
+    </div>
+
+    <div class="location-card">
+      <span class="location-tag">Location 02</span>
+      <div class="location-name">Willowgrove SQ</div>
+      <div class="location-detail">
+        <div class="location-row">
+          <span class="location-row-label">Address</span>
+          <span class="location-row-val">106–419 Willowgrove SQ., Saskatoon, SK</span>
+        </div>
+        <div class="location-row">
+          <span class="location-row-label">Phone</span>
+          <span class="location-row-val">1 (306) 986-4004</span>
+        </div>
+        <div class="location-row">
+          <span class="location-row-label">Email</span>
+          <span class="location-row-val">srtbarbershop@gmail.com</span>
+        </div>
+      </div>
+      <div class="hours-grid">
+        <div class="hours-row"><span class="hours-day">Tuesday – Friday</span><span class="hours-time">9:00 AM – 6:00 PM</span></div>
+        <div class="hours-row"><span class="hours-day">Saturday</span><span class="hours-time">9:00 AM – 5:00 PM</span></div>
+        <div class="hours-row"><span class="hours-day">Sun – Monday</span><span class="hours-closed">Closed</span></div>
+      </div>
+      <a href="https://getsquire.com/booking/book/srt-barber-and-elite-laser-saskatoon" class="location-btn">Book This Location</a>
+    </div>
+
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="testimonials-section">
+  <div class="section-label">Client Stories</div>
+  <div class="section-title">What They Say</div>
+  <div class="testimonials-grid">
+
+    <div class="testimonial-card">
+      <div class="testimonial-quote-mark">"</div>
+      <p class="testimonial-text">Diar is the only person I trust to cut my hair in the province of Saskatchewan. His attention to detail is amazing — he has a true passion for his art.</p>
+      <span class="testimonial-author">Akhtar S.</span>
+    </div>
+
+    <div class="testimonial-card">
+      <div class="testimonial-quote-mark">"</div>
+      <p class="testimonial-text">I have pretty thick hair and always struggle to find someone who can manage it. Been seeing Maddie for a while and I'm always very happy with her work.</p>
+      <span class="testimonial-author">Grant T.</span>
+    </div>
+
+    <div class="testimonial-card">
+      <div class="testimonial-quote-mark">"</div>
+      <p class="testimonial-text">Diar takes his time every single time I see him. He's easily the best barber in the city — no question about it.</p>
+      <span class="testimonial-author">Omair K.</span>
+    </div>
+
+  </div>
+</section>
+
+<!-- INSTAGRAM -->
+<section class="instagram-section">
+  <div class="insta-header">
+    <div>
+      <div class="section-label">Recent Work</div>
+      <div class="section-title" style="margin-bottom:0;">Fresh Cuts</div>
+    </div>
+    <div style="text-align:right;">
+      <span class="insta-handle"><span>@</span>srtbarbershop</span>
+      <a href="https://www.instagram.com/srtbarbershop/" class="insta-follow">Follow on Instagram →</a>
+    </div>
+  </div>
+
+  <div class="insta-grid">
+    <div class="insta-tile"><img src="images/DSC00892.jpg" alt=""></div>
+    <div class="insta-tile"><img src="images/DSC00912.jpg" alt="" style="object-position: center 20%;"></div>
+    <div class="insta-tile"><img src="images/IMG_2843-1.jpg" alt=""></div>
+    <div class="insta-tile"><img src="images/IMG_0876-2-567x1024.jpg" alt=""></div>
+    <div class="insta-tile"><img src="images/IMG_0408-1-scaled.jpg" alt=""></div>
+    <div class="insta-tile"><img src="images/DSC00834-scaled.jpg" alt=""></div>
+    <div class="insta-tile"><img src="images/DSC00912.jpg" alt="" style="object-position: center 60%;"></div>
+    <div class="insta-tile"><img src="images/DSC00892.jpg" alt="" style="object-position: center 30%;"></div>
+    <div class="insta-tile"><img src="images/IMG_0408-1-scaled.jpg" alt="" style="object-position: center 20%;"></div>
+    <div class="insta-tile"><img src="images/IMG_0876-2-567x1024.jpg" alt="" style="object-position: center 10%;"></div>
+    <div class="insta-tile"><img src="images/IMG_2843-1.jpg" alt="" style="object-position: center 40%;"></div>
+    <div class="insta-tile"><img src="images/DSC00834-scaled.jpg" alt="" style="object-position: center 50%;"></div>
+  </div>
+
+  <div class="insta-footer">
+    <a href="https://www.instagram.com/srtbarbershop/" class="btn-outline">View Full Gallery on Instagram</a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-top">
+    <div>
+      <span class="footer-logo">SRT</span>
+      <p class="footer-tagline">Saskatoon's Premier Traditional Barbershop</p>
+      <div class="footer-socials">
+        <a href="https://www.facebook.com/srtbarbershop" class="social-pill">Facebook</a>
+        <a href="https://www.instagram.com/srtbarbershop/" class="social-pill">Instagram</a>
+        <a href="https://www.tiktok.com/@srtbarbershop" class="social-pill">TikTok</a>
+      </div>
+    </div>
+    <div>
+      <div class="footer-col-title">Evergreen SQ</div>
+      <ul class="footer-links">
+        <li>20–211 Evergreen SQ.</li>
+        <li>Saskatoon, SK</li>
+        <li style="margin-top:10px;">1 (306) 952-6415</li>
+        <li>srtbarbershop@gmail.com</li>
+        <li style="margin-top:10px;" class="highlight">Mon–Fri &nbsp; 9AM – 7:30PM</li>
+        <li class="highlight">Saturday &nbsp; 9AM – 6PM</li>
+      </ul>
+    </div>
+    <div>
+      <div class="footer-col-title">Willowgrove SQ</div>
+      <ul class="footer-links">
+        <li>106–419 Willowgrove SQ.</li>
+        <li>Saskatoon, SK</li>
+        <li style="margin-top:10px;">1 (306) 986-4004</li>
+        <li>srtbarbershop@gmail.com</li>
+        <li style="margin-top:10px;" class="highlight">Tue–Fri &nbsp; 9AM – 6PM</li>
+        <li class="highlight">Saturday &nbsp; 9AM – 5PM</li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span class="footer-copy">© 2025 SRT Barbershop Ltd. — Saskatoon, SK</span>
+    <span class="policy-text">We ask that cancellations be made more than 2 hours in advance so we can offer your time slot to another client. Thank you for your understanding.</span>
+  </div>
+</footer>
+
+</body>
+</html>
