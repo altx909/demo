@@ -132,16 +132,16 @@ nav.scrolled{height:60px;background:rgba(8,8,8,0.97);}
 .team-heading{font-family:var(--fd);font-size:clamp(56px,8vw,110px);line-height:0.88;color:var(--w);margin-bottom:56px;}
 .team-strip{display:flex;gap:10px;align-items:flex-end;}
 .tc{position:relative;overflow:hidden;background:var(--panel);flex-shrink:0;}
-.tc img{display:block;object-fit:cover;object-position:center top;filter:brightness(0.85);transition:transform 0.5s ease;}
-.tc:hover img{transform:scale(1.04);filter:brightness(1);}
+.tc img{display:block;width:100%;height:auto;object-fit:contain;background:#111;transition:transform 0.5s ease;}
+.tc:hover img{transform:scale(1.02);}
 .tc-info{position:absolute;bottom:0;left:0;right:0;padding:48px 16px 18px;background:linear-gradient(to top,rgba(8,8,8,1) 0%,rgba(8,8,8,0.5) 60%,transparent 100%);}
 .tc-name{font-family:var(--fd);font-size:26px;letter-spacing:1px;color:var(--w);}
 .tc-role{font-family:var(--fc);font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--blue);margin-top:3px;}
-.tc1{width:22%;height:420px;}
-.tc2{width:17%;height:360px;}
-.tc3{width:20%;height:460px;}
-.tc4{width:18%;height:340px;}
-.tc5{width:23%;height:400px;}
+.tc1{width:22%;}
+.tc2{width:17%;}
+.tc3{width:20%;}
+.tc4{width:18%;}
+.tc5{width:23%;}
 
 /* BOOKING WALL */
 .booking{background:var(--b);padding:120px 56px;border-top:1px solid var(--bd);border-bottom:1px solid var(--bd);position:relative;overflow:hidden;}
