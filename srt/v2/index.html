@@ -317,6 +317,38 @@ footer{background:var(--b);border-top:1px solid var(--bd);padding:0;}
 .diar-face .diar-hover{opacity:0;}
 @media(max-width:767px){.diar-bubble{bottom:20px;right:20px;}.diar-face{width:64px;height:64px;}}
 
+
+/* ── MUSIC PLAYER ─────────────────────────────────────── */
+.music-btn{
+  position:fixed;bottom:32px;left:32px;z-index:9990;
+  width:44px;height:44px;border-radius:50%;
+  background:rgba(8,8,8,0.85);border:1px solid var(--bd);
+  backdrop-filter:blur(12px);
+  display:flex;align-items:center;justify-content:center;
+  cursor:pointer;transition:border-color 0.3s,transform 0.2s;
+  color:var(--m);font-size:18px;
+}
+.music-btn:hover{border-color:var(--blue);transform:scale(1.08);}
+.music-btn.playing{border-color:var(--blue);color:var(--blue);}
+.music-btn .bar{
+  display:none;gap:2px;align-items:flex-end;height:16px;
+}
+.music-btn.playing .bar{display:flex;}
+.music-btn.playing .icon-mute{display:none;}
+.music-btn .bar span{
+  display:block;width:3px;background:var(--blue);border-radius:2px;
+  animation:barBounce 0.8s ease-in-out infinite alternate;
+}
+.music-btn .bar span:nth-child(1){height:6px;animation-delay:0s;}
+.music-btn .bar span:nth-child(2){height:12px;animation-delay:0.2s;}
+.music-btn .bar span:nth-child(3){height:8px;animation-delay:0.1s;}
+.music-btn .bar span:nth-child(4){height:14px;animation-delay:0.3s;}
+@keyframes barBounce{
+  from{transform:scaleY(0.4);}
+  to{transform:scaleY(1);}
+}
+@media(max-width:767px){.music-btn{bottom:20px;left:20px;}}
+
 </style>
 </head>
 <body>
@@ -734,6 +766,57 @@ if(scissorEl && window.innerWidth > 768){
     setTimeout(showSurprised, 2000);
   }
   setTimeout(showSurprised, 3000);
+})();
+</script>
+
+
+<!-- MUSIC PLAYER -->
+<audio id="bgMusic" loop>
+  <source src="is-this-love.mp3" type="audio/mpeg">
+</audio>
+
+<button class="music-btn" id="musicBtn" title="Toggle music" onclick="toggleMusic()">
+  <span class="icon-mute">♪</span>
+  <div class="bar">
+    <span></span><span></span><span></span><span></span>
+  </div>
+</button>
+
+<script>
+(function(){
+  var audio    = document.getElementById('bgMusic');
+  var btn      = document.getElementById('musicBtn');
+  var unlocked = false;
+
+  audio.volume = 0.35;
+  audio.muted  = true;
+
+  // Try to start playback immediately (muted)
+  audio.play().catch(function(){});
+
+  function unlock() {
+    if (unlocked) return;
+    unlocked = true;
+    audio.muted = false;
+    btn.classList.add('playing');
+    audio.play().catch(function(){});
+  }
+
+  // Unlock on first scroll or click anywhere
+  window.addEventListener('scroll', unlock, { once: true, passive: true });
+  document.addEventListener('click',  unlock, { once: true });
+
+  window.toggleMusic = function() {
+    if (audio.paused) {
+      audio.muted = false;
+      audio.play();
+      btn.classList.add('playing');
+      unlocked = true;
+    } else {
+      audio.muted = !audio.muted;
+      btn.classList.toggle('playing', !audio.muted);
+    }
+  };
 })();
 </script>
 
