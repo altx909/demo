@@ -770,6 +770,32 @@ if(scissorEl && window.innerWidth > 768){
     }
   }, {passive:true});
 }
+
+// DIAR AUTO FACE SWAP — clean 2s/2s loop
+(function(){
+  const normal  = document.querySelector('.diar-normal');
+  const hoverImg = document.querySelector('.diar-hover');
+  const speech  = document.querySelector('.diar-speech');
+  if(!normal || !hoverImg || !speech) return;
+
+  function showSurprised(){
+    normal.style.opacity    = '0';
+    hoverImg.style.opacity  = '1';
+    speech.style.opacity    = '1';
+    speech.style.transform  = 'translateY(0) scale(1)';
+    setTimeout(showNormal, 2000);
+  }
+
+  function showNormal(){
+    normal.style.opacity    = '1';
+    hoverImg.style.opacity  = '0';
+    speech.style.opacity    = '0';
+    speech.style.transform  = 'translateY(8px) scale(0.95)';
+    setTimeout(showSurprised, 2000);
+  }
+
+  setTimeout(showSurprised, 2000);
+})();
 </script>
 
 <!-- DIAR CHAT BUBBLE -->
