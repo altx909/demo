@@ -18,23 +18,18 @@
 html{scroll-behavior:smooth;}
 body{background:var(--b);color:var(--w);font-family:var(--fb);overflow-x:hidden;cursor:none;}
 
-/* SCISSOR CURSOR */
 .cursor-wrap{position:fixed;pointer-events:none;z-index:99999;transform:translate(-50%,-50%);}
 .cursor-svg{width:36px;height:36px;transition:transform 0.12s ease;}
 
-/* GRAIN */
 body::before{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");pointer-events:none;z-index:9998;opacity:0.5;}
 
-/* SCROLL REVEAL */
 .reveal{opacity:0;transform:translateY(36px);transition:opacity 0.75s ease,transform 0.75s ease;}
 .reveal.visible{opacity:1;transform:translateY(0);}
-.reveal-left{opacity:0;transform:translateX(-36px);transition:opacity 0.75s ease,transform 0.75s ease;}
-.reveal-left.visible{opacity:1;transform:translateX(0);}
 .reveal-right{opacity:0;transform:translateX(36px);transition:opacity 0.75s ease,transform 0.75s ease;}
 .reveal-right.visible{opacity:1;transform:translateX(0);}
 
 /* NAV */
-nav{position:fixed;top:0;left:0;right:0;z-index:1000;display:flex;align-items:center;justify-content:space-between;padding:0 56px;height:72px;background:rgba(8,8,8,0.88);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid var(--bd);transition:height 0.3s,background 0.3s;}
+nav{position:fixed;top:0;left:0;right:0;z-index:1000;display:flex;align-items:center;justify-content:space-between;padding:0 56px;height:72px;background:rgba(8,8,8,0.88);backdrop-filter:blur(20px);border-bottom:1px solid var(--bd);transition:height 0.3s,background 0.3s;}
 nav.scrolled{height:60px;background:rgba(8,8,8,0.97);}
 .nl{font-family:var(--fd);font-size:24px;letter-spacing:6px;color:var(--w);position:relative;}
 .nl::after{content:'';position:absolute;bottom:-3px;left:0;width:100%;height:1px;background:var(--blue);}
@@ -55,8 +50,6 @@ nav.scrolled{height:60px;background:rgba(8,8,8,0.97);}
 .hero-content{position:relative;z-index:2;width:100%;padding:0 56px 72px;}
 .hero-top{display:flex;align-items:flex-start;justify-content:space-between;}
 .hero-script{font-family:var(--fs);font-size:clamp(28px,3.5vw,52px);color:var(--blue);line-height:1;margin-bottom:-4px;letter-spacing:1px;}
-
-/* SPARKLE on BARBER */
 .hero-title{font-family:var(--fd);font-size:clamp(90px,16vw,240px);line-height:0.85;letter-spacing:-2px;color:var(--w);}
 .sparkle-wrap{position:relative;display:inline-block;}
 .sparkle{position:absolute;pointer-events:none;width:6px;height:6px;opacity:0;}
@@ -64,22 +57,18 @@ nav.scrolled{height:60px;background:rgba(8,8,8,0.97);}
 .sparkle::before{width:2px;height:100%;left:50%;transform:translateX(-50%);}
 .sparkle::after{width:100%;height:2px;top:50%;transform:translateY(-50%);}
 @keyframes sparklePop{0%{opacity:0;transform:scale(0) rotate(0deg);}40%{opacity:1;transform:scale(1.4) rotate(45deg);}100%{opacity:0;transform:scale(0) rotate(90deg);}}
-
 .hero-right-col{text-align:right;padding-top:48px;max-width:260px;display:flex;flex-direction:column;gap:20px;}
 .hero-tagline{font-family:var(--fc);font-size:12px;font-weight:300;letter-spacing:2px;text-transform:uppercase;color:var(--m);line-height:1.8;}
 .hero-actions{display:flex;flex-direction:column;gap:12px;align-items:flex-end;}
-
-/* BUTTONS */
 .btn-solid{font-family:var(--fc);font-size:11px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--b);background:var(--blue);padding:15px 30px;display:inline-block;text-decoration:none;position:relative;overflow:hidden;animation:btnPulse 3s ease-in-out infinite;}
 @keyframes btnPulse{0%,100%{box-shadow:0 0 0 0 rgba(123,191,239,0);}50%{box-shadow:0 0 22px 4px rgba(123,191,239,0.45),0 0 40px 8px rgba(123,191,239,0.15);}}
 .btn-solid::after{content:'';position:absolute;top:0;left:-100%;width:60%;height:100%;background:linear-gradient(to right,transparent,rgba(255,255,255,0.35),transparent);transform:skewX(-20deg);animation:shine 3s ease-in-out infinite 1.5s;}
 @keyframes shine{0%,100%{left:-100%;}50%{left:160%;}}
 .btn-solid:hover{opacity:0.9;transform:translateY(-1px);}
-.btn-line{font-family:var(--fc);font-size:11px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--blue);border:1px solid rgba(123,191,239,0.3);padding:15px 30px;display:inline-block;transition:all 0.25s;text-decoration:none;position:relative;overflow:hidden;animation:linePulse 3s ease-in-out infinite 1s;}
-@keyframes linePulse{0%,100%{border-color:rgba(123,191,239,0.3);}50%{border-color:rgba(123,191,239,0.7);box-shadow:0 0 14px rgba(123,191,239,0.2),inset 0 0 14px rgba(123,191,239,0.05);}}
+.btn-line{font-family:var(--fc);font-size:11px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--blue);border:1px solid rgba(123,191,239,0.3);padding:15px 30px;display:inline-block;transition:all 0.25s;text-decoration:none;animation:linePulse 3s ease-in-out infinite 1s;}
+@keyframes linePulse{0%,100%{border-color:rgba(123,191,239,0.3);}50%{border-color:rgba(123,191,239,0.7);box-shadow:0 0 14px rgba(123,191,239,0.2);}}
 .btn-line:hover{border-color:var(--blue);background:var(--bg);}
-
-.hero-meta{display:flex;margin-top:40px;border-top:1px solid rgba(255,255,255,0.06);padding-top:28px;gap:0;}
+.hero-meta{display:flex;margin-top:40px;border-top:1px solid rgba(255,255,255,0.06);padding-top:28px;}
 .hmi{flex:1;padding-right:32px;border-right:1px solid rgba(255,255,255,0.05);margin-right:32px;}
 .hmi:last-child{border-right:none;margin-right:0;padding-right:0;}
 .hm-num{font-family:var(--fd);font-size:44px;color:var(--blue);line-height:1;}
@@ -92,35 +81,45 @@ nav.scrolled{height:60px;background:rgba(8,8,8,0.97);}
 .tick-dot{width:4px;height:4px;background:rgba(8,8,8,0.25);border-radius:50%;flex-shrink:0;}
 @keyframes tick{from{transform:translateX(0)}to{transform:translateX(-50%)}}
 
-/* GRAFFITI BANNER */
-.graf-banner{position:relative;padding:64px 0;overflow:hidden;background:url('images/graf-wall.jpg') center/cover no-repeat;border-top:1px solid rgba(255,255,255,0.04);border-bottom:1px solid rgba(255,255,255,0.04);}
-.graf-banner::before{content:'';position:absolute;inset:0;background:rgba(8,8,8,0.78);z-index:0;}
-.graf-spray{position:absolute;inset:0;z-index:1;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 600 120' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='spray'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4'/%3E%3CfeColorMatrix type='matrix' values='0 0 0 0 0.48 0 0 0 0 0.75 0 0 0 0 0.94 0 0 0 0.04 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23spray)'/%3E%3C/svg%3E");pointer-events:none;opacity:0.6;}
-.graf-text{font-family:'Permanent Marker',cursive;font-size:clamp(40px,7vw,96px);color:transparent;-webkit-text-stroke:1.5px rgba(123,191,239,0.45);letter-spacing:8px;text-transform:uppercase;white-space:nowrap;text-align:center;position:relative;z-index:2;line-height:1;padding:0 48px;}
-.graf-text em{color:var(--blue);-webkit-text-stroke:0px;font-style:normal;opacity:0.9;}
-.graf-sub{font-family:'Permanent Marker',cursive;font-size:clamp(13px,1.8vw,20px);color:rgba(123,191,239,0.22);letter-spacing:12px;text-transform:uppercase;text-align:center;margin-top:12px;position:relative;z-index:2;}
+/* GRAFFITI BANNER — scrolling marquee */
+.graf-banner{position:relative;padding:68px 0;overflow:hidden;background:url('images/graf-wall.jpg') center/cover no-repeat;}
+.graf-banner::before{content:'';position:absolute;inset:0;background:rgba(8,8,8,0.82);z-index:0;}
+.graf-spray{position:absolute;inset:0;z-index:1;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 600 120' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='sp'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4'/%3E%3CfeColorMatrix type='matrix' values='0 0 0 0 0.48 0 0 0 0 0.75 0 0 0 0 0.94 0 0 0 0.04 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23sp)'/%3E%3C/svg%3E");pointer-events:none;opacity:0.5;}
+.graf-marquee-wrap{overflow:hidden;position:relative;z-index:2;}
+.graf-marquee{display:inline-flex;white-space:nowrap;animation:grafScroll 22s linear infinite;}
+.graf-item{font-family:'Permanent Marker',cursive;font-size:clamp(60px,9vw,120px);color:transparent;-webkit-text-stroke:1.5px rgba(123,191,239,0.38);letter-spacing:4px;text-transform:uppercase;padding:0 56px;line-height:1.05;display:inline-block;}
+.graf-item em{color:var(--blue);-webkit-text-stroke:0px;font-style:normal;}
+.graf-item .dot{color:rgba(123,191,239,0.25);-webkit-text-stroke:0px;}
+@keyframes grafScroll{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+.graf-sub{font-family:'Permanent Marker',cursive;font-size:clamp(12px,1.4vw,18px);color:rgba(123,191,239,0.28);letter-spacing:10px;text-transform:uppercase;text-align:center;margin-top:16px;position:relative;z-index:2;}
 
 /* SERVICES */
-.svc-section{padding:120px 56px;background:var(--s);position:relative;overflow:hidden;}
+.svc-section{padding:140px 56px;background:var(--s);position:relative;overflow:hidden;}
 .svc-section::before{content:'';position:absolute;top:0;left:56px;right:56px;height:1px;background:linear-gradient(to right,transparent,rgba(123,191,239,0.2) 40%,rgba(123,191,239,0.2) 60%,transparent);z-index:1;}
-.svc-header{display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:72px;padding-bottom:48px;border-bottom:1px solid rgba(255,255,255,0.04);position:relative;z-index:1;}
-.svc-heading{font-family:var(--fd);font-size:clamp(64px,9vw,130px);line-height:0.9;color:var(--w);}
-.svc-heading em{color:var(--blue);font-style:normal;}
+
+/* GIANT SCISSOR ART — desktop only */
+.scissor-art{position:fixed;right:0;top:50%;transform:translateY(-50%) translateX(100%);width:520px;height:520px;pointer-events:none;z-index:3;opacity:0;filter:grayscale(1) contrast(1.2) brightness(0.9);will-change:transform,opacity;}
+.scissor-art img{width:100%;height:100%;object-fit:contain;display:block;}
+
+.svc-header{display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:72px;padding-bottom:48px;border-bottom:1px solid rgba(255,255,255,0.05);position:relative;z-index:2;}
+.svc-heading{font-family:var(--fd);font-size:clamp(72px,10vw,140px);line-height:0.88;color:var(--w);}
+.svc-heading em{color:var(--blue);font-style:normal;display:block;}
 .svc-intro{font-family:var(--fc);font-size:12px;font-weight:300;letter-spacing:2px;text-transform:uppercase;color:var(--m);max-width:180px;text-align:right;line-height:1.9;}
-.svc-row{display:grid;grid-template-columns:72px 1fr 1fr auto;gap:48px;align-items:start;padding:36px 0;border-bottom:1px solid rgba(255,255,255,0.05);position:relative;z-index:1;transition:border-color 0.4s;}
-.svc-row-inner{position:absolute;inset:-1px;border-radius:3px;opacity:0;transition:opacity 0.4s;background:var(--bghover);}
+
+.svc-row{display:grid;grid-template-columns:80px 200px 1fr auto;gap:40px;align-items:center;padding:40px 0;border-bottom:1px solid rgba(255,255,255,0.05);position:relative;z-index:2;transition:border-color 0.4s;}
+.svc-row-inner{position:absolute;inset:0 -8px;border-radius:3px;opacity:0;transition:opacity 0.4s;background:var(--bghover);}
 .svc-row:hover .svc-row-inner{opacity:1;}
 .svc-row:hover{border-bottom-color:rgba(123,191,239,0.3);}
-.svc-n{font-family:var(--fd);font-size:72px;color:rgba(123,191,239,0.06);line-height:1;transition:color 0.4s;position:relative;z-index:1;}
-.svc-row:hover .svc-n{color:rgba(123,191,239,0.22);}
-.svc-name{font-family:var(--fd);font-size:clamp(32px,3.5vw,52px);color:var(--w);line-height:1;position:relative;z-index:1;transition:color 0.3s;}
+.svc-n{font-family:var(--fd);font-size:80px;color:rgba(123,191,239,0.06);line-height:1;transition:color 0.4s;position:relative;z-index:1;}
+.svc-row:hover .svc-n{color:rgba(123,191,239,0.2);}
+.svc-name{font-family:var(--fd);font-size:clamp(36px,3.8vw,56px);color:var(--w);line-height:1;position:relative;z-index:1;transition:color 0.3s;}
 .svc-row:hover .svc-name{color:var(--blue);}
-.svc-items{list-style:none;display:flex;flex-direction:column;gap:9px;padding-top:4px;position:relative;z-index:1;}
-.svc-items li{font-family:var(--fb);font-size:13px;font-weight:300;color:var(--m);display:flex;align-items:center;gap:12px;transition:color 0.3s;}
-.svc-items li::before{content:'';width:18px;height:1px;background:var(--blue);opacity:0.25;flex-shrink:0;transition:opacity 0.3s,width 0.3s;}
+.svc-items{list-style:none;display:flex;flex-wrap:wrap;gap:8px 24px;padding-top:0;position:relative;z-index:1;}
+.svc-items li{font-family:var(--fb);font-size:13px;font-weight:300;color:var(--m);display:flex;align-items:center;gap:10px;transition:color 0.3s;}
+.svc-items li::before{content:'';width:16px;height:1px;background:var(--blue);opacity:0.25;flex-shrink:0;transition:opacity 0.3s,width 0.3s;}
 .svc-row:hover .svc-items li{color:var(--mid);}
-.svc-row:hover .svc-items li::before{opacity:0.6;width:24px;}
-.svc-book{font-family:var(--fc);font-size:10px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--blue);opacity:0;transition:opacity 0.3s,transform 0.3s;align-self:center;white-space:nowrap;text-decoration:none;position:relative;z-index:1;transform:translateX(-8px);}
+.svc-row:hover .svc-items li::before{opacity:0.6;width:22px;}
+.svc-book{font-family:var(--fc);font-size:10px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--blue);opacity:0;transition:opacity 0.3s,transform 0.3s;white-space:nowrap;text-decoration:none;position:relative;z-index:1;transform:translateX(-8px);}
 .svc-row:hover .svc-book{opacity:1;transform:translateX(0);}
 
 /* TEAM */
@@ -128,9 +127,10 @@ nav.scrolled{height:60px;background:rgba(8,8,8,0.97);}
 .team-section::after{content:'SRT';position:absolute;right:-30px;bottom:20px;font-family:var(--fd);font-size:300px;color:rgba(123,191,239,0.018);line-height:1;pointer-events:none;letter-spacing:-10px;}
 .team-eyebrow{font-family:var(--fc);font-size:11px;font-weight:600;letter-spacing:5px;text-transform:uppercase;color:var(--blue);margin-bottom:14px;}
 .team-heading{font-family:var(--fd);font-size:clamp(56px,8vw,110px);line-height:0.88;color:var(--w);margin-bottom:56px;}
+/* Desktop: staggered horizontal strip */
 .team-strip{display:flex;gap:10px;align-items:flex-end;}
 .tc{position:relative;overflow:hidden;background:var(--panel);flex-shrink:0;}
-.tc img{display:block;width:100%;height:100%;object-fit:cover;object-position:center 25%;transition:transform 0.5s ease;}
+.tc img{display:block;width:100%;height:100%;object-fit:cover;transition:transform 0.5s ease;}
 .tc:hover img{transform:scale(1.03);}
 .tc-info{position:absolute;bottom:0;left:0;right:0;padding:48px 16px 18px;background:linear-gradient(to top,rgba(8,8,8,1) 0%,rgba(8,8,8,0.5) 60%,transparent 100%);}
 .tc-name{font-family:var(--fd);font-size:26px;letter-spacing:1px;color:var(--w);}
@@ -245,26 +245,45 @@ footer{background:var(--b);border-top:1px solid var(--bd);padding:0;}
   .hero-actions{align-items:flex-start;}
   .hero-meta{flex-wrap:wrap;gap:24px;}
   .hmi{flex:1 1 40%;padding-right:0;border-right:none;margin-right:0;}
-  .graf-text{font-size:clamp(28px,8vw,52px);letter-spacing:4px;white-space:normal;text-align:center;padding:0 20px;}
-  .graf-sub{letter-spacing:4px;font-size:12px;}
-  .svc-section{padding:80px 20px;}
-  .svc-heading{font-size:clamp(56px,13vw,90px);}
-  .svc-row{grid-template-columns:48px 1fr;gap:20px;}
-  .svc-items{display:none;}
-  .svc-book{display:none;}
-  .svc-header{flex-direction:column;align-items:flex-start;gap:16px;}
-  .svc-intro{text-align:left;max-width:100%;}
+
+  /* Graf banner mobile */
+  .graf-item{font-size:clamp(38px,10vw,64px);padding:0 20px;}
+  .graf-sub{letter-spacing:4px;font-size:11px;}
+
+  /* Services mobile — full card layout */
+  .svc-section{padding:72px 20px;}
   .svc-section::before{left:20px;right:20px;}
+  .scissor-art{display:none;}
+  .svc-header{flex-direction:column;align-items:flex-start;gap:12px;margin-bottom:40px;padding-bottom:32px;}
+  .svc-heading{font-size:clamp(56px,14vw,88px);}
+  .svc-intro{text-align:left;max-width:100%;}
+  /* Mobile: stack vertically, each row is a full card */
+  .svc-row{grid-template-columns:1fr;grid-template-rows:auto;gap:0;padding:0;margin-bottom:2px;border-bottom:none;}
+  .svc-row-inner{display:none;}
+  .svc-n{display:none;}
+  .svc-name{font-size:13px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--b);background:var(--blue);padding:12px 20px;margin:0;}
+  .svc-items{display:flex;flex-direction:column;gap:0;background:var(--panel);padding:0;}
+  .svc-items li{font-size:14px;font-weight:300;color:var(--w);padding:12px 20px;border-bottom:1px solid rgba(255,255,255,0.05);gap:14px;}
+  .svc-items li::before{opacity:0.4;}
+  .svc-book{display:inline-block;opacity:1;transform:none;padding:14px 20px;background:var(--b);border-top:1px solid var(--bd);font-size:11px;letter-spacing:2px;align-self:flex-start;width:100%;}
+  .svc-row:hover .svc-name{color:var(--b);}
+
+  /* Team mobile — beautiful stacked cards */
   .team-section{padding:80px 20px;}
-  .team-strip{overflow-x:auto;padding-bottom:16px;}
-  .tc1,.tc2,.tc3,.tc4,.tc5{width:160px;}
-  .tc1{height:260px;}.tc2{height:220px;}.tc3{height:280px;}.tc4{height:200px;}.tc5{height:240px;}
+  .team-section::after{font-size:140px;}
+  .team-strip{flex-direction:column;gap:0;align-items:stretch;}
+  .tc{width:100% !important;height:auto !important;display:grid;grid-template-columns:120px 1fr;border-bottom:1px solid rgba(255,255,255,0.05);}
+  .tc img{width:120px;height:160px;object-fit:cover;display:block;}
+  .tc-info{position:static;padding:20px 20px;background:var(--panel);display:flex;flex-direction:column;justify-content:center;}
+  .tc-name{font-size:28px;}
+  .tc-role{margin-top:4px;}
+
   .booking{padding:80px 20px;}
   .bk-grid{grid-template-columns:1fr;}
   .bk-heading{font-size:clamp(48px,12vw,80px);}
-  .booking::after{font-size:120px;right:-20px;}
+  .booking::after{font-size:100px;right:-20px;}
   .reviews{padding:80px 20px;}
-  .reviews::before{font-size:150px;}
+  .reviews::before{font-size:120px;}
   .rev-item{grid-template-columns:40px 1fr;gap:16px;}
   .rev-stars{display:none;}
   .rev-badge{align-items:flex-start;}
@@ -272,18 +291,16 @@ footer{background:var(--b);border-top:1px solid var(--bd);padding:0;}
   .insta-top{flex-direction:column;align-items:flex-start;gap:16px;}
   .insta-right{text-align:left;}
   .collage{grid-template-columns:repeat(2,1fr);grid-template-rows:auto;gap:4px;}
-  .ct1,.ct2,.ct3,.ct4,.ct5,.ct6,.ct7,.ct8,.ct9,.ct10,.ct11{grid-column:span 1;grid-row:span 1;height:120px;}
+  .ct1,.ct2,.ct3,.ct4,.ct5,.ct6,.ct7,.ct8,.ct9,.ct10,.ct11{grid-column:span 1;grid-row:span 1;height:140px;}
   .ft-masthead{padding:40px 20px 28px;}
   .ft-columns{grid-template-columns:1fr 1fr;gap:32px;padding:32px 20px;}
   .ft-bottom{padding:16px 20px;flex-direction:column;gap:8px;text-align:center;}
-  .team-section::after{font-size:140px;}
 }
 @media(max-width:480px){
   .hero-title{font-size:72px;}
-  .svc-name{font-size:32px;}
-  .ft-name{font-size:clamp(48px,12vw,80px);}
+  .ft-name{font-size:clamp(44px,12vw,72px);}
   .ft-columns{grid-template-columns:1fr;}
-  .bk-card{padding:32px 24px;}
+  .bk-card{padding:28px 20px;}
   .rev-item{grid-template-columns:1fr;}
   .rev-num{display:none;}
   .rev-header{flex-direction:column;align-items:flex-start;}
@@ -292,7 +309,7 @@ footer{background:var(--b);border-top:1px solid var(--bd);padding:0;}
 </head>
 <body>
 
-<!-- SCISSOR CURSOR -->
+<!-- CURSOR -->
 <div class="cursor-wrap" id="cur">
   <svg class="cursor-svg" id="curSvg" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
     <path d="M6 8 C6 8 8 6 11 7 C14 8 15 11 15 11 L38 20 L34 22 Z" fill="#7BBFEF" opacity="0.9"/>
@@ -370,18 +387,29 @@ footer{background:var(--b);border-top:1px solid var(--bd);padding:0;}
 </div>
 
 <!-- GRAFFITI BANNER -->
-<div class="graf-banner reveal">
+<div class="graf-banner">
   <div class="graf-spray"></div>
-  <div class="graf-text">Fresh <em>Cuts</em> · Sharp <em>Fades</em> · Clean <em>Blades</em></div>
+  <div class="graf-marquee-wrap">
+    <div class="graf-marquee">
+      <span class="graf-item">Fresh <em>Cuts</em> <span class="dot">·</span> Sharp <em>Fades</em> <span class="dot">·</span> Clean <em>Blades</em> <span class="dot">·</span></span>
+      <span class="graf-item">Fresh <em>Cuts</em> <span class="dot">·</span> Sharp <em>Fades</em> <span class="dot">·</span> Clean <em>Blades</em> <span class="dot">·</span></span>
+    </div>
+  </div>
   <div class="graf-sub">Straight Razor Touch · Saskatoon's Finest</div>
 </div>
 
 <!-- SERVICES -->
 <section class="svc-section" id="services">
+  <!-- SCISSOR ART — parallax slides in from right on scroll -->
+  <div class="scissor-art" id="scissorArt">
+    <img src="images/J.svg" alt="">
+  </div>
+
   <div class="svc-header reveal">
     <div class="svc-heading">OUR<br><em>SERVICES</em></div>
     <div class="svc-intro">Every cut is a craft.<br>Every client,<br>a priority.</div>
   </div>
+
   <div class="svc-row reveal">
     <div class="svc-row-inner"></div>
     <div class="svc-n">01</div>
@@ -426,10 +454,10 @@ footer{background:var(--b);border-top:1px solid var(--bd);padding:0;}
   <div class="team-heading reveal">THE<br>TEAM</div>
   <div class="team-strip">
     <div class="tc tc1 reveal"><img src="images/DSC00892.jpg" alt="Diar K." style="object-position:50% 30%;"><div class="tc-info"><div class="tc-name">Diar K.</div><div class="tc-role">Master Barber &amp; Founder</div></div></div>
-    <div class="tc tc2 reveal" style="transition-delay:0.1s"><img src="images/IMG_2843-1.jpg" alt="Finch" style="object-position:50% 25%;"><div class="tc-info"><div class="tc-name">Finch</div><div class="tc-role">Barber</div></div></div>
-    <div class="tc tc3 reveal" style="transition-delay:0.2s"><img src="images/IMG_0876-2-567x1024.jpg" alt="Nash Y." style="object-position:50% 15%;"><div class="tc-info"><div class="tc-name">Nash Y.</div><div class="tc-role">Barber</div></div></div>
-    <div class="tc tc4 reveal" style="transition-delay:0.3s"><img src="images/DSC00912.jpg" alt="Maddie L." style="object-position:50% 20%;"><div class="tc-info"><div class="tc-name">Maddie L.</div><div class="tc-role">Stylist</div></div></div>
-    <div class="tc tc5 reveal" style="transition-delay:0.4s"><img src="images/IMG_0408-1-scaled.jpg" alt="Efrem A." style="object-position:50% 15%;"><div class="tc-info"><div class="tc-name">Efrem A.</div><div class="tc-role">Barber</div></div></div>
+    <div class="tc tc2 reveal" style="transition-delay:0.08s"><img src="images/IMG_2843-1.jpg" alt="Finch" style="object-position:50% 25%;"><div class="tc-info"><div class="tc-name">Finch</div><div class="tc-role">Barber</div></div></div>
+    <div class="tc tc3 reveal" style="transition-delay:0.16s"><img src="images/IMG_0876-2-567x1024.jpg" alt="Nash Y." style="object-position:50% 15%;"><div class="tc-info"><div class="tc-name">Nash Y.</div><div class="tc-role">Barber</div></div></div>
+    <div class="tc tc4 reveal" style="transition-delay:0.24s"><img src="images/DSC00912.jpg" alt="Maddie L." style="object-position:50% 20%;"><div class="tc-info"><div class="tc-name">Maddie L.</div><div class="tc-role">Stylist</div></div></div>
+    <div class="tc tc5 reveal" style="transition-delay:0.32s"><img src="images/IMG_0408-1-scaled.jpg" alt="Efrem A." style="object-position:50% 15%;"><div class="tc-info"><div class="tc-name">Efrem A.</div><div class="tc-role">Barber</div></div></div>
   </div>
 </section>
 
@@ -472,9 +500,7 @@ footer{background:var(--b);border-top:1px solid var(--bd);padding:0;}
   <div class="rev-header reveal">
     <div class="rev-heading">WHAT THEY<br>SAY</div>
     <div class="rev-badge">
-      <div class="rev-stars-big">
-        <div class="rev-star-big"></div><div class="rev-star-big"></div><div class="rev-star-big"></div><div class="rev-star-big"></div><div class="rev-star-big"></div>
-      </div>
+      <div class="rev-stars-big"><div class="rev-star-big"></div><div class="rev-star-big"></div><div class="rev-star-big"></div><div class="rev-star-big"></div><div class="rev-star-big"></div></div>
       <div class="rev-score">4.9</div>
       <div class="rev-count">329 Google Reviews</div>
       <a href="https://www.google.com/maps/place/SRT+Barber+Shop/@52.1651334,-106.572052,17z" target="_blank" class="rev-google-link">Read on Google →</a>
@@ -482,26 +508,17 @@ footer{background:var(--b);border-top:1px solid var(--bd);padding:0;}
   </div>
   <div class="rev-item reveal">
     <div class="rev-num">01</div>
-    <div class="rev-body">
-      <p class="rev-text">"Diar is the only person I trust to cut my hair in the province of Saskatchewan. His attention to detail is amazing — he has a true passion for his art."</p>
-      <div class="rev-author">Akhtar S.</div>
-    </div>
+    <div class="rev-body"><p class="rev-text">"Diar is the only person I trust to cut my hair in the province of Saskatchewan. His attention to detail is amazing — he has a true passion for his art."</p><div class="rev-author">Akhtar S.</div></div>
     <div class="rev-stars"><div class="rev-star"></div><div class="rev-star"></div><div class="rev-star"></div><div class="rev-star"></div><div class="rev-star"></div></div>
   </div>
   <div class="rev-item reveal">
     <div class="rev-num">02</div>
-    <div class="rev-body">
-      <p class="rev-text">"I have pretty thick hair and always struggle to find someone who can manage it. Been seeing Maddie for a while — I'm always very happy with her work."</p>
-      <div class="rev-author">Grant T.</div>
-    </div>
+    <div class="rev-body"><p class="rev-text">"I have pretty thick hair and always struggle to find someone who can manage it. Been seeing Maddie for a while — I'm always very happy with her work."</p><div class="rev-author">Grant T.</div></div>
     <div class="rev-stars"><div class="rev-star"></div><div class="rev-star"></div><div class="rev-star"></div><div class="rev-star"></div><div class="rev-star"></div></div>
   </div>
   <div class="rev-item reveal">
     <div class="rev-num">03</div>
-    <div class="rev-body">
-      <p class="rev-text">"Diar takes his time every single time. Easily the best barber in the city — been coming for years, staff are always friendly and quality never drops."</p>
-      <div class="rev-author">Omair K.</div>
-    </div>
+    <div class="rev-body"><p class="rev-text">"Diar takes his time every single time. Easily the best barber in the city — been coming for years, staff are always friendly and quality never drops."</p><div class="rev-author">Omair K.</div></div>
     <div class="rev-stars"><div class="rev-star"></div><div class="rev-star"></div><div class="rev-star"></div><div class="rev-star"></div><div class="rev-star"></div></div>
   </div>
 </section>
@@ -591,56 +608,93 @@ footer{background:var(--b);border-top:1px solid var(--bd);padding:0;}
 </footer>
 
 <script>
+// CURSOR
 const cur = document.getElementById('cur');
 const curSvg = document.getElementById('curSvg');
 let px=window.innerWidth/2, py=window.innerHeight/2;
 document.addEventListener('mousemove', e => {
-  const dx = e.clientX - px, dy = e.clientY - py;
-  if(Math.abs(dx) > 0.5 || Math.abs(dy) > 0.5){
-    const angle = Math.atan2(dy, dx) * (180/Math.PI);
-    curSvg.style.transform = 'rotate(' + angle + 'deg)';
+  const dx=e.clientX-px, dy=e.clientY-py;
+  if(Math.abs(dx)>0.5||Math.abs(dy)>0.5){
+    curSvg.style.transform='rotate('+(Math.atan2(dy,dx)*(180/Math.PI))+'deg)';
   }
-  px = e.clientX; py = e.clientY;
-  cur.style.left = e.clientX + 'px';
-  cur.style.top = e.clientY + 'px';
+  px=e.clientX; py=e.clientY;
+  cur.style.left=e.clientX+'px';
+  cur.style.top=e.clientY+'px';
 });
 
-window.addEventListener('scroll', () => {
-  document.getElementById('nav').classList.toggle('scrolled', window.scrollY > 60);
-}, {passive:true});
+// NAV
+window.addEventListener('scroll',()=>{
+  document.getElementById('nav').classList.toggle('scrolled',window.scrollY>60);
+},{passive:true});
 
-const observer = new IntersectionObserver(entries => {
-  entries.forEach(e => {
-    if(e.isIntersecting){ e.target.classList.add('visible'); observer.unobserve(e.target); }
-  });
-}, {threshold: 0.1});
-document.querySelectorAll('.reveal,.reveal-left,.reveal-right').forEach(el => observer.observe(el));
+// REVEAL
+const obs=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');obs.unobserve(e.target);}});
+},{threshold:0.1});
+document.querySelectorAll('.reveal,.reveal-right').forEach(el=>obs.observe(el));
 
-window.addEventListener('scroll', () => {
-  const img = document.getElementById('heroImg');
-  if(img) img.style.transform = 'translateY(' + (window.scrollY * 0.28) + 'px)';
-}, {passive:true});
+// HERO PARALLAX
+window.addEventListener('scroll',()=>{
+  const img=document.getElementById('heroImg');
+  if(img) img.style.transform='translateY('+(window.scrollY*0.28)+'px)';
+},{passive:true});
 
+// SPARKLE
 function createSparkle(host){
-  const count = 6;
-  for(let i=0; i<count; i++){
-    const s = document.createElement('div');
-    s.className = 'sparkle';
-    const size = 6 + Math.random()*8;
-    const x = Math.random()*100;
-    const y = -20 + Math.random()*140;
-    const delay = Math.random()*0.6;
-    s.style.cssText = `left:${x}%;top:${y}%;width:${size}px;height:${size}px;animation:sparklePop 0.8s ${delay}s ease-out forwards;`;
+  for(let i=0;i<6;i++){
+    const s=document.createElement('div');
+    s.className='sparkle';
+    const size=6+Math.random()*8, delay=Math.random()*0.6;
+    s.style.cssText=`left:${Math.random()*100}%;top:${-20+Math.random()*140}%;width:${size}px;height:${size}px;animation:sparklePop 0.8s ${delay}s ease-out forwards;`;
     host.appendChild(s);
-    setTimeout(() => s.remove(), (delay + 0.85) * 1000);
+    setTimeout(()=>s.remove(),(delay+0.85)*1000);
   }
 }
-const sparkleHost = document.getElementById('sparkleHost');
-if(sparkleHost){
-  setTimeout(() => {
-    createSparkle(sparkleHost);
-    setInterval(() => createSparkle(sparkleHost), 5000);
-  }, 2000);
+const sh=document.getElementById('sparkleHost');
+if(sh){setTimeout(()=>{createSparkle(sh);setInterval(()=>createSparkle(sh),5000);},2000);}
+
+// SCISSOR PARALLAX — travels from off-screen right on hero, lands at services
+const scissorArt = document.getElementById('scissorArt');
+if(scissorArt && window.innerWidth > 768){
+  const heroSection = document.getElementById('home');
+  const svcSection = document.getElementById('services');
+
+  window.addEventListener('scroll', () => {
+    const heroBottom = heroSection.getBoundingClientRect().bottom;
+    const svcTop = svcSection.getBoundingClientRect().top;
+    const svcBottom = svcSection.getBoundingClientRect().bottom;
+    const vh = window.innerHeight;
+
+    // Zone 1: hero still visible — scissor fully hidden right
+    if(heroBottom > vh * 0.5){
+      scissorArt.style.transform = 'translateY(-50%) translateX(100%)';
+      scissorArt.style.opacity = '0';
+      return;
+    }
+
+    // Zone 2: between hero and services — scissor travels in
+    if(svcTop > 0){
+      // progress 0 = just left hero, 1 = services top at viewport top
+      const totalTravel = svcTop + (vh * 0.5 - heroBottom);
+      const traveled = (vh * 0.5 - heroBottom);
+      const progress = Math.min(Math.max(traveled / totalTravel, 0), 1);
+      const translateX = (1 - progress) * 100; // 100% to 0%
+      scissorArt.style.transform = `translateY(-50%) translateX(${translateX}%)`;
+      scissorArt.style.opacity = (progress * 0.88).toString();
+      return;
+    }
+
+    // Zone 3: inside services section — scissor stays at final resting position
+    if(svcTop <= 0 && svcBottom > 0){
+      scissorArt.style.transform = 'translateY(-50%) translateX(0%)';
+      scissorArt.style.opacity = '0.88';
+      return;
+    }
+
+    // Zone 4: past services — hide again
+    scissorArt.style.transform = 'translateY(-50%) translateX(100%)';
+    scissorArt.style.opacity = '0';
+  }, {passive:true});
 }
 </script>
 </body>
