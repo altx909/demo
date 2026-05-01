@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>SRT Barbershop — Straight Razor Touch</title>
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Kaushan+Script&family=Barlow:ital,wght@0,300;0,400;0,500;1,300&family=Barlow+Condensed:wght@300;400;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Kaushan+Script&family=Rubik+Dirt&family=Permanent+Marker&family=Barlow:ital,wght@0,300;0,400;0,500;1,300&family=Barlow+Condensed:wght@300;400;600;700&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
 :root{
@@ -64,6 +64,22 @@ nav.scrolled{height:60px;background:rgba(8,8,8,0.97);}
 .sparkle::before{width:2px;height:100%;left:50%;transform:translateX(-50%);}
 .sparkle::after{width:100%;height:2px;top:50%;transform:translateY(-50%);}
 @keyframes sparklePop{0%{opacity:0;transform:scale(0) rotate(0deg);}40%{opacity:1;transform:scale(1.4) rotate(45deg);}100%{opacity:0;transform:scale(0) rotate(90deg);}}
+
+/* DRIP from R */
+.r-drip-wrap{position:relative;display:inline-block;}
+.drip-svg{position:absolute;left:50%;transform:translateX(-50%);top:85%;width:clamp(12px,1.5vw,20px);height:clamp(40px,6vw,80px);overflow:visible;pointer-events:none;}
+.drip-path{stroke-dasharray:120;stroke-dashoffset:120;animation:dripDown 1.4s 0.5s ease-out forwards;}
+.drip-drop{opacity:0;animation:dripDropShow 0.3s 1.7s ease-out forwards;}
+@keyframes dripDown{to{stroke-dashoffset:0;}}
+@keyframes dripDropShow{to{opacity:1;}}
+
+/* GRAFFITI BANNER */
+.graf-banner{position:relative;padding:48px 0;overflow:hidden;background:var(--b) url('images/graf-wall.jpg') center/cover no-repeat;border-top:1px solid rgba(255,255,255,0.04);border-bottom:1px solid rgba(255,255,255,0.04);}
+.graf-banner::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 50% 50%,rgba(123,191,239,0.04) 0%,transparent 70%);}
+.graf-spray{position:absolute;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 600 120' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='spray'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4'/%3E%3CfeColorMatrix type='matrix' values='0 0 0 0 0.48 0 0 0 0 0.75 0 0 0 0 0.94 0 0 0 0.06 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23spray)'/%3E%3C/svg%3E");pointer-events:none;opacity:0.7;}
+.graf-text{font-family:'Permanent Marker',cursive;font-size:clamp(40px,7vw,96px);color:transparent;-webkit-text-stroke:1.5px rgba(123,191,239,0.5);letter-spacing:8px;text-transform:uppercase;white-space:nowrap;text-align:center;position:relative;z-index:1;line-height:1;padding:0 48px;}
+.graf-text em{color:var(--blue);-webkit-text-stroke:0px;font-style:normal;opacity:0.85;}
+.graf-sub{font-family:'Permanent Marker',cursive;font-size:clamp(14px,2vw,22px);color:rgba(123,191,239,0.25);letter-spacing:12px;text-transform:uppercase;text-align:center;margin-top:8px;position:relative;z-index:1;}
 
 .hero-right-col{text-align:right;padding-top:48px;max-width:260px;display:flex;flex-direction:column;gap:20px;}
 .hero-tagline{font-family:var(--fc);font-size:12px;font-weight:300;letter-spacing:2px;text-transform:uppercase;color:var(--m);line-height:1.8;}
@@ -132,16 +148,16 @@ nav.scrolled{height:60px;background:rgba(8,8,8,0.97);}
 .team-heading{font-family:var(--fd);font-size:clamp(56px,8vw,110px);line-height:0.88;color:var(--w);margin-bottom:56px;}
 .team-strip{display:flex;gap:10px;align-items:flex-end;}
 .tc{position:relative;overflow:hidden;background:var(--panel);flex-shrink:0;}
-.tc img{display:block;width:100%;height:auto;object-fit:contain;background:#111;transition:transform 0.5s ease;}
-.tc:hover img{transform:scale(1.02);}
+.tc img{display:block;object-fit:cover;object-position:center top;filter:grayscale(100%) contrast(1.15) brightness(0.7);transition:filter 0.6s ease,transform 0.6s ease;}
+.tc:hover img{filter:grayscale(0%) contrast(1.05) brightness(0.88);transform:scale(1.05);}
 .tc-info{position:absolute;bottom:0;left:0;right:0;padding:48px 16px 18px;background:linear-gradient(to top,rgba(8,8,8,1) 0%,rgba(8,8,8,0.5) 60%,transparent 100%);}
 .tc-name{font-family:var(--fd);font-size:26px;letter-spacing:1px;color:var(--w);}
 .tc-role{font-family:var(--fc);font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--blue);margin-top:3px;}
-.tc1{width:22%;}
-.tc2{width:17%;}
-.tc3{width:20%;}
-.tc4{width:18%;}
-.tc5{width:23%;}
+.tc1{width:22%;height:340px;}
+.tc2{width:17%;height:280px;}
+.tc3{width:20%;height:380px;}
+.tc4{width:18%;height:260px;}
+.tc5{width:23%;height:320px;}
 
 /* BOOKING WALL */
 .booking{background:var(--b);padding:120px 56px;border-top:1px solid var(--bd);border-bottom:1px solid var(--bd);position:relative;overflow:hidden;}
@@ -375,6 +391,13 @@ footer{background:var(--b);border-top:1px solid var(--bd);padding:0;}
   </div>
 </div>
 
+<!-- GRAFFITI BANNER -->
+<div class="graf-banner reveal">
+  <div class="graf-spray"></div>
+  <div class="graf-text">Fresh <em>Cuts</em> · Sharp <em>Fades</em> · Clean <em>Blades</em></div>
+  <div class="graf-sub">Straight Razor Touch · Saskatoon's Finest</div>
+</div>
+
 <!-- SERVICES -->
 <section class="svc-section" id="services">
   <div class="svc-header reveal">
@@ -424,15 +447,11 @@ footer{background:var(--b);border-top:1px solid var(--bd);padding:0;}
   <div class="team-eyebrow reveal">Behind the Chair</div>
   <div class="team-heading reveal">THE<br>TEAM</div>
   <div class="team-strip">
-    <div class="tc tc1 reveal"><img src="images/diar.jpg" alt="Diar K." style="object-position:50% 30%;"><div class="tc-info"><div class="tc-name">Diar K.</div><div class="tc-role">Master Barber &amp; Founder</div></div></div>
-
-<div class="tc tc2 reveal" style="transition-delay:0.1s"><img src="images/IMG_2843-1.jpg" alt="Finch" style="object-position:50% 25%;"><div class="tc-info"><div class="tc-name">Finch</div><div class="tc-role">Barber</div></div></div>
-
-<div class="tc tc3 reveal" style="transition-delay:0.2s"><img src="images/IMG_0876-2-567x1024.jpg" alt="Nash Y." style="object-position:50% 15%;"><div class="tc-info"><div class="tc-name">Nash Y.</div><div class="tc-role">Barber</div></div></div>
-
-<div class="tc tc4 reveal" style="transition-delay:0.3s"><img src="images/DSC00912.jpg" alt="Maddie L." style="object-position:50% 20%;"><div class="tc-info"><div class="tc-name">Maddie L.</div><div class="tc-role">Stylist</div></div></div>
-
-<div class="tc tc5 reveal" style="transition-delay:0.4s"><img src="images/IMG_0408-1-scaled.jpg" alt="Efrem A." style="object-position:50% 10%;"><div class="tc-info"><div class="tc-name">Efrem A.</div><div class="tc-role">Barber</div></div></div>
+    <div class="tc tc1 reveal"><img src="images/DSC00892.jpg" alt="Diar K."><div class="tc-info"><div class="tc-name">Diar K.</div><div class="tc-role">Master Barber &amp; Founder</div></div></div>
+    <div class="tc tc2 reveal" style="transition-delay:0.1s"><img src="images/IMG_2843-1.jpg" alt="Finch"><div class="tc-info"><div class="tc-name">Finch</div><div class="tc-role">Barber</div></div></div>
+    <div class="tc tc3 reveal" style="transition-delay:0.2s"><img src="images/IMG_0876-2-567x1024.jpg" alt="Nash Y."><div class="tc-info"><div class="tc-name">Nash Y.</div><div class="tc-role">Barber</div></div></div>
+    <div class="tc tc4 reveal" style="transition-delay:0.3s"><img src="images/DSC00912.jpg" alt="Maddie L."><div class="tc-info"><div class="tc-name">Maddie L.</div><div class="tc-role">Stylist</div></div></div>
+    <div class="tc tc5 reveal" style="transition-delay:0.4s"><img src="images/IMG_0408-1-scaled.jpg" alt="Efrem A."><div class="tc-info"><div class="tc-name">Efrem A.</div><div class="tc-role">Barber</div></div></div>
   </div>
 </section>
 
@@ -519,14 +538,14 @@ footer{background:var(--b);border-top:1px solid var(--bd);padding:0;}
     </div>
   </div>
   <div class="collage reveal">
-    <div class="ct ct1"><img src="images/diar.jpg" alt=""></div>
+    <div class="ct ct1"><img src="images/DSC00892.jpg" alt=""></div>
     <div class="ct ct2"><img src="images/DSC00912.jpg" alt="" style="object-position:center 20%;"></div>
     <div class="ct ct3"><img src="images/IMG_2843-1.jpg" alt=""></div>
     <div class="ct ct4"><img src="images/IMG_0876-2-567x1024.jpg" alt=""></div>
     <div class="ct ct5"><img src="images/IMG_0408-1-scaled.jpg" alt=""></div>
     <div class="ct ct6"><img src="images/DSC00834-scaled.jpg" alt=""></div>
     <div class="ct ct7"><img src="images/DSC00912.jpg" alt="" style="object-position:center 60%;"></div>
-    <div class="ct ct8"><img src="images/diar.jpg" alt="" style="object-position:center 40%;"></div>
+    <div class="ct ct8"><img src="images/DSC00892.jpg" alt="" style="object-position:center 40%;"></div>
     <div class="ct ct9"><img src="images/IMG_0408-1-scaled.jpg" alt="" style="object-position:center 30%;"></div>
     <div class="ct ct10"><img src="images/IMG_2843-1.jpg" alt="" style="object-position:center 50%;"></div>
     <div class="ct ct11"><img src="images/DSC00834-scaled.jpg" alt="" style="object-position:center 70%;"></div>
