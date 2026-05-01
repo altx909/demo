@@ -786,30 +786,33 @@ if(scissorEl && window.innerWidth > 768){
 (function(){
   var audio    = document.getElementById('bgMusic');
   var btn      = document.getElementById('musicBtn');
-  var unlocked = false;
-  audio.volume = 0.35;
+  var started  = false;
 
-  // Don't call audio.play() here — browser blocks it without a user gesture.
-  // Instead wait for the FIRST real interaction, then start with sound.
-  function unlock() {
-    if (unlocked) return;
-    unlocked = true;
-    audio.muted = false;
-    audio.play().then(function() {
+  audio.volume = 0.35;
+  audio.muted  = false;
+
+  function startMusic() {
+    if (started) return;
+    started = true;
+    var p = audio.play();
+    if (p !== undefined) {
+      p.then(function(){ btn.classList.add('playing'); })
+       .catch(function(e){ console.log('Audio blocked:', e); started = false; });
+    } else {
       btn.classList.add('playing');
-    }).catch(function(){});
-    window.removeEventListener('touchstart', unlock);
-    window.removeEventListener('mousedown',  unlock);
-    window.removeEventListener('wheel',      unlock);
-    window.removeEventListener('keydown',    unlock);
+    }
   }
-  window.addEventListener('touchstart', unlock, { passive: true });
-  window.addEventListener('mousedown',  unlock, { passive: true });
-  window.addEventListener('wheel',      unlock, { passive: true });
-  window.addEventListener('keydown',    unlock, { passive: true });
+
+  // Attach to every possible first-interaction event
+  ['touchstart','touchmove','mousedown','wheel','scroll','keydown','pointerdown'].forEach(function(evt) {
+    window.addEventListener(evt, function handler() {
+      window.removeEventListener(evt, handler);
+      startMusic();
+    }, { once: true, passive: true, capture: true });
+  });
 
   window.toggleMusic = function() {
-    if (!unlocked) { unlock(); return; }
+    if (!started) { startMusic(); return; }
     if (audio.paused) {
       audio.play();
       btn.classList.add('playing');
