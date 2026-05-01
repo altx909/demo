@@ -132,7 +132,8 @@ nav.scrolled{height:60px;background:rgba(8,8,8,0.97);}
 .team-heading{font-family:var(--fd);font-size:clamp(56px,8vw,110px);line-height:0.88;color:var(--w);margin-bottom:56px;}
 .team-strip{display:flex;gap:10px;align-items:flex-end;}
 .tc{position:relative;overflow:hidden;background:var(--panel);flex-shrink:0;}
-.tc img{display:block;object-fit:cover;object-position:center top;filter:grayscale(100%) contrast(1.15) brightness(0.7);transition:filter 0.6s ease,transform 0.6s ease;}
+.tc img{display:block;object-fit:cover;object-position:center top;filter:brightness(0.85);transition:transform 0.5s ease;}
+.tc:hover img{transform:scale(1.04);filter:brightness(1);}
 .tc:hover img{filter:grayscale(0%) contrast(1.05) brightness(0.88);transform:scale(1.05);}
 .tc-info{position:absolute;bottom:0;left:0;right:0;padding:48px 16px 18px;background:linear-gradient(to top,rgba(8,8,8,1) 0%,rgba(8,8,8,0.5) 60%,transparent 100%);}
 .tc-name{font-family:var(--fd);font-size:26px;letter-spacing:1px;color:var(--w);}
