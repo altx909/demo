@@ -108,9 +108,10 @@ nav.scrolled{height:60px;background:rgba(8,8,8,0.97);}
 @keyframes tick{from{transform:translateX(0)}to{transform:translateX(-50%)}}
 
 /* SERVICES */
-.svc-section{padding:120px 56px;background:var(--s);position:relative;overflow:hidden;}
-.svc-section::before{content:'';position:absolute;top:0;left:56px;right:56px;height:1px;background:linear-gradient(to right,transparent,rgba(123,191,239,0.2) 40%,rgba(123,191,239,0.2) 60%,transparent);}
-.svc-header{display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:72px;padding-bottom:48px;border-bottom:1px solid rgba(255,255,255,0.04);}
+.svc-section{padding:120px 56px;background:url('images/graf-wall.jpg') center/cover no-repeat fixed;position:relative;overflow:hidden;}
+.svc-section::before{content:'';position:absolute;inset:0;background:rgba(8,8,8,0.92);z-index:0;}
+.svc-section::after{content:'';position:absolute;top:0;left:56px;right:56px;height:1px;background:linear-gradient(to right,transparent,rgba(123,191,239,0.2) 40%,rgba(123,191,239,0.2) 60%,transparent);z-index:1;}
+.svc-header{display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:72px;padding-bottom:48px;border-bottom:1px solid rgba(255,255,255,0.04);position:relative;z-index:1;}
 .svc-heading{font-family:var(--fd);font-size:clamp(64px,9vw,130px);line-height:0.9;color:var(--w);}
 .svc-heading em{color:var(--blue);font-style:normal;}
 .svc-intro{font-family:var(--fc);font-size:12px;font-weight:300;letter-spacing:2px;text-transform:uppercase;color:var(--m);max-width:180px;text-align:right;line-height:1.9;}
@@ -121,7 +122,7 @@ nav.scrolled{height:60px;background:rgba(8,8,8,0.97);}
 .svc-row:hover .svc-row-inner{opacity:1;}
 
 /* ROTATING BORDER GLOW on hover */
-.svc-row::after{content:'';position:absolute;inset:-1px;border-radius:3px;background:conic-gradient(from var(--angle,0deg),transparent 0deg,rgba(123,191,239,0.6) 60deg,transparent 120deg);opacity:0;transition:opacity 0.3s;-webkit-mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);-webkit-mask-composite:xor;mask-composite:exclude;padding:1px;}
+.svc-row{display:grid;grid-template-columns:72px 1fr 1fr auto;gap:48px;align-items:start;padding:36px 0;border-bottom:1px solid rgba(255,255,255,0.05);position:relative;z-index:1;transition:border-color 0.4s;}
 .svc-row:hover::after{opacity:1;animation:rotateBorder 2.5s linear infinite;}
 @keyframes rotateBorder{to{--angle:360deg;}}
 @property --angle{syntax:'<angle>';initial-value:0deg;inherits:false;}
