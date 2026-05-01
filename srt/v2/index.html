@@ -794,17 +794,14 @@ if(scissorEl && window.innerWidth > 768){
   // Try to start playback immediately (muted)
   audio.play().catch(function(){});
 
-  function unlock() {
-    if (unlocked) return;
-    unlocked = true;
+  // Unlock on first scroll
+  window.addEventListener('scroll', function onFirstScroll() {
+    window.removeEventListener('scroll', onFirstScroll);
     audio.muted = false;
+    unlocked = true;
     btn.classList.add('playing');
     audio.play().catch(function(){});
-  }
-
-  // Unlock on first scroll or click anywhere
-  window.addEventListener('scroll', unlock, { once: true, passive: true });
-  document.addEventListener('click',  unlock, { once: true });
+  }, { passive: true });
 
   window.toggleMusic = function() {
     if (audio.paused) {
