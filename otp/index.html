@@ -342,6 +342,31 @@
     height: 1px;
     background: linear-gradient(90deg, transparent, rgba(200, 213, 192, 0.5), transparent);
   }
+
+  /* === Gold variant — Buy/Sell card (the realtor lane) === */
+  .persona--gold {
+    background: linear-gradient(160deg,
+      rgba(150, 118, 60, 0.62) 0%,
+      rgba(85, 65, 28, 0.86) 100%);
+    border-color: rgba(212, 177, 106, 0.32);
+    box-shadow: 0 4px 30px rgba(60, 40, 15, 0.30);
+  }
+  .persona--gold:hover {
+    background: linear-gradient(160deg,
+      rgba(178, 142, 78, 0.78) 0%,
+      rgba(110, 84, 38, 0.94) 100%);
+    border-color: rgba(220, 188, 122, 0.55);
+    box-shadow: 0 14px 40px rgba(60, 40, 15, 0.45);
+  }
+  .persona--gold::before {
+    background: linear-gradient(90deg, transparent, rgba(220, 188, 122, 0.65), transparent);
+  }
+  .persona--gold .persona__num {
+    color: #D9B978;
+  }
+  .persona--gold .persona__cta {
+    border-top-color: rgba(220, 188, 122, 0.32);
+  }
   .persona__num {
     font-family: var(--serif);
     font-style: italic;
@@ -472,7 +497,7 @@
   /* ---------------- MEET KRISHNA ---------------- */
   .meet {
     background: var(--cream);
-    padding: 140px 40px 160px;
+    padding: 100px 40px 100px;
     position: relative;
     overflow: hidden;
   }
@@ -514,7 +539,7 @@
     margin: 0 auto;
     display: grid;
     grid-template-columns: 5fr 6fr;
-    gap: 100px;
+    gap: 80px;
     align-items: start;
   }
 
@@ -575,7 +600,7 @@
     letter-spacing: 0.28em;
     text-transform: uppercase;
     color: var(--forest);
-    margin-bottom: 36px;
+    margin-bottom: 24px;
   }
   .meet__eyebrow::before {
     content: "";
@@ -592,7 +617,7 @@
     line-height: 1.08;
     letter-spacing: -0.02em;
     color: var(--ink);
-    margin: 0 0 48px;
+    margin: 0 0 32px;
     max-width: 600px;
   }
   .meet__title em {
@@ -606,11 +631,11 @@
   }
   .meet__story p {
     font-family: var(--sans);
-    font-size: 16.5px;
+    font-size: 16px;
     font-weight: 300;
-    line-height: 1.75;
+    line-height: 1.65;
     color: var(--ink-soft);
-    margin: 0 0 22px;
+    margin: 0 0 16px;
   }
   .meet__story p:last-child { margin-bottom: 0; }
   .meet__story p .lead {
@@ -620,11 +645,11 @@
 
   /* Signature */
   .meet__signature {
-    margin-top: 44px;
+    margin-top: 28px;
     font-family: var(--serif);
     font-style: italic;
     font-weight: 300;
-    font-size: 56px;
+    font-size: 52px;
     line-height: 1;
     color: var(--forest);
     letter-spacing: -0.01em;
@@ -648,8 +673,8 @@
   /* Credentials strip — full grid width, single row of 4 */
   .meet__credentials {
     grid-column: 1 / -1;
-    margin-top: 96px;
-    padding-top: 40px;
+    margin-top: 64px;
+    padding-top: 32px;
     border-top: 1px solid var(--line);
     display: grid;
     grid-template-columns: repeat(4, 1fr);
@@ -717,24 +742,32 @@
   .link-arrow:hover { gap: 18px; opacity: 0.75; }
 
   @media (max-width: 1024px) {
-    .meet { padding: 100px 24px 110px; }
+    .meet { padding: 70px 24px 70px; }
     .meet__inner {
       grid-template-columns: 1fr;
-      gap: 56px;
+      gap: 40px;
     }
     .meet__media { position: relative; top: 0; max-width: 460px; }
     .meet__body::before { font-size: 360px; top: -60px; right: -60px; opacity: 0.45; }
+    .meet__credentials {
+      margin-top: 48px;
+      padding-top: 24px;
+    }
   }
   @media (max-width: 640px) {
-    .meet { padding: 80px 20px 90px; }
-    .meet__inner { gap: 40px; }
-    .meet__title { margin-bottom: 32px; }
-    .meet__signature { font-size: 44px; }
+    .meet { padding: 56px 20px 56px; }
+    .meet__inner { gap: 32px; }
+    .meet__eyebrow { margin-bottom: 16px; }
+    .meet__title { margin-bottom: 20px; }
+    .meet__signature { font-size: 42px; margin-top: 22px; }
     .meet__credentials {
       grid-template-columns: repeat(2, 1fr);
-      gap: 24px 20px;
+      gap: 20px 16px;
+      margin-top: 40px;
+      padding-top: 20px;
     }
     .credential__num { font-size: 28px; }
+    .meet__cta-row { margin-top: 20px; }
     .meet__body::before { font-size: 240px; top: -40px; right: -30px; opacity: 0.35; }
   }
 
@@ -1055,14 +1088,35 @@
       align-items: start;
     }
     .services__sub { padding-bottom: 0; }
+
+    /* Carousel: horizontal scroll-snap with auto-advance */
     .services__grid {
-      grid-template-columns: 1fr;
-      gap: 16px;
+      display: flex;
+      grid-template-columns: none;
+      gap: 14px;
+      overflow-x: auto;
+      overflow-y: hidden;
+      scroll-snap-type: x mandatory;
+      padding: 4px 24px;
+      margin: 0 -24px;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+    }
+    .services__grid::-webkit-scrollbar { display: none; }
+    .service-card {
+      flex: 0 0 86%;
+      max-width: 380px;
+      scroll-snap-align: center;
     }
     .rental-band { padding: 28px 28px; }
   }
   @media (max-width: 640px) {
     .services { padding: 80px 20px; }
+    .services__grid {
+      padding: 4px 20px;
+      margin: 0 -20px;
+    }
+    .service-card { flex: 0 0 88%; }
     .service-card__body { padding: 26px 22px 28px; }
     .service-card__title { font-size: 24px; }
     .rental-band {
@@ -2334,7 +2388,7 @@
 
     <div class="personas" role="navigation" aria-label="Choose your path">
 
-      <a href="#buy-sell" class="persona">
+      <a href="#buy-sell" class="persona persona--gold">
         <span class="persona__num">01 · For buyers &amp; sellers</span>
         <h3 class="persona__title">I want to buy or sell a home</h3>
         <p class="persona__sub">Find the right home in Saskatoon — or get the one you have moved at the right price.</p>
@@ -3346,6 +3400,51 @@
       }
     });
   });
+
+  /* =========================================================
+     SERVICES CAROUSEL — mobile/tablet only
+     Auto-advances every 4s. Pauses on touch/click for 6s.
+     Loops back to the first card.
+     ========================================================= */
+  (function() {
+    const grid = document.querySelector('.services__grid');
+    if (!grid) return;
+
+    let interval = null;
+    let paused = false;
+    let resumeTimer = null;
+
+    const isCarousel = () => window.innerWidth <= 1024;
+
+    function advance() {
+      if (!isCarousel() || paused) return;
+      const card = grid.querySelector('.service-card');
+      if (!card) return;
+      const step = card.offsetWidth + 14;
+      const max = grid.scrollWidth - grid.clientWidth;
+      if (grid.scrollLeft >= max - 10) {
+        grid.scrollTo({ left: 0, behavior: 'smooth' });
+      } else {
+        grid.scrollTo({ left: grid.scrollLeft + step, behavior: 'smooth' });
+      }
+    }
+
+    function pause() {
+      paused = true;
+      clearTimeout(resumeTimer);
+      resumeTimer = setTimeout(() => { paused = false; }, 6000);
+    }
+
+    grid.addEventListener('touchstart', pause, { passive: true });
+    grid.addEventListener('pointerdown', pause);
+
+    function setup() {
+      if (interval) clearInterval(interval);
+      interval = setInterval(advance, 4000);
+    }
+    window.addEventListener('resize', setup);
+    setup();
+  })();
 </script>
 
 </body>
