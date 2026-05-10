@@ -3496,9 +3496,11 @@
       if (!isCarousel()) return;
       const list = cards();
       const target = list[Math.max(0, Math.min(index, list.length - 1))];
-      if (target) {
-        target.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
-      }
+      if (!target) return;
+      // Scroll only the grid horizontally — never the page vertically.
+      const cardCenter = target.offsetLeft + target.offsetWidth / 2;
+      const targetScrollLeft = cardCenter - grid.clientWidth / 2;
+      grid.scrollTo({ left: targetScrollLeft, behavior: 'smooth' });
     }
 
     function advance() {
