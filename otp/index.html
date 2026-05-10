@@ -462,6 +462,31 @@
     to { opacity: 1; transform: translateY(0); }
   }
 
+  /* ---------------- PERSONA DOTS ---------------- */
+  .personas-dots {
+    display: none;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    margin-top: 22px;
+    padding: 0;
+  }
+  .personas-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 999px;
+    background: rgba(250, 247, 242, 0.30);
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    transition: width 350ms var(--ease), background-color 350ms var(--ease);
+  }
+  .personas-dot:hover { background: rgba(250, 247, 242, 0.55); }
+  .personas-dot.active {
+    background: var(--cream);
+    width: 26px;
+  }
+
   /* ---------------- RESPONSIVE ---------------- */
   @media (max-width: 1024px) {
     .nav { padding: 18px 24px; }
@@ -471,12 +496,29 @@
     .nav__toggle { display: inline-flex; }
     .hero__inner { padding: 130px 24px 24px; }
     .hero__meta { padding: 0 24px 28px; }
+
+    /* Personas → horizontal carousel, one card per view */
     .personas {
-      grid-template-columns: 1fr;
-      margin-top: 56px;
-      gap: 10px;
+      display: flex;
+      grid-template-columns: none;
+      gap: 12px;
+      margin: 48px -24px 0;
+      padding: 4px 24px;
+      overflow-x: auto;
+      overflow-y: hidden;
+      scroll-snap-type: x mandatory;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
     }
-    .persona { min-height: auto; }
+    .personas::-webkit-scrollbar { display: none; }
+    .persona {
+      flex: 0 0 calc(100vw - 48px);
+      max-width: 480px;
+      min-height: auto;
+      scroll-snap-align: center;
+    }
+
+    .personas-dots { display: flex; }
   }
 
   @media (max-width: 640px) {
@@ -487,9 +529,17 @@
     .hero__inner { padding: 120px 20px 20px; }
     .hero__title { font-size: clamp(34px, 9vw, 52px); }
     .hero__eyebrow { margin-bottom: 20px; }
-    .personas { margin-top: 48px; }
-    .persona { padding: 24px 22px; }
+
+    .personas {
+      margin: 40px -20px 0;
+      padding: 4px 20px;
+    }
+    .persona {
+      flex: 0 0 calc(100vw - 40px);
+      padding: 24px 22px;
+    }
     .persona__title { font-size: 22px; }
+
     .hero__meta { padding: 0 20px 24px; font-size: 10px; }
     .hero__meta .meta-right { display: none; }
   }
@@ -2425,6 +2475,13 @@
       </a>
 
     </div>
+
+    <!-- Pagination dots — visible on mobile/tablet only -->
+    <div class="personas-dots" id="personasDots" role="tablist" aria-label="Persona cards">
+      <button class="personas-dot active" data-index="0" aria-label="Show buyers &amp; sellers card"></button>
+      <button class="personas-dot" data-index="1" aria-label="Show renters card"></button>
+      <button class="personas-dot" data-index="2" aria-label="Show investors card"></button>
+    </div>
   </div>
 
   <div class="hero__meta">
@@ -3400,6 +3457,88 @@
       }
     });
   });
+
+  /* =========================================================
+     PERSONAS CAROUSEL — mobile/tablet only
+     One card per view. Auto-advances every 3s. Pagination dots.
+     ========================================================= */
+  (function() {
+    const grid = document.querySelector('.personas');
+    const dots = document.querySelectorAll('.personas-dots .personas-dot');
+    if (!grid || !dots.length) return;
+
+    let interval = null;
+    let paused = false;
+    let resumeTimer = null;
+
+    const isCarousel = () => window.innerWidth <= 1024;
+    const cards = () => grid.querySelectorAll('.persona');
+
+    function getCurrentIndex() {
+      const list = cards();
+      let closest = 0;
+      let minDist = Infinity;
+      const gridCenter = grid.scrollLeft + grid.clientWidth / 2;
+      list.forEach((c, i) => {
+        const center = c.offsetLeft + c.offsetWidth / 2;
+        const dist = Math.abs(center - gridCenter);
+        if (dist < minDist) { minDist = dist; closest = i; }
+      });
+      return closest;
+    }
+
+    function updateDots() {
+      const idx = getCurrentIndex();
+      dots.forEach((d, i) => d.classList.toggle('active', i === idx));
+    }
+
+    function goTo(index) {
+      if (!isCarousel()) return;
+      const list = cards();
+      const target = list[Math.max(0, Math.min(index, list.length - 1))];
+      if (target) {
+        target.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+      }
+    }
+
+    function advance() {
+      if (!isCarousel() || paused) return;
+      const list = cards();
+      const next = (getCurrentIndex() + 1) % list.length;
+      goTo(next);
+    }
+
+    function pause() {
+      paused = true;
+      clearTimeout(resumeTimer);
+      resumeTimer = setTimeout(() => { paused = false; }, 5000);
+    }
+
+    let scrollDebounce;
+    grid.addEventListener('scroll', () => {
+      clearTimeout(scrollDebounce);
+      scrollDebounce = setTimeout(updateDots, 80);
+    }, { passive: true });
+
+    dots.forEach((dot, i) => {
+      dot.addEventListener('click', () => {
+        pause();
+        goTo(i);
+      });
+    });
+
+    grid.addEventListener('touchstart', pause, { passive: true });
+
+    function setup() {
+      if (interval) clearInterval(interval);
+      if (isCarousel()) {
+        interval = setInterval(advance, 3000);
+        updateDots();
+      }
+    }
+    window.addEventListener('resize', setup);
+    setup();
+  })();
 
   /* =========================================================
      SERVICES CAROUSEL — mobile/tablet only
