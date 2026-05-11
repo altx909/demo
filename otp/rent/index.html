@@ -1868,7 +1868,7 @@
 
   function rentalCardHTML(r) {
     return `
-      <a class="property-card" href="#prop-${r.id}">
+      <a class="property-card" href="./property/?id=${r.id}">
         <div class="property-card__media">
           <span class="property-card__badge">${r.available}</span>
           ${r.pets !== 'none' ? `<span class="property-card__pet">${petLabel(r.pets)}</span>` : ''}
