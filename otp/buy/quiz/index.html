@@ -704,10 +704,21 @@
   }
 
   async function submitToBackend(payload) {
-    /* Same /api/quiz-submit endpoint that the rent quiz uses.
-       Wire when the Cloudflare Pages Function is deployed. */
-    console.log('[BUYER QUIZ SUBMIT — payload ready for GHL]', payload);
-    return Promise.resolve(true);
+    try {
+      const res = await fetch('/api/quiz-submit', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+      if (!res.ok) {
+        console.error('Quiz submission failed:', res.status, await res.text());
+        return false;
+      }
+      return await res.json();
+    } catch (err) {
+      console.error('Quiz submission error:', err);
+      return false;
+    }
   }
 
   function renderFinal() {
