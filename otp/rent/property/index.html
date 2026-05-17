@@ -1255,28 +1255,90 @@
   }
 
   /* ============================================
-     READ ?id= AND RENDER
+     READ ?id= AND FETCH FROM SANITY
+     The ?id= value can be either the canonical slug or the document _id.
+     The Cloudflare Function /api/rentals/[slug] handles both.
      ============================================ */
   const params = new URLSearchParams(window.location.search);
-  const propId = params.get('id') || 'b-001';
-  const property = enrich(PROPERTIES[propId]);
+  const propId = params.get('id');
 
-  if (!property) {
+  let property = null;
+  let allListings = [];  // used by renderSimilar()
+
+  function showLoading() {
+    document.getElementById('propHero').innerHTML = `
+      <div style="text-align:center;padding:60px 20px;color:var(--muted);font-family:var(--serif);font-style:italic;font-size:18px;">
+        Loading…
+      </div>`;
+  }
+
+  function showError(message) {
     document.body.innerHTML = `
       <div style="padding:140px 24px;text-align:center;font-family:var(--serif);color:var(--ink);">
-        <h1 style="font-size:36px;font-weight:300;">Listing not found.</h1>
-        <p style="font-size:15px;color:var(--muted);margin:16px 0 24px;">It may have already rented out.</p>
-        <a href="../" class="cta">See all available rentals</a>
+        <h1 style="font-size:36px;font-weight:300;">${message.title}</h1>
+        <p style="font-size:15px;color:var(--muted);margin:16px 0 24px;font-family:var(--sans);">${message.sub}</p>
+        <a href="../" style="display:inline-flex;align-items:center;gap:8px;padding:11px 20px;background:var(--forest);color:var(--cream);border-radius:999px;font-family:var(--sans);font-size:12.5px;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;text-decoration:none;">See all available rentals</a>
       </div>`;
-  } else {
-    document.getElementById('pageTitle').textContent =
-      `${property.title} — Krishna Ambilwade Rentals`;
-    renderHero();
-    renderFacts();
-    renderContent();
-    renderSimilar();
-    // renderQuiz is called at the very end of the script, after all quiz
-    // constants (QUIZ_STEPS, viewport, quizState, etc.) are initialized.
+  }
+
+  async function init() {
+    if (!propId) {
+      showError({
+        title: 'No listing specified',
+        sub: 'It looks like the link is missing some details.'
+      });
+      return;
+    }
+
+    showLoading();
+
+    try {
+      // Fetch the specific listing AND all listings in parallel.
+      // All listings are used to compute the "Similar properties" section.
+      const [singleRes, allRes] = await Promise.all([
+        fetch(`/api/rentals/${encodeURIComponent(propId)}`, { cache: 'no-store' }),
+        fetch('/api/rentals', { cache: 'no-store' })
+      ]);
+
+      if (singleRes.status === 404) {
+        showError({
+          title: 'Listing not found',
+          sub: 'It may have already rented out — but plenty of other places are available.'
+        });
+        return;
+      }
+      if (!singleRes.ok) throw new Error(`API ${singleRes.status}`);
+
+      const singleData = await singleRes.json();
+      property = enrich(singleData.listing);
+
+      if (allRes.ok) {
+        const allData = await allRes.json();
+        allListings = (allData.listings || []).map(enrich);
+      }
+
+      // If the URL used a non-canonical id (e.g., document _id), rewrite
+      // the address bar to the clean slug version without a page reload.
+      if (propId !== property.slug && property.slug) {
+        const newUrl = `${window.location.pathname}?id=${encodeURIComponent(property.slug)}`;
+        window.history.replaceState({}, '', newUrl);
+      }
+
+      document.getElementById('pageTitle').textContent =
+        `${property.title} — Krishna Ambilwade Rentals`;
+
+      renderHero();
+      renderFacts();
+      renderContent();
+      renderSimilar();
+      setupQuizForProperty();
+    } catch (err) {
+      console.error('Failed to load property:', err);
+      showError({
+        title: 'We couldn\'t load this listing',
+        sub: 'Try refreshing — or browse all our current rentals.'
+      });
+    }
   }
 
   /* --------- HERO + GALLERY --------- */
@@ -1390,8 +1452,21 @@
 
   /* --------- SIMILAR PROPERTIES --------- */
   function renderSimilar() {
-    const all = Object.values(PROPERTIES).map(enrich);
-    const candidates = all
+    const grid = document.getElementById('similarGrid');
+    if (!grid) return;
+
+    // No other listings available → hide the section gracefully
+    if (!allListings || allListings.length === 0) {
+      grid.innerHTML = `
+        <div style="grid-column:1/-1;text-align:center;padding:40px 20px;color:var(--muted);">
+          <p style="margin:0;font-family:var(--serif);font-style:italic;font-size:16px;">
+            More listings coming soon. <a href="../" style="color:var(--forest);text-decoration:underline;">Browse all rentals →</a>
+          </p>
+        </div>`;
+      return;
+    }
+
+    const candidates = allListings
       .filter(p => p.id !== property.id)
       .map(p => ({
         p,
@@ -1403,10 +1478,20 @@
       .slice(0, 3)
       .map(s => s.p);
 
-    document.getElementById('similarGrid').innerHTML = candidates.map(p => `
-      <a class="property-card" href="?id=${p.id}">
+    if (candidates.length === 0) {
+      grid.innerHTML = `
+        <div style="grid-column:1/-1;text-align:center;padding:40px 20px;color:var(--muted);">
+          <p style="margin:0;font-family:var(--serif);font-style:italic;font-size:16px;">
+            This is currently our only listing. <a href="../" style="color:var(--forest);text-decoration:underline;">Browse all rentals →</a>
+          </p>
+        </div>`;
+      return;
+    }
+
+    grid.innerHTML = candidates.map(p => `
+      <a class="property-card" href="?id=${encodeURIComponent(p.slug || p.id)}">
         <div class="property-card__media">
-          <img src="${p.gallery[0]}" alt="${p.title}" loading="lazy" />
+          <img src="${(p.gallery && p.gallery[0]) || p.image || ''}" alt="${p.title}" loading="lazy" />
         </div>
         <div>
           <div class="property-card__price">$${p.price.toLocaleString()}<small>/mo</small></div>
@@ -1414,7 +1499,7 @@
           <div class="property-card__specs">
             <span><strong>${p.beds === 0 ? 'Studio' : p.beds}</strong> ${p.beds === 1 ? 'bed' : 'beds'}</span>
             <span><strong>${p.baths}</strong> ${p.baths === 1 ? 'bath' : 'baths'}</span>
-            <span><strong>${p.sqft.toLocaleString()}</strong> sqft</span>
+            <span><strong>${(p.sqft || 0).toLocaleString()}</strong> sqft</span>
           </div>
         </div>
       </a>
@@ -1498,23 +1583,26 @@
     return undefined;
   }
 
-  const prefilled = property ? {
-    bedrooms: String(property.beds),
-    budget: budgetBucketFor(property.price),
-    area: [property.neighbourhood]
-  } : {};
+  /* Quiz state is populated AFTER the property loads from Sanity.
+     setupQuizForProperty() (called from init()) fills these in. */
+  let prefilled = {};
+  let quizState = { current: 0, answers: {}, propertyContext: null };
 
-  if (property) {
+  function setupQuizForProperty() {
+    if (!property) return;
+    prefilled = {
+      bedrooms: String(property.beds),
+      budget: budgetBucketFor(property.price),
+      area: [property.neighbourhood]
+    };
     document.getElementById('quizPrefilled').innerHTML = `
       Pre-filled for this place: <strong>${property.beds === 0 ? 'Studio' : property.beds + (property.beds === 1 ? ' bed' : ' beds')}</strong>,
       budget around <strong>$${property.price.toLocaleString()}/mo</strong>, in <strong>${property.neighbourhood}</strong>.
       Change anything that doesn't fit you.
     `;
+    quizState = { current: 0, answers: { ...prefilled }, propertyContext: property.id };
+    renderQuiz();
   }
-
-  const quizState = property
-    ? { current: 0, answers: { ...prefilled }, propertyContext: property.id }
-    : { current: 0, answers: {}, propertyContext: null };
   const viewport = document.getElementById('quizViewport');
   const progress = document.getElementById('quizProgress');
 
@@ -1707,8 +1795,9 @@
     renderStep();
   }
 
-  // Now that all quiz constants and functions are initialized, run the quiz.
-  if (property) renderQuiz();
+  // Kick off the Sanity fetch. init() will populate `property`, render
+  // the page, and call setupQuizForProperty() which in turn calls renderQuiz().
+  init();
 </script>
 
 </body>

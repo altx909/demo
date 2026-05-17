@@ -1748,10 +1748,15 @@
   );
 
   /* ============================================
-     RENTALS — placeholder data, swap with Buildium API later
-     Each listing must have this shape for the quiz matcher to work.
+     RENTALS — live data from Sanity via /api/rentals
+     Fetched on page load. Falls back to empty if API errors.
+     Each listing has the same shape as before (id, slug, title, image,
+     price, address, beds/baths/sqft, neighbourhood, type, available,
+     pets, parking, laundry, furnished, etc.) so the existing render
+     and filter code keeps working unchanged.
      ============================================ */
-  const RENTALS = [
+  let RENTALS = [];
+  const _MOCK_RENTALS = [
     { id: 'b-001', image: 'https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?auto=format&fit=crop&w=1200&q=80',
       price: 1650, address: '1402 — 215 Lawson Pl', beds: 2, baths: 1, sqft: 850,
       neighbourhood: 'Lawson Heights', type: 'Apartment', available: 'Available Now',
@@ -1868,7 +1873,7 @@
 
   function rentalCardHTML(r) {
     return `
-      <a class="property-card" href="./property/?id=${r.id}">
+      <a class="property-card" href="./property/?id=${encodeURIComponent(r.slug || r.id)}">
         <div class="property-card__media">
           <span class="property-card__badge">${r.available}</span>
           ${r.pets !== 'none' ? `<span class="property-card__pet">${petLabel(r.pets)}</span>` : ''}
@@ -1945,8 +1950,44 @@
     searchInput.focus();
   });
 
-  liveCount.textContent = `${RENTALS.length} available now`;
-  renderRentals();
+  /* ============================================
+     Load rentals from /api/rentals on page load.
+     Cloudflare Function pulls from Sanity, caches 5 min.
+     ============================================ */
+  async function loadRentals() {
+    // Initial loading state
+    liveCount.textContent = 'Loading…';
+    grid.innerHTML = `
+      <div class="rentals-empty" style="grid-column: 1 / -1;">
+        <p style="margin: 0; font-size: 14px; color: var(--muted);">Loading available rentals…</p>
+      </div>`;
+
+    try {
+      const res = await fetch('/api/rentals', { cache: 'no-store' });
+      if (!res.ok) throw new Error(`API ${res.status}`);
+      const data = await res.json();
+      RENTALS = data.listings || [];
+      liveCount.textContent = `${RENTALS.length} available now`;
+      renderRentals();
+    } catch (err) {
+      console.error('Failed to load rentals:', err);
+      RENTALS = [];
+      liveCount.textContent = '— available now';
+      grid.innerHTML = `
+        <div class="rentals-empty" style="grid-column: 1 / -1;">
+          <h3 class="rentals-empty__title">We couldn't load our rentals right now.</h3>
+          <p class="rentals-empty__sub">Try refreshing — or take the matchmaker quiz and we'll be in touch.</p>
+          <a href="#quiz" class="cta">
+            Start the matchmaker
+            <svg class="arrow" width="14" height="10" viewBox="0 0 14 10" fill="none">
+              <path d="M1 5h11M8 1l4 4-4 4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </a>
+        </div>`;
+    }
+  }
+
+  loadRentals();
 
   /* ============================================
      QUIZ — 10-step button-driven matchmaker
