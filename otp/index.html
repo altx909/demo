@@ -3281,7 +3281,9 @@
          neighbourhood, type, status, href }
      ========================================================= */
 
-  const PROPERTIES = {
+  /* Rent listings come from Sanity via /api/rentals (loaded async below).
+     Sale listings stay mocked until MyRealPage is wired up. */
+  let PROPERTIES = {
     sale: [
       {
         id: 'mrp-001',
@@ -3326,51 +3328,52 @@
         type: 'Riverfront Estate', status: 'Featured', href: '#mrp-006'
       }
     ],
-    rent: [
-      {
-        id: 'b-001',
-        image: 'https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?auto=format&fit=crop&w=1200&q=80',
-        price: '$1,650', priceSuffix: '/mo', address: '1402 — 215 Lawson Pl',
-        beds: 2, baths: 1, sqft: 850, neighbourhood: 'Lawson Heights',
-        type: 'Apartment', status: 'Available Now', href: '#b-001'
-      },
-      {
-        id: 'b-002',
-        image: 'https://images.unsplash.com/photo-1493809842364-78817add7ffb?auto=format&fit=crop&w=1200&q=80',
-        price: '$2,400', priceSuffix: '/mo', address: '32 Evergreen Terrace',
-        beds: 3, baths: 2.5, sqft: 1450, neighbourhood: 'Evergreen',
-        type: 'Townhouse', status: 'Available June 1', href: '#b-002'
-      },
-      {
-        id: 'b-003',
-        image: 'https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?auto=format&fit=crop&w=1200&q=80',
-        price: '$1,150', priceSuffix: '/mo', address: '208 — 110 23rd St E',
-        beds: 1, baths: 1, sqft: 450, neighbourhood: 'Downtown',
-        type: 'Studio', status: 'Available Now', href: '#b-003'
-      },
-      {
-        id: 'b-004',
-        image: 'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=1200&q=80',
-        price: '$2,950', priceSuffix: '/mo', address: '440 Erindale Drive',
-        beds: 4, baths: 3, sqft: 2100, neighbourhood: 'Erindale',
-        type: 'Family Home', status: 'Available July 1', href: '#b-004'
-      },
-      {
-        id: 'b-005',
-        image: 'https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?auto=format&fit=crop&w=1200&q=80',
-        price: '$3,200', priceSuffix: '/mo', address: 'PH3 — 511 Spadina Cres',
-        beds: 2, baths: 2, sqft: 1500, neighbourhood: 'Riverside',
-        type: 'Penthouse', status: 'Available Now', href: '#b-005'
-      },
-      {
-        id: 'b-006',
-        image: 'https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=1200&q=80',
-        price: '$1,850', priceSuffix: '/mo', address: '212 — 920 9th Street E',
-        beds: 1, baths: 1, sqft: 720, neighbourhood: 'Varsity View',
-        type: 'Furnished Suite', status: 'Available Now', href: '#b-006'
-      }
-    ]
+    rent: []  // populated by loadHomeRentals() below
   };
+
+  /* Transform a Sanity-shaped rental → homepage card shape */
+  function rentToCard(r) {
+    return {
+      id: r.id,
+      image: r.image,
+      price: `$${(r.price || 0).toLocaleString()}`,
+      priceSuffix: '/mo',
+      address: r.address || r.streetAddress || '',
+      beds: r.beds,
+      baths: r.baths,
+      sqft: r.sqft || 0,
+      neighbourhood: r.neighbourhood || '',
+      type: r.type || 'Apartment',
+      status: r.available || 'Available',
+      href: `./rent/property/?id=${encodeURIComponent(r.slug || r.id)}`
+    };
+  }
+
+  /* Async: fetch live rentals from /api/rentals (Sanity → Cloudflare Function).
+     Shows the first 6 on the homepage. Falls back gracefully if API is down. */
+  async function loadHomeRentals() {
+    try {
+      const res = await fetch('/api/rentals', { cache: 'no-store' });
+      if (!res.ok) throw new Error(`API ${res.status}`);
+      const data = await res.json();
+      const listings = (data.listings || []).slice(0, 6).map(rentToCard);
+      PROPERTIES.rent = listings;
+      // If user is currently viewing the rent tab, refresh the grid
+      const activeTab = document.querySelector('.listings__toggle button.active');
+      if (activeTab && activeTab.dataset.type === 'rent') {
+        render('rent');
+      }
+      // Update the count badge on the rent tab
+      const rentTab = document.querySelector('.listings__toggle button[data-type="rent"]');
+      if (rentTab) {
+        const countSpan = rentTab.querySelector('.count');
+        if (countSpan) countSpan.textContent = String(listings.length).padStart(2, '0');
+      }
+    } catch (err) {
+      console.error('Failed to load homepage rentals:', err);
+      // PROPERTIES.rent stays [] — render will show an empty state
+    }
+  }
 
   const HEART_SVG = `<svg width="16" height="14" viewBox="0 0 16 14" fill="none">
     <path d="M8 13s-6-3.7-6-8a3.5 3.5 0 016-2.45A3.5 3.5 0 0114 5c0 4.3-6 8-6 8z"
@@ -3418,13 +3421,28 @@
     if (!grid) return;
     grid.classList.add('fading');
     setTimeout(() => {
-      grid.innerHTML = PROPERTIES[type].map(cardHTML).join('');
+      const listings = PROPERTIES[type] || [];
+      if (listings.length === 0) {
+        // Empty state — different message for sale vs rent
+        const emptyMsg = type === 'rent'
+          ? "No rentals available right now — but I'll let you know when something opens up."
+          : 'Nothing currently listed in this category.';
+        const emptyCta = type === 'rent'
+          ? '<a href="./rent/" style="display:inline-flex;align-items:center;gap:8px;color:var(--forest);font-size:12px;font-weight:500;letter-spacing:0.16em;text-transform:uppercase;border-bottom:1px solid var(--forest);padding-bottom:4px;">Take the matchmaker quiz →</a>'
+          : '';
+        grid.innerHTML = `
+          <div style="grid-column:1/-1;text-align:center;padding:60px 24px;background:var(--cream-warm);border-radius:8px;">
+            <p style="margin:0 0 18px;font-family:var(--serif);font-style:italic;font-size:17px;color:var(--ink-soft);">${emptyMsg}</p>
+            ${emptyCta}
+          </div>`;
+      } else {
+        grid.innerHTML = listings.map(cardHTML).join('');
+      }
       grid.classList.remove('fading');
     }, 220);
 
     if (viewAll) {
-      viewAll.querySelector('span, *') ;
-      viewAll.firstChild && (viewAll.childNodes[0].nodeValue = '');
+      viewAll.href = type === 'sale' ? '#all-listings' : './rent/';
       viewAll.innerHTML = (type === 'sale'
         ? 'View all properties for sale'
         : 'View all available rentals')
@@ -3445,8 +3463,12 @@
     });
   });
 
-  // Initial render
+  // Initial render — sale tab first (mock data ready)
   render('sale');
+
+  // Kick off the rent listings fetch from Sanity. The grid will refresh
+  // automatically when data arrives if the rent tab is currently active.
+  loadHomeRentals();
 
   // Allow the rental band in Services to deep-link to the rentals tab
   document.querySelectorAll('[data-toggle-rentals]').forEach(el => {
