@@ -19,6 +19,7 @@ const RENTAL_FIELDS = `
   unitNumber,
   streetAddress,
   neighbourhood,
+  neighbourhoodCustom,
   postalCode,
   propertyType,
   floor,
@@ -119,7 +120,9 @@ function normalize(r) {
     address: formatAddress(r),
     streetAddress: r.streetAddress || '',
     postalCode: r.postalCode || '',
-    neighbourhood: r.neighbourhood || '',
+    neighbourhood: (r.neighbourhood === 'Custom' && r.neighbourhoodCustom)
+      ? r.neighbourhoodCustom
+      : (r.neighbourhood || ''),
     type: r.propertyType || 'Apartment',
     floor: r.floor || null,
     yearBuilt: r.yearBuilt || null,
