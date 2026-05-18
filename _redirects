@@ -1,0 +1,5 @@
+# Cloudflare Pages routing rules
+# Serve property/index.html for any /otp/rent/property/<anything>/ URL.
+# Status 200 = silent rewrite (URL in the address bar doesn't change).
+
+/otp/rent/property/*  /otp/rent/property/index.html  200

@@ -1823,7 +1823,7 @@
 
   function rentalCardHTML(r) {
     return `
-      <a class="property-card" href="./property/?id=${encodeURIComponent(r.slug || r.id)}">
+      <a class="property-card" href="./property/${encodeURIComponent(r.slug || r.id)}/">
         <div class="property-card__media">
           <span class="property-card__badge">${r.available}</span>
           ${r.pets !== 'none' ? `<span class="property-card__pet">${petLabel(r.pets)}</span>` : ''}

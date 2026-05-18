@@ -910,17 +910,17 @@
 
 <!-- ============================================ NAV ============================================ -->
 <nav class="nav" id="nav">
-  <a href="../../" class="wordmark">
+  <a href="/otp/" class="wordmark">
     <span class="wordmark__name">Krishna Ambilwade</span>
     <span class="wordmark__tag">Saskatoon Real Estate</span>
   </a>
   <div class="nav__links">
-    <a href="../../#buy">Buy</a>
-    <a href="../../#sell">Sell</a>
-    <a href="../" class="active">Rent</a>
-    <a href="../../#manage">Property Management</a>
-    <a href="../../#about">About</a>
-    <a href="../../#journal">Journal</a>
+    <a href="/otp/buy/">Buy</a>
+    <a href="/otp/#sell">Sell</a>
+    <a href="/otp/rent/" class="active">Rent</a>
+    <a href="/otp/#manage">Property Management</a>
+    <a href="/otp/#about">About</a>
+    <a href="/otp/#journal">Journal</a>
   </div>
   <div class="nav__utils">
     <a href="#owner-portal" class="util">Owner Portal</a>
@@ -945,19 +945,19 @@
       <path d="M2 2l18 18M20 2L2 20" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
     </svg>
   </button>
-  <a href="../../#buy">Buy</a>
-  <a href="../../#sell">Sell</a>
-  <a href="../">Rent</a>
-  <a href="../../#manage">Property Management</a>
-  <a href="../../#about">About</a>
-  <a href="../../#journal">Journal</a>
+  <a href="/otp/buy/">Buy</a>
+  <a href="/otp/#sell">Sell</a>
+  <a href="/otp/rent/">Rent</a>
+  <a href="/otp/#manage">Property Management</a>
+  <a href="/otp/#about">About</a>
+  <a href="/otp/#journal">Journal</a>
   <a href="#owner-portal" class="util">Owner Portal</a>
   <a href="#tenant-portal" class="util">Tenant Portal</a>
 </div>
 
 <!-- ============================================ BREADCRUMB ============================================ -->
 <div class="breadcrumb">
-  <a href="../">
+  <a href="/otp/rent/">
     <svg width="14" height="10" viewBox="0 0 14 10" fill="none">
       <path d="M13 5H1M5 1L1 5l4 4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
     </svg>
@@ -1042,7 +1042,7 @@
   <div class="similar__inner">
     <div class="similar__head">
       <h2 class="similar__title">Similar places <em>also available</em>.</h2>
-      <a href="../" class="similar__cta">
+      <a href="/otp/rent/" class="similar__cta">
         See all rentals
         <svg width="14" height="10" viewBox="0 0 14 10" fill="none">
           <path d="M1 5h11M8 1l4 4-4 4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
@@ -1087,21 +1087,21 @@
       <div class="footer__col">
         <h4 class="footer__col-title">Services</h4>
         <ul class="footer__list">
-          <li><a href="../../#buy">Buy a Home</a></li>
-          <li><a href="../../#sell">Sell with Confidence</a></li>
-          <li><a href="../">Find a Rental</a></li>
-          <li><a href="../../#manage">Property Management</a></li>
-          <li><a href="../../#tools">Free Reports</a></li>
+          <li><a href="/otp/#buy">Buy a Home</a></li>
+          <li><a href="/otp/#sell">Sell with Confidence</a></li>
+          <li><a href="/otp/rent/">Find a Rental</a></li>
+          <li><a href="/otp/#manage">Property Management</a></li>
+          <li><a href="/otp/#tools">Free Reports</a></li>
         </ul>
       </div>
       <div class="footer__col">
         <h4 class="footer__col-title">Explore</h4>
         <ul class="footer__list">
-          <li><a href="../../#about">About Krishna</a></li>
-          <li><a href="../../#listings">Active Listings</a></li>
-          <li><a href="../../#proof">Neighbourhoods</a></li>
-          <li><a href="../../#proof">Testimonials</a></li>
-          <li><a href="../../#journal">Journal</a></li>
+          <li><a href="/otp/#about">About Krishna</a></li>
+          <li><a href="/otp/#listings">Active Listings</a></li>
+          <li><a href="/otp/#proof">Neighbourhoods</a></li>
+          <li><a href="/otp/#proof">Testimonials</a></li>
+          <li><a href="/otp/#journal">Journal</a></li>
         </ul>
       </div>
       <div class="footer__col">
@@ -1277,12 +1277,24 @@
   }
 
   /* ============================================
-     READ ?id= AND FETCH FROM SANITY
-     The ?id= value can be either the canonical slug or the document _id.
-     The Cloudflare Function /api/rentals/[slug] handles both.
+     READ SLUG FROM URL AND FETCH FROM SANITY
+     Supports two URL formats:
+       1. Clean path:  /otp/rent/property/test-2-br-lawson-heights/
+       2. Legacy query: /otp/rent/property/?id=test-2-br-lawson-heights
+     Both work. After load, query-style URLs are silently upgraded to
+     the clean path via history.replaceState (no reload).
      ============================================ */
-  const params = new URLSearchParams(window.location.search);
-  const propId = params.get('id');
+  function getSlugFromUrl() {
+    // 1. Path-based slug: /otp/rent/property/<slug>/
+    const pathMatch = window.location.pathname.match(/\/property\/([^\/]+?)\/?$/);
+    if (pathMatch && pathMatch[1] && pathMatch[1] !== 'index.html') {
+      return pathMatch[1];
+    }
+    // 2. Query fallback: ?id=<slug>
+    const params = new URLSearchParams(window.location.search);
+    return params.get('id');
+  }
+  const propId = getSlugFromUrl();
 
   let property = null;
   let allListings = [];  // used by renderSimilar()
@@ -1299,7 +1311,7 @@
       <div style="padding:140px 24px;text-align:center;font-family:var(--serif);color:var(--ink);">
         <h1 style="font-size:36px;font-weight:300;">${message.title}</h1>
         <p style="font-size:15px;color:var(--muted);margin:16px 0 24px;font-family:var(--sans);">${message.sub}</p>
-        <a href="../" style="display:inline-flex;align-items:center;gap:8px;padding:11px 20px;background:var(--forest);color:var(--cream);border-radius:999px;font-family:var(--sans);font-size:12.5px;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;text-decoration:none;">See all available rentals</a>
+        <a href="/otp/rent/" style="display:inline-flex;align-items:center;gap:8px;padding:11px 20px;background:var(--forest);color:var(--cream);border-radius:999px;font-family:var(--sans);font-size:12.5px;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;text-decoration:none;">See all available rentals</a>
       </div>`;
   }
 
@@ -1339,11 +1351,17 @@
         allListings = (allData.listings || []).map(enrich);
       }
 
-      // If the URL used a non-canonical id (e.g., document _id), rewrite
-      // the address bar to the clean slug version without a page reload.
-      if (propId !== property.slug && property.slug) {
-        const newUrl = `${window.location.pathname}?id=${encodeURIComponent(property.slug)}`;
-        window.history.replaceState({}, '', newUrl);
+      // Canonicalize the URL to the clean slug-based path.
+      // Examples that all end up at /otp/rent/property/<slug>/ :
+      //   /otp/rent/property/?id=<slug>
+      //   /otp/rent/property/?id=<sanity-doc-id>
+      //   /otp/rent/property/old-slug/
+      if (property.slug) {
+        const canonical = `/otp/rent/property/${encodeURIComponent(property.slug)}/`;
+        const current = window.location.pathname + window.location.search;
+        if (current !== canonical) {
+          window.history.replaceState({}, '', canonical);
+        }
       }
 
       document.getElementById('pageTitle').textContent =
@@ -1493,7 +1511,7 @@
       grid.innerHTML = `
         <div style="grid-column:1/-1;text-align:center;padding:40px 20px;color:var(--muted);">
           <p style="margin:0;font-family:var(--serif);font-style:italic;font-size:16px;">
-            More listings coming soon. <a href="../" style="color:var(--forest);text-decoration:underline;">Browse all rentals →</a>
+            More listings coming soon. <a href="/otp/rent/" style="color:var(--forest);text-decoration:underline;">Browse all rentals →</a>
           </p>
         </div>`;
       return;
@@ -1515,14 +1533,14 @@
       grid.innerHTML = `
         <div style="grid-column:1/-1;text-align:center;padding:40px 20px;color:var(--muted);">
           <p style="margin:0;font-family:var(--serif);font-style:italic;font-size:16px;">
-            This is currently our only listing. <a href="../" style="color:var(--forest);text-decoration:underline;">Browse all rentals →</a>
+            This is currently our only listing. <a href="/otp/rent/" style="color:var(--forest);text-decoration:underline;">Browse all rentals →</a>
           </p>
         </div>`;
       return;
     }
 
     grid.innerHTML = candidates.map(p => `
-      <a class="property-card" href="?id=${encodeURIComponent(p.slug || p.id)}">
+      <a class="property-card" href="/otp/rent/property/${encodeURIComponent(p.slug || p.id)}/">
         <div class="property-card__media">
           <img src="${(p.gallery && p.gallery[0]) || p.image || ''}" alt="${p.title}" loading="lazy" />
         </div>

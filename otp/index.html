@@ -3345,7 +3345,7 @@
       neighbourhood: r.neighbourhood || '',
       type: r.type || 'Apartment',
       status: r.available || 'Available',
-      href: `./rent/property/?id=${encodeURIComponent(r.slug || r.id)}`
+      href: `./rent/property/${encodeURIComponent(r.slug || r.id)}/`
     };
   }
 
