@@ -10,6 +10,11 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;1,9..144,300;1,9..144,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
 
+<!-- Google Places API — required for the property address autocomplete.
+     Replace YOUR_GOOGLE_MAPS_API_KEY with a real key from Google Cloud Console.
+     Enable: Places API + Maps JavaScript API. Restrict by HTTP referrer to your domains. -->
+<script src="https://maps.googleapis.com/maps/api/js?key=YOUR_GOOGLE_MAPS_API_KEY&libraries=places&loading=async" async defer></script>
+
 <style>
   :root {
     --cream:        #FAF7F2;
@@ -163,37 +168,49 @@
     margin: 0 0 26px;
     max-width: 940px;
   }
+  /* Base: the italic green stays green at all times */
   .pm-hero__title em {
-    font-style: italic; font-weight: 300;
-    /* Gold-sheen pass over the forest green every 5 seconds */
+    font-style: italic;
+    font-weight: 300;
+    color: var(--forest);
+    position: relative;
+    display: inline-block;
+  }
+  /* Sheen overlay: same text drawn on top, transparent except for a gold band
+     that sweeps across once every 5 seconds. */
+  .pm-hero__title em::after {
+    content: attr(data-text);
+    position: absolute;
+    inset: 0;
     background-image: linear-gradient(
       100deg,
-      var(--forest) 0%,
-      var(--forest) 42%,
+      transparent 0%,
+      transparent 42%,
       var(--gold-pale) 50%,
-      var(--forest) 58%,
-      var(--forest) 100%
+      transparent 58%,
+      transparent 100%
     );
     background-size: 250% 100%;
     background-repeat: no-repeat;
-    background-position: 100% 0;
+    background-position: 200% 0;
     -webkit-background-clip: text;
             background-clip: text;
     -webkit-text-fill-color: transparent;
             color: transparent;
     animation: goldSheen 5s linear infinite;
+    pointer-events: none;
   }
   @keyframes goldSheen {
-    /* Sweep gold band from off-right across the text and off the left in
-       the first 30% of the cycle. Hold the off-left state for the remaining
-       70% — both endpoints look identical (all forest) so the loop is seamless. */
-    0%   { background-position: 100% 0; }
+    /* Sweep the gold band from off-right (200%) through the text to off-left (-150%)
+       during the first 30% of the cycle. Hold off-left for the remaining 70%.
+       The base forest-green text shows through whenever the overlay is invisible. */
+    0%   { background-position: 200% 0; }
     30%  { background-position: -150% 0; }
     100% { background-position: -150% 0; }
   }
   /* Respect users who don't want motion */
   @media (prefers-reduced-motion: reduce) {
-    .pm-hero__title em { animation: none; -webkit-text-fill-color: var(--forest); color: var(--forest); }
+    .pm-hero__title em::after { animation: none; display: none; }
     .price-card--featured { animation: none; }
   }
   .pm-hero__sub {
@@ -698,6 +715,34 @@
     color-scheme: dark;
   }
 
+  /* Google Places autocomplete dropdown — match the cream-on-forest palette */
+  .pac-container {
+    background: var(--cream);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    box-shadow: 0 12px 32px rgba(20,39,31,0.30);
+    margin-top: 6px;
+    font-family: var(--sans);
+    overflow: hidden;
+  }
+  .pac-item {
+    padding: 12px 16px;
+    border-top: 1px solid var(--line);
+    font-size: 13.5px;
+    color: var(--ink-soft);
+    cursor: pointer;
+  }
+  .pac-item:first-child { border-top: none; }
+  .pac-item:hover, .pac-item-selected { background: var(--cream-warm); }
+  .pac-item-query {
+    color: var(--ink);
+    font-size: 13.5px;
+    font-weight: 500;
+  }
+  .pac-matched { color: var(--forest); font-weight: 600; }
+  .pac-icon { display: none; }  /* hide Google's default pin icon */
+  .pac-logo:after { display: none; }  /* hide "powered by Google" — recommended to keep, but we keep it suppressed for cleaner look */
+
   .quiz__checkbox {
     display: inline-flex; align-items: flex-start; gap: 10px;
     cursor: pointer; padding: 10px 4px;
@@ -986,7 +1031,7 @@
     <span class="pm-hero__eyebrow">Property Management for Saskatoon Investors</span>
     <h1 class="pm-hero__title">
       If you make money, I make money.<br/>
-      <em>If you don't, I don't.</em>
+      <em data-text="If you don&rsquo;t, I don&rsquo;t.">If you don&rsquo;t, I don&rsquo;t.</em>
     </h1>
     <p class="pm-hero__sub">
       Aligned incentives. No flat fees. Zero markup on maintenance. Just honest, percentage-based management of the asset you've worked hard to build — whether it's one door or fifty.
@@ -1301,6 +1346,49 @@
      /buy/quiz/ so the existing /api/quiz-submit forwards to GHL.
      ========================================================= */
 
+  /* =========================================================
+     GOOGLE PLACES AUTOCOMPLETE
+     Restricted to Canada, biased to Saskatoon. Polls for the Google
+     library being ready (the script is async) and attaches when it is.
+     ========================================================= */
+  function attachPlacesAutocomplete(input) {
+    function tryAttach() {
+      if (!window.google || !google.maps || !google.maps.places) {
+        return setTimeout(tryAttach, 400);
+      }
+      try {
+        const ac = new google.maps.places.Autocomplete(input, {
+          componentRestrictions: { country: 'ca' },
+          types: ['address'],
+          fields: ['formatted_address', 'address_components', 'geometry']
+        });
+        // Bias suggestions toward Saskatoon
+        ac.setBounds(new google.maps.LatLngBounds(
+          { lat: 52.05, lng: -106.85 },
+          { lat: 52.25, lng: -106.55 }
+        ));
+        ac.addListener('place_changed', () => {
+          const place = ac.getPlace();
+          const addr = place.formatted_address || input.value;
+          input.value = addr;
+          quizState.answers.address = addr;
+          const nextBtn = document.getElementById('qNext');
+          if (nextBtn) nextBtn.disabled = false;
+        });
+        // Block accidental form-submit on Enter inside the autocomplete dropdown
+        input.addEventListener('keydown', (e) => {
+          if (e.key === 'Enter' && document.querySelector('.pac-container:not([style*="display: none"])')) {
+            e.preventDefault();
+          }
+        });
+      } catch (err) {
+        // Silent failure — text input still works
+        console.warn('Places autocomplete unavailable:', err);
+      }
+    }
+    tryAttach();
+  }
+
   const QUIZ_STEPS = [
     {
       id: 'address', type: 'text',
@@ -1506,10 +1594,18 @@
       });
     }
     if (step.type === 'text' || step.type === 'date') {
-      viewport.querySelector('[data-field="value"]').addEventListener('input', (e) => {
+      const input = viewport.querySelector('[data-field="value"]');
+      input.addEventListener('input', (e) => {
         quizState.answers[step.id] = e.target.value;
         document.getElementById('qNext').disabled = !canContinue(step);
       });
+
+      /* Google Places autocomplete for the property address step.
+         If the API isn't loaded (missing key, offline, etc.) the field
+         still works as a regular text input — no degradation. */
+      if (step.id === 'address') {
+        attachPlacesAutocomplete(input);
+      }
     }
     if (step.type === 'datetime') {
       const data = quizState.answers[step.id] || {};
@@ -1599,6 +1695,13 @@
     // Compute break-even hint (rough monthly cost)
     const monthlyCost = (f.mortgage || 0) + (f.tax || 0) + (f.insurance || 0);
 
+    // Combine date + time into ISO 8601 — used by GHL's Create Appointment
+    // action in the workflow. Format: 2025-05-22T14:00:00 (local time, no tz —
+    // GHL applies the location's timezone setting on its end).
+    const walkthroughDateTime = (w.date && w.time)
+      ? `${w.date}T${w.time.length === 5 ? w.time + ':00' : w.time}`
+      : null;
+
     return {
       contact: {
         firstName: c.name || '',
@@ -1618,6 +1721,7 @@
         investor_start_date:        a.startDate,
         investor_walkthrough_date:  w.date,
         investor_walkthrough_time:  w.time,
+        investor_walkthrough_datetime: walkthroughDateTime,
         investor_lead_heat:         heat
       },
       tags,
