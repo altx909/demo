@@ -10,11 +10,6 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;1,9..144,300;1,9..144,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
 
-<!-- Google Places API — required for the property address autocomplete.
-     Replace YOUR_GOOGLE_MAPS_API_KEY with a real key from Google Cloud Console.
-     Enable: Places API + Maps JavaScript API. Restrict by HTTP referrer to your domains. -->
-<script src="https://maps.googleapis.com/maps/api/js?key=YOUR_GOOGLE_MAPS_API_KEY&libraries=places&loading=async" async defer></script>
-
 <style>
   :root {
     --cream:        #FAF7F2;
@@ -744,34 +739,6 @@
     color-scheme: dark;
   }
 
-  /* Google Places autocomplete dropdown — match the cream-on-forest palette */
-  .pac-container {
-    background: var(--cream);
-    border: 1px solid var(--line);
-    border-radius: 8px;
-    box-shadow: 0 12px 32px rgba(20,39,31,0.30);
-    margin-top: 6px;
-    font-family: var(--sans);
-    overflow: hidden;
-  }
-  .pac-item {
-    padding: 12px 16px;
-    border-top: 1px solid var(--line);
-    font-size: 13.5px;
-    color: var(--ink-soft);
-    cursor: pointer;
-  }
-  .pac-item:first-child { border-top: none; }
-  .pac-item:hover, .pac-item-selected { background: var(--cream-warm); }
-  .pac-item-query {
-    color: var(--ink);
-    font-size: 13.5px;
-    font-weight: 500;
-  }
-  .pac-matched { color: var(--forest); font-weight: 600; }
-  .pac-icon { display: none; }  /* hide Google's default pin icon */
-  .pac-logo:after { display: none; }  /* hide "powered by Google" — recommended to keep, but we keep it suppressed for cleaner look */
-
   .quiz__checkbox {
     display: inline-flex; align-items: flex-start; gap: 10px;
     cursor: pointer; padding: 10px 4px;
@@ -1388,49 +1355,6 @@
      /buy/quiz/ so the existing /api/quiz-submit forwards to GHL.
      ========================================================= */
 
-  /* =========================================================
-     GOOGLE PLACES AUTOCOMPLETE
-     Restricted to Canada, biased to Saskatoon. Polls for the Google
-     library being ready (the script is async) and attaches when it is.
-     ========================================================= */
-  function attachPlacesAutocomplete(input) {
-    function tryAttach() {
-      if (!window.google || !google.maps || !google.maps.places) {
-        return setTimeout(tryAttach, 400);
-      }
-      try {
-        const ac = new google.maps.places.Autocomplete(input, {
-          componentRestrictions: { country: 'ca' },
-          types: ['address'],
-          fields: ['formatted_address', 'address_components', 'geometry']
-        });
-        // Bias suggestions toward Saskatoon
-        ac.setBounds(new google.maps.LatLngBounds(
-          { lat: 52.05, lng: -106.85 },
-          { lat: 52.25, lng: -106.55 }
-        ));
-        ac.addListener('place_changed', () => {
-          const place = ac.getPlace();
-          const addr = place.formatted_address || input.value;
-          input.value = addr;
-          quizState.answers.address = addr;
-          const nextBtn = document.getElementById('qNext');
-          if (nextBtn) nextBtn.disabled = false;
-        });
-        // Block accidental form-submit on Enter inside the autocomplete dropdown
-        input.addEventListener('keydown', (e) => {
-          if (e.key === 'Enter' && document.querySelector('.pac-container:not([style*="display: none"])')) {
-            e.preventDefault();
-          }
-        });
-      } catch (err) {
-        // Silent failure — text input still works
-        console.warn('Places autocomplete unavailable:', err);
-      }
-    }
-    tryAttach();
-  }
-
   const QUIZ_STEPS = [
     {
       id: 'address', type: 'text',
@@ -1641,13 +1565,6 @@
         quizState.answers[step.id] = e.target.value;
         document.getElementById('qNext').disabled = !canContinue(step);
       });
-
-      /* Google Places autocomplete for the property address step.
-         If the API isn't loaded (missing key, offline, etc.) the field
-         still works as a regular text input — no degradation. */
-      if (step.id === 'address') {
-        attachPlacesAutocomplete(input);
-      }
     }
     if (step.type === 'datetime') {
       const data = quizState.answers[step.id] || {};
