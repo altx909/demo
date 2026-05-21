@@ -4,3 +4,4 @@
 
 /otp/rent/property/*  /otp/rent/property/index.html  200
 /admin https://krishna-realty.sanity.studio 301
+https://www.meetkrishna.com/* https://meetkrishna.com/:splat 301
