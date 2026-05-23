@@ -989,7 +989,7 @@
     const a = quizState.answers;
     const c = a.contact || {};
     const heat = calculateLeadHeat();
-    const tags = ['Buyer-Quiz', `Buyer-${heat}`];
+    const tags = ['Buyer-Quiz', 'buy-completed', `Buyer-${heat}`];
     if (a.timing === 'now')       tags.push('Timing-Next-3-Months');
     if (a.timing === '3-6')       tags.push('Timing-3-to-6');
     if (a.timing === '6-12')      tags.push('Timing-6-to-12');
@@ -1025,7 +1025,8 @@
       const res = await fetch('/api/quiz-submit', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload)
+        body: JSON.stringify(payload),
+        keepalive: true
       });
       if (!res.ok) {
         console.error('Quiz submission failed:', res.status, await res.text());
@@ -1043,6 +1044,9 @@
     const branch  = FINAL_SCREENS[heat];
     const payload = buildPayload();
     submitToBackend(payload);
+    try { sessionStorage.setItem('typName', (quizState.answers.contact && quizState.answers.contact.name) || ''); } catch (e) {}
+    window.location.href = '/typ-buy/';
+    return;
 
     const primaryTarget   = branch.primary.newTab ? ' target="_blank" rel="noopener"' : '';
     const secondaryTarget = branch.secondary.newTab ? ' target="_blank" rel="noopener"' : '';

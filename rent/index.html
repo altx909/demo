@@ -2274,7 +2274,7 @@
        will read this object and POST to GHL with the correct field IDs. */
     const a = quizState.answers;
     const c = a.contact || {};
-    const tags = [];
+    const tags = ['rent-completed'];
     if (a.timing === 'now')      tags.push('Tenant-HOT');
     if (a.timing === '30')       tags.push('Tenant-WARM');
     if (a.timing === 'browsing') tags.push('Tenant-COLD');
@@ -2312,7 +2312,8 @@
          await fetch('/api/quiz-submit', {
            method: 'POST',
            headers: { 'Content-Type': 'application/json' },
-           body: JSON.stringify(payload)
+           body: JSON.stringify(payload),
+        keepalive: true
          });
     */
     console.log('[QUIZ SUBMIT — payload ready for GHL]', payload);
@@ -2323,6 +2324,9 @@
     const matches = findMatches();
     const payload = buildPayload();
     submitToBackend(payload);
+    try { sessionStorage.setItem('typName', (quizState.answers.contact && quizState.answers.contact.name) || ''); } catch (e) {}
+    window.location.href = '/typ-rent/';
+    return;
 
     const firstName = (quizState.answers.contact && quizState.answers.contact.name) || 'there';
 

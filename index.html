@@ -2901,13 +2901,13 @@
     const payload = isSeller ? {
       contact:      { email },
       customFields: { seller_property_address: address },
-      tags:         ['seller-quiz', 'home-value-widget'],
+      tags:         ['seller-quiz', 'home-value-widget', 'sell-started'],
       consent:      {},
       sourcePage:   'home-valuation-widget'
     } : {
       contact:      { email },
       customFields: { investor_property_address: address },
-      tags:         ['Investor-Quiz', 'rental-value-widget'],
+      tags:         ['Investor-Quiz', 'rental-value-widget', 'pm-started'],
       consent:      {},
       sourcePage:   'home-rental-widget'
     };
