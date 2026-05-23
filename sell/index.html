@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Buy a Home in Saskatoon — Krishna Ambilwade</title>
-<meta name="description" content="Saskatoon's full home-buying experience, coming soon. In the meantime, take the 60-second matchmaker quiz and Krishna will match you the moment your home hits the market." />
+<title>Sell Your Home in Saskatoon — Krishna Ambilwade</title>
+<meta name="description" content="Thinking about selling in Saskatoon? Find out what your home is worth and whether you're ready to sell — take the free 60-second quiz and Krishna will send your home value estimate and a personalized plan." />
 
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -120,162 +120,134 @@
     cursor: pointer; padding: 8px;
   }
 
-  /* ---------------- BUY HERO ---------------- */
-  .buy-hero {
-    padding: 160px 40px 90px;
+  /* ---------------- SELL HERO ---------------- */
+  .sell-hero {
+    padding: 160px 40px 96px;
     position: relative;
     overflow: hidden;
   }
-  .buy-hero::before {
-    content: "Soon.";
+  .sell-hero::before {
+    content: "Worth.";
     position: absolute;
-    bottom: -110px; right: -50px;
+    bottom: -100px; right: -40px;
     font-family: var(--serif);
     font-style: italic; font-weight: 300;
-    font-size: 440px; line-height: 1;
+    font-size: 400px; line-height: 1;
     color: var(--sage-pale);
-    opacity: 0.55;
+    opacity: 0.5;
     pointer-events: none; z-index: 0;
   }
-  .buy-hero__inner {
+  .sell-hero__inner {
     position: relative; z-index: 1;
-    max-width: 880px;
+    max-width: 860px;
     margin: 0 auto;
     text-align: center;
   }
-
-  .buy-hero__eyebrow {
+  .sell-hero__eyebrow {
     display: inline-flex; align-items: center; justify-content: center; gap: 14px;
     font-size: 11px; font-weight: 500;
     letter-spacing: 0.28em; text-transform: uppercase;
     color: var(--forest);
     margin-bottom: 28px;
   }
-  .buy-hero__eyebrow::before,
-  .buy-hero__eyebrow::after {
+  .sell-hero__eyebrow::before,
+  .sell-hero__eyebrow::after {
     content: ""; width: 28px; height: 1px;
     background: var(--forest); opacity: 0.7;
   }
-  .buy-hero__eyebrow .live-dot {
-    width: 7px; height: 7px;
-    background: var(--gold);
-    border-radius: 50%;
-    margin-left: 2px;
-    position: relative;
-    display: inline-block;
-  }
-  .buy-hero__eyebrow .live-dot::after {
-    content: "";
-    position: absolute; inset: 0;
-    border-radius: 50%;
-    background: var(--gold);
-    opacity: 0.5;
-    animation: dotPulse 2s var(--ease) infinite;
-  }
-  @keyframes dotPulse {
-    0%   { transform: scale(1);    opacity: 0.55; }
-    80%  { transform: scale(3.2);  opacity: 0; }
-    100% { transform: scale(3.2);  opacity: 0; }
-  }
-
-  .buy-hero__title {
+  .sell-hero__title {
     font-family: var(--serif); font-weight: 300;
     font-size: clamp(40px, 6.2vw, 76px);
     line-height: 1.04; letter-spacing: -0.02em;
     color: var(--ink);
     margin: 0 0 24px;
   }
-  .buy-hero__title em {
+  .sell-hero__title em {
     font-style: italic; font-weight: 300;
     color: var(--forest);
   }
-
-  .buy-hero__sub {
+  .sell-hero__sub {
     font-family: var(--sans);
     font-size: 17px; font-weight: 300;
     line-height: 1.65; color: var(--ink-soft);
     margin: 0 auto;
-    max-width: 580px;
+    max-width: 600px;
   }
 
-  /* Loading bar */
-  .loading-bar {
-    display: flex; flex-direction: column;
-    align-items: center; gap: 18px;
-    margin: 56px auto 0;
-    max-width: 480px;
-    width: 100%;
+  /* Two big CTAs — both lead to the quiz */
+  .sell-hero__ctas {
+    display: flex; gap: 18px;
+    justify-content: center; align-items: stretch;
+    margin: 52px auto 0;
+    max-width: 720px;
+    flex-wrap: wrap;
   }
-  .loading-bar__track {
-    width: 100%;
-    height: 6px;
-    background: var(--sage-pale);
-    border-radius: 999px;
-    position: relative;
+  .sell-card {
+    flex: 1 1 300px;
+    display: flex; flex-direction: column; align-items: flex-start;
+    text-align: left;
+    padding: 28px 28px 26px;
+    border-radius: 14px;
+    cursor: pointer;
+    position: relative; overflow: hidden;
+    transition: transform 280ms var(--ease), box-shadow 280ms var(--ease), background 280ms var(--ease);
   }
-  .loading-bar__fill {
-    height: 100%;
-    background: linear-gradient(90deg, var(--forest-soft), var(--forest));
-    border-radius: 999px;
-    width: 0;
-    position: relative;
-    animation: loadingFill 2.5s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  .sell-card--primary {
+    background: var(--forest);
+    color: var(--cream);
+    box-shadow: 0 14px 40px -22px rgba(20,39,31,0.7);
   }
-  .loading-bar__fill::after {
-    content: "";
-    position: absolute;
-    top: 50%;
-    right: -5px;
-    transform: translate(0, -50%);
-    width: 12px; height: 12px;
-    background: var(--gold);
-    border-radius: 50%;
-    opacity: 0;
-    animation: pulsePoint 1.8s var(--ease) infinite 2.5s;
-    box-shadow: 0 0 0 0 rgba(217,185,120,0.5);
+  .sell-card--primary:hover {
+    background: var(--forest-deep);
+    transform: translateY(-3px);
+    box-shadow: 0 22px 52px -22px rgba(20,39,31,0.75);
   }
-  @keyframes loadingFill {
-    from { width: 0%; }
-    to   { width: 50%; }
+  .sell-card--alt {
+    background: var(--cream-warm);
+    color: var(--ink);
+    border: 1px solid var(--line);
   }
-  @keyframes pulsePoint {
-    0%   { opacity: 1; transform: translate(0, -50%) scale(1);    box-shadow: 0 0 0 0 rgba(217,185,120,0.55); }
-    70%  { opacity: 0.4; transform: translate(0, -50%) scale(1.4); box-shadow: 0 0 0 14px rgba(217,185,120,0); }
-    100% { opacity: 1; transform: translate(0, -50%) scale(1);    box-shadow: 0 0 0 0 rgba(217,185,120,0); }
+  .sell-card--alt:hover {
+    transform: translateY(-3px);
+    border-color: var(--forest);
+    box-shadow: 0 18px 44px -26px rgba(31,58,46,0.45);
   }
-
-  .loading-bar__caption {
-    display: flex; align-items: center; gap: 12px;
-    font-family: var(--sans);
+  .sell-card__icon {
+    width: 40px; height: 40px; border-radius: 10px;
+    display: inline-flex; align-items: center; justify-content: center;
+    margin-bottom: 18px;
+  }
+  .sell-card--primary .sell-card__icon { background: rgba(200,213,192,0.16); color: var(--sage); }
+  .sell-card--alt .sell-card__icon { background: var(--sage-pale); color: var(--forest); }
+  .sell-card__label {
+    font-family: var(--serif); font-weight: 400;
+    font-size: 23px; line-height: 1.15; letter-spacing: -0.01em;
+    margin-bottom: 8px;
+  }
+  .sell-card__desc {
+    font-size: 13.5px; font-weight: 300; line-height: 1.5;
+    opacity: 0.85; margin-bottom: 22px;
+  }
+  .sell-card__go {
+    margin-top: auto;
+    display: inline-flex; align-items: center; gap: 9px;
     font-size: 11.5px; font-weight: 500;
-    letter-spacing: 0.22em; text-transform: uppercase;
+    letter-spacing: 0.16em; text-transform: uppercase;
+  }
+  .sell-card--primary .sell-card__go { color: var(--sage); }
+  .sell-card--alt .sell-card__go { color: var(--forest); }
+  .sell-card__go .arrow { transition: transform 300ms var(--ease); }
+  .sell-card:hover .sell-card__go .arrow { transform: translateX(4px); }
+
+  .sell-hero__reassure {
+    display: inline-flex; align-items: center; gap: 14px;
+    flex-wrap: wrap; justify-content: center;
+    margin-top: 30px;
+    font-size: 12px; font-weight: 400; letter-spacing: 0.04em;
     color: var(--muted);
   }
-  .loading-bar__caption strong {
-    color: var(--forest);
-    font-weight: 600;
-    font-variant-numeric: tabular-nums;
-  }
-  .loading-bar__caption::before {
-    content: ""; width: 14px; height: 1px;
-    background: var(--muted); opacity: 0.5;
-  }
-
-  .buy-hero__actions {
-    display: inline-flex; gap: 12px;
-    flex-wrap: wrap; justify-content: center;
-    margin-top: 48px;
-  }
-  .btn-secondary {
-    display: inline-flex; align-items: center; gap: 10px;
-    padding: 13px 24px;
-    background: transparent; color: var(--forest);
-    border: 1px solid var(--forest); border-radius: 999px;
-    font-size: 12px; font-weight: 500;
-    letter-spacing: 0.12em; text-transform: uppercase;
-    transition: background 250ms var(--ease), color 250ms var(--ease);
-  }
-  .btn-secondary:hover { background: var(--forest); color: var(--cream); }
+  .sell-hero__reassure span { display: inline-flex; align-items: center; gap: 8px; }
+  .sell-hero__reassure .dot { width: 4px; height: 4px; border-radius: 50%; background: var(--gold); }
 
   /* ---------------- QUIZ (forest-deep section) ---------------- */
   .quiz {
@@ -286,11 +258,11 @@
     overflow: hidden;
   }
   .quiz::before {
-    content: "Match.";
+    content: "Ready.";
     position: absolute;
     bottom: -120px; left: -40px;
     font-family: var(--serif); font-style: italic; font-weight: 300;
-    font-size: 380px; line-height: 1;
+    font-size: 360px; line-height: 1;
     color: rgba(200, 213, 192, 0.045);
     pointer-events: none;
   }
@@ -567,19 +539,17 @@
     .nav { padding: 14px 24px; }
     .nav__links, .nav__utils .util { display: none; }
     .nav__toggle { display: inline-flex; }
-    .buy-hero { padding: 120px 24px 70px; }
-    .buy-hero::before { font-size: 280px; bottom: -60px; }
+    .sell-hero { padding: 120px 24px 76px; }
+    .sell-hero::before { font-size: 260px; bottom: -50px; }
     .quiz { padding: 80px 24px 100px; }
     .footer { padding: 64px 24px 28px; }
     .footer__grid { grid-template-columns: 1fr 1fr; gap: 48px; }
   }
   @media (max-width: 640px) {
-    .buy-hero { padding: 110px 20px 56px; }
-    .buy-hero::before { font-size: 220px; bottom: -40px; }
-    .buy-hero__title { font-size: clamp(34px, 9vw, 52px); }
-    .loading-bar { margin-top: 40px; }
-    .buy-hero__actions { flex-direction: column; align-items: stretch; }
-    .buy-hero__actions .cta, .buy-hero__actions .btn-secondary { justify-content: center; }
+    .sell-hero { padding: 110px 20px 60px; }
+    .sell-hero::before { font-size: 200px; bottom: -34px; }
+    .sell-hero__title { font-size: clamp(34px, 9vw, 52px); }
+    .sell-hero__ctas { flex-direction: column; margin-top: 40px; }
     .quiz { padding: 64px 20px 80px; }
     .quiz__nav { flex-direction: column-reverse; gap: 10px; }
     .quiz__nav .quiz__btn { width: 100%; justify-content: center; }
@@ -600,8 +570,8 @@
     <span class="wordmark__tag">Saskatoon Real Estate</span>
   </a>
   <div class="nav__links">
-    <a href="/buy/" class="active">Buy</a>
-    <a href="/sell/">Sell</a>
+    <a href="/buy/">Buy</a>
+    <a href="/sell/" class="active">Sell</a>
     <a href="/rent/">Rent</a>
     <a href="/property-management/">Property Management</a>
     <a href="/#about">About</a>
@@ -640,59 +610,76 @@
   <a href="#tenant-portal" class="util">Tenant Portal</a>
 </div>
 
-<!-- ============================================ BUY HERO ============================================ -->
-<section class="buy-hero">
-  <div class="buy-hero__inner">
+<!-- ============================================ SELL HERO ============================================ -->
+<section class="sell-hero">
+  <div class="sell-hero__inner">
 
-    <span class="buy-hero__eyebrow">
-      Building the buy experience
-      <span class="live-dot" aria-hidden="true"></span>
-    </span>
+    <span class="sell-hero__eyebrow">Thinking about selling?</span>
 
-    <h1 class="buy-hero__title">
-      Saskatoon's full market, <em>almost ready.</em>
+    <h1 class="sell-hero__title">
+      What's your home worth — <em>and are you ready to sell?</em>
     </h1>
 
-    <p class="buy-hero__sub">
-      We're pulling together every home for sale across Saskatoon — from MLS to off-market opportunities. Until that's live, tell us what you're looking for. The moment your match hits the market, you'll be the first to know.
+    <p class="sell-hero__sub">
+      Whether you're ready to list tomorrow or just curious what your place would fetch in today's Saskatoon market, start here. Answer a few quick questions and Krishna will send your home value estimate and a plan that fits where you actually are.
     </p>
 
-    <!-- Loading bar -->
-    <div class="loading-bar" role="status" aria-label="Progress: 50% complete">
-      <div class="loading-bar__track">
-        <div class="loading-bar__fill"></div>
-      </div>
-      <div class="loading-bar__caption">
-        Connecting to MLS · <strong id="loadingPct">0%</strong> complete
-      </div>
+    <!-- Two big CTAs — both lead to the same quiz -->
+    <div class="sell-hero__ctas">
+      <a href="#quiz" class="sell-card sell-card--primary">
+        <span class="sell-card__icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+            <path d="M3 11.5L12 4l9 7.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M5 10.5V20h14v-9.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M12 20v-5h0" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+          </svg>
+        </span>
+        <span class="sell-card__label">What's my home worth?</span>
+        <span class="sell-card__desc">Get a free, no-obligation estimate based on your home and today's market.</span>
+        <span class="sell-card__go">
+          Get my estimate
+          <svg class="arrow" width="14" height="10" viewBox="0 0 14 10" fill="none">
+            <path d="M1 5h11M8 1l4 4-4 4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </span>
+      </a>
+
+      <a href="#quiz" class="sell-card sell-card--alt">
+        <span class="sell-card__icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+            <path d="M9 12l2 2 4-5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+            <circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.6"/>
+          </svg>
+        </span>
+        <span class="sell-card__label">Am I ready to sell?</span>
+        <span class="sell-card__desc">Find out where you stand in 60 seconds — timing, equity, and your next move.</span>
+        <span class="sell-card__go">
+          Check my readiness
+          <svg class="arrow" width="14" height="10" viewBox="0 0 14 10" fill="none">
+            <path d="M1 5h11M8 1l4 4-4 4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </span>
+      </a>
     </div>
 
-    <!-- CTAs -->
-    <div class="buy-hero__actions">
-      <a href="#quiz" class="cta">
-        Take the matchmaker quiz
-        <svg class="arrow" width="14" height="10" viewBox="0 0 14 10" fill="none">
-          <path d="M1 5h11M8 1l4 4-4 4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
-      </a>
-      <a href="https://calendly.com/your-link" target="_blank" rel="noopener" class="btn-secondary">
-        Book a call with Krishna
-        <svg width="14" height="10" viewBox="0 0 14 10" fill="none">
-          <path d="M1 5h11M8 1l4 4-4 4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
-      </a>
+    <div class="sell-hero__reassure">
+      <span>About 60 seconds</span>
+      <span class="dot" aria-hidden="true"></span>
+      <span>No obligation</span>
+      <span class="dot" aria-hidden="true"></span>
+      <span>Free home value estimate</span>
     </div>
 
   </div>
 </section>
 
-<!-- ============================================ BUYER MATCHMAKER QUIZ ============================================ -->
+<!-- ============================================ SELLER MATCHMAKER QUIZ ============================================ -->
 <section class="quiz" id="quiz">
   <div class="quiz__inner">
 
     <div class="quiz__head">
-      <span class="quiz__eyebrow">Find your match</span>
-      <h2 class="quiz__title">Tell us about you. <em>We'll match you to the right place.</em></h2>
+      <span class="quiz__eyebrow">Find your number</span>
+      <h2 class="quiz__title">Tell us about your home. <em>We'll tell you where you stand.</em></h2>
       <p class="quiz__sub">Six quick questions. About 60 seconds. Mostly tapping.</p>
     </div>
 
@@ -768,81 +755,73 @@
   mMenu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => mMenu.classList.remove('open')));
 
   /* =========================================================
-     LOADING BAR PERCENTAGE COUNTER
-     Animates 0 → 50 in sync with the CSS bar fill.
-     ========================================================= */
-  (function() {
-    const counter = document.getElementById('loadingPct');
-    if (!counter) return;
-    const duration = 2500;
-    const target = 50;
-    const start = performance.now();
-    function tick(now) {
-      const elapsed = now - start;
-      const t = Math.min(elapsed / duration, 1);
-      const eased = 1 - Math.pow(1 - t, 3); // ease-out cubic
-      counter.textContent = `${Math.round(eased * target)}%`;
-      if (t < 1) requestAnimationFrame(tick);
-    }
-    requestAnimationFrame(tick);
-  })();
-
-  /* =========================================================
-     BUYER MATCHMAKER QUIZ — same engine as /buy/quiz/
-     6 button-driven steps + final branched screen.
+     SELLER MATCHMAKER QUIZ
+     6 button-driven steps + contact form + branched final.
+     Posts to the same /api/quiz-submit bridge as the buyer quiz.
      ========================================================= */
   const QUIZ_STEPS = [
     {
-      id: 'timing', type: 'single', question: "When are you thinking about buying?",
+      id: 'timeline', type: 'single', question: "When are you hoping to sell?",
       options: [
-        { value: 'now',       label: 'In the next 3 months' },
-        { value: '3-6',       label: '3 – 6 months from now' },
-        { value: '6-12',      label: '6 – 12 months from now' },
-        { value: 'exploring', label: "I'm just exploring" }
+        { value: 'now',     label: 'As soon as possible — within 3 months' },
+        { value: '3-6',     label: '3 – 6 months from now' },
+        { value: '6-12',    label: '6 – 12 months from now' },
+        { value: 'curious', label: "Not sure — I'm just curious what it's worth" }
       ]
     },
     {
-      id: 'motivation', type: 'single', question: "What's pulling you toward owning?",
+      id: 'reason', type: 'single', question: "What's prompting the move?",
       options: [
-        { value: 'tired-of-renting', label: 'Tired of renting' },
-        { value: 'family',           label: 'Family or lifestyle change' },
-        { value: 'equity',           label: 'Building equity & wealth' },
-        { value: 'space',            label: 'More space, a yard, or privacy' },
-        { value: 'curious',          label: "I'm just curious" }
+        { value: 'upsizing',   label: 'Upsizing — we need more space' },
+        { value: 'downsizing', label: 'Downsizing — we need less' },
+        { value: 'relocating', label: 'Relocating for work or a new city' },
+        { value: 'investment', label: 'Cashing in / financial reasons' },
+        { value: 'life',       label: 'A life change — family, retirement, etc.' }
       ]
     },
     {
-      id: 'financial', type: 'single', question: "Where are you with the money side?",
-      hint: "There are no wrong answers — this just helps me tailor the next step.",
+      id: 'propertyType', type: 'single', question: "What are you thinking of selling?",
       options: [
-        { value: 'ready-full',  label: 'Down payment saved AND I’ve talked to a lender' },
-        { value: 'saved-only',  label: "Saved a down payment, haven't talked to a lender" },
-        { value: 'lender-only', label: 'Talked to a lender, still saving' },
-        { value: 'neither',     label: "Haven't done either — that's why I'm here" }
+        { value: 'detached',   label: 'Detached house' },
+        { value: 'condo',      label: 'Condo or townhouse' },
+        { value: 'multiunit',  label: 'Duplex or multi-unit' },
+        { value: 'acreage',    label: 'Acreage or land' },
+        { value: 'rental',     label: 'A rental / investment property' }
       ]
     },
     {
-      id: 'budget', type: 'single', question: "Roughly, what's your monthly housing budget compared to rent now?",
+      id: 'mortgage', type: 'single', question: "Where do you stand on the mortgage?",
+      hint: "Ballpark is fine — this just helps me estimate what you'd walk away with.",
       options: [
-        { value: 'rent-match', label: 'About the same as my rent' },
-        { value: 'stretch',    label: 'A bit more, for the right place' },
-        { value: 'invest',     label: 'Notably more — I’m ready to invest' },
-        { value: 'unsure',     label: 'Not sure — I want help figuring this out' }
+        { value: 'paid-off',  label: 'Paid off — no mortgage' },
+        { value: 'under-half',label: 'I owe less than half of its value' },
+        { value: 'about-half',label: 'I owe roughly half' },
+        { value: 'most',      label: 'I owe most of what it’s worth' },
+        { value: 'unsure',    label: "Not sure / prefer not to say" }
       ]
     },
     {
-      id: 'concern', type: 'single', question: "What's the one thing you most want to know?",
+      id: 'residence', type: 'single', question: "Is this your primary home?",
+      hint: "It matters for taxes — primary residences are usually exempt from capital gains in Canada.",
       options: [
-        { value: 'afford',  label: 'Can I actually afford it?' },
-        { value: 'where',   label: 'Where should I be looking?' },
-        { value: 'timing',  label: 'Is now the right time, or should I wait?' },
-        { value: 'process', label: 'How does the whole process work?' },
-        { value: 'talk',    label: 'I just want to talk to someone' }
+        { value: 'primary',   label: 'Yes — it’s my primary residence' },
+        { value: 'investment',label: 'No — it’s a rental or investment property' },
+        { value: 'secondary', label: 'It’s a second home or cottage' },
+        { value: 'inherited', label: 'I inherited it / it’s an estate sale' }
       ]
     },
     {
-      id: 'contact', type: 'form', question: "Last step — where should I send your read?",
-      hint: "I'll only use this to follow up about your situation. Promise."
+      id: 'price', type: 'single', question: "Do you have a sense of what it's worth?",
+      options: [
+        { value: 'valued',     label: "Yes — I've had it valued recently" },
+        { value: 'rough',      label: 'I have a rough idea from listings nearby' },
+        { value: 'noidea',     label: "No — that's exactly what I want to find out" },
+        { value: 'underwater', label: 'I worry I might owe more than it’s worth' }
+      ]
+    },
+    {
+      id: 'contact', type: 'form', question: "Last step — where should I send your home value estimate?",
+      hint: "I'll only use this to follow up about your home. Promise."
     }
   ];
   const TOTAL_STEPS = QUIZ_STEPS.length;
@@ -850,24 +829,24 @@
   const FINAL_SCREENS = {
     HOT: {
       eyebrow: "You're ready",
-      title: 'You’re more ready than most. <em>Let’s talk.</em>',
-      sub: "Based on what you told me, you're in a strong position to start house-hunting now. The fastest path forward is a 15-minute call — I'll line up properties that fit and we can map out the next 30 days.",
-      primary:   { label: 'Book a 15-minute call', href: 'https://calendly.com/your-link', newTab: true },
-      secondary: { label: 'Browse current rentals', href: '/rent/' }
+      title: 'You’re in a strong spot to sell. <em>Let’s get your number.</em>',
+      sub: "Based on your timeline and equity, you're well positioned to list. The fastest path is a quick call — I'll prepare a proper home valuation, walk you through what you'd net after fees, and map out the next 30 days.",
+      primary:   { label: 'Book a 15-minute seller call', href: 'https://calendly.com/your-link', newTab: true },
+      secondary: { label: 'Send my home value report',    href: '#valuation' }
     },
     WARM: {
       eyebrow: "You're close",
       title: 'You’re <em>closer than you think</em>. Let’s build the plan.',
-      sub: "Some pieces are in place; others need a little work. The smartest move is a free 30-minute consult — we'll map out exactly what's needed, in what order, and on what timeline.",
-      primary:   { label: 'Book a free consultation', href: 'https://calendly.com/your-link', newTab: true },
-      secondary: { label: 'Send me the Playbook',     href: '#playbook' }
+      sub: "Some pieces are in place; a few need attention before you list. The smartest move is a free seller consult — we'll pin down your home's value, the right timing, and exactly what to do first.",
+      primary:   { label: 'Book a free seller consult', href: 'https://calendly.com/your-link', newTab: true },
+      secondary: { label: 'Send my home value estimate', href: '#valuation' }
     },
     COLD: {
       eyebrow: 'Start here',
-      title: '<em>No rush.</em> Every homeowner started where you are.',
-      sub: "You're at the very beginning, and that's exactly the right place to be. Start with the First-Time Buyer Playbook — it walks through saving for a down payment, understanding credit, and what owning actually costs. When you're ready for a real conversation, you'll know.",
-      primary:   { label: 'Send me the Playbook',  href: '#playbook' },
-      secondary: { label: 'Keep me in the loop',  href: '#newsletter' }
+      title: '<em>No rush.</em> Let’s start with what it’s worth.',
+      sub: "You're early, and that's the right time to get informed. I'll put together a free, no-pressure home value estimate so you know your number — and when you're ready to talk timing, you'll know where to find me.",
+      primary:   { label: 'Send my free home value estimate', href: '#valuation' },
+      secondary: { label: 'Keep me posted on the market',     href: '#newsletter' }
     }
   };
 
@@ -914,13 +893,14 @@
     } else if (step.type === 'form') {
       const a = ans || {};
       html = `<div class="quiz__form">
-        <input class="quiz__field" type="text"  placeholder="First name"      data-field="name"  value="${a.name||''}"  required />
-        <input class="quiz__field" type="email" placeholder="Email"           data-field="email" value="${a.email||''}" required />
+        <input class="quiz__field" type="text"  placeholder="First name"       data-field="name"  value="${a.name||''}"  required />
+        <input class="quiz__field" type="email" placeholder="Email"            data-field="email" value="${a.email||''}" required />
         <input class="quiz__field" type="tel"   placeholder="Phone (optional)" data-field="phone" value="${a.phone||''}" />
+        <input class="quiz__field" type="text"  placeholder="Property address (optional)" data-field="address" value="${a.address||''}" />
         <label class="quiz__checkbox">
           <input type="checkbox" data-field="optIn" ${a.optIn ? 'checked' : ''} />
           <span class="quiz__checkbox-box"></span>
-          <span>Send me new listings in my budget as they come up</span>
+          <span>Email me Saskatoon market updates for sellers</span>
         </label>
       </div>`;
     }
@@ -974,49 +954,57 @@
     updateProgress();
   }
 
+  /* ---------------------------------------------------------
+     Lead heat — HOT / WARM / COLD.
+     Hidden from the visitor; sent as a custom field AND as a
+     single entry tag (Sell-Hot / Sell-Warm / Sell-Cold) so GHL
+     workflows can branch on it.
+     --------------------------------------------------------- */
   function calculateLeadHeat() {
     const a = quizState.answers;
-    const t = a.timing;
-    const f = a.financial;
-    const b = a.budget;
-    if ((t === 'now' || t === '3-6') && f === 'ready-full') return 'HOT';
-    if (t === 'now' && (f === 'saved-only' || f === 'lender-only')) return 'HOT';
-    if (t === 'exploring' && f === 'neither' && b !== 'invest') return 'COLD';
+    const t = a.timeline;
+    const p = a.price;
+    const r = a.reason;
+
+    // Near-term sellers who know (or roughly know) their value = hottest.
+    if ((t === 'now' || t === '3-6') && (p === 'valued' || p === 'rough')) return 'HOT';
+    // Ready to sell now, or a forced move, is hot regardless of pricing knowledge.
+    if (t === 'now') return 'HOT';
+    if ((t === 'now' || t === '3-6') && (r === 'relocating' || r === 'life')) return 'HOT';
+    // Just curious with no sense of value = early-stage.
+    if (t === 'curious' && (p === 'noidea' || p === 'underwater')) return 'COLD';
     return 'WARM';
   }
 
   function buildPayload() {
-    const a = quizState.answers;
-    const c = a.contact || {};
+    const a    = quizState.answers;
+    const c    = a.contact || {};
     const heat = calculateLeadHeat();
-    const tags = ['Buyer-Quiz', `Buyer-${heat}`];
-    if (a.timing === 'now')       tags.push('Timing-Next-3-Months');
-    if (a.timing === '3-6')       tags.push('Timing-3-to-6');
-    if (a.timing === '6-12')      tags.push('Timing-6-to-12');
-    if (a.timing === 'exploring') tags.push('Timing-Exploring');
-    if (a.motivation) tags.push(`Motivation:${a.motivation}`);
-    if (a.financial)  tags.push(`Financial:${a.financial}`);
-    if (a.budget)     tags.push(`Budget:${a.budget}`);
-    if (a.concern)    tags.push(`Concern:${a.concern}`);
-    if (a.financial === 'neither') tags.push('Needs-Education');
-    if (c.optIn) tags.push('New-Listing-Alerts');
+
+    // Per Krishna's request: only the heat tag drives workflows.
+    // (A source tag is included so seller leads are easy to find in GHL.)
+    // Lowercase to match GHL's tag normalization.
+    const tags = ['seller-quiz', `sell-${heat.toLowerCase()}`];
+
     return {
       contact: {
-        firstName: c.name || '',
+        firstName: c.name  || '',
         email:     c.email || '',
         phone:     c.phone || ''
       },
       customFields: {
-        buyer_move_timeline:    a.timing,
-        buyer_motivation:       a.motivation,
-        buyer_financial_status: a.financial,
-        buyer_budget_bracket:   a.budget,
-        buyer_top_concern:      a.concern,
-        buyer_lead_heat:        heat
+        seller_timeline:       a.timeline,
+        seller_reason:         a.reason,
+        seller_property_type:  a.propertyType,
+        seller_mortgage_status:a.mortgage,
+        seller_residence_type: a.residence,
+        seller_price_knowledge:a.price,
+        seller_property_address:c.address || '',
+        seller_lead_heat:      heat
       },
       tags,
-      consent:    { newListingAlerts: !!c.optIn },
-      sourcePage: 'buy-landing'
+      consent:    { marketUpdates: !!c.optIn },
+      sourcePage: 'sell-landing'
     };
   }
 
@@ -1044,7 +1032,7 @@
     const payload = buildPayload();
     submitToBackend(payload);
 
-    const primaryTarget   = branch.primary.newTab ? ' target="_blank" rel="noopener"' : '';
+    const primaryTarget   = branch.primary.newTab   ? ' target="_blank" rel="noopener"' : '';
     const secondaryTarget = branch.secondary.newTab ? ' target="_blank" rel="noopener"' : '';
     const firstName       = (quizState.answers.contact?.name) || 'there';
 
