@@ -1,7 +1,8 @@
 # Cloudflare Pages routing rules
-# Serve property/index.html for any /otp/rent/property/<anything>/ URL.
+# Serve /rent/property/index.html for any /rent/property/<slug>/ URL.
 # Status 200 = silent rewrite (URL in the address bar doesn't change).
+# (Backup to the catch-all Pages Function at functions/rent/property/[[slug]].js)
 
-/otp/rent/property/*  /otp/rent/property/index.html  200
+/rent/property/*  /rent/property/index.html  200
 /admin https://krishna-realty.sanity.studio 301
 https://www.meetkrishna.com/* https://meetkrishna.com/:splat 301
