@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Book a Call with Krishna — Saskatoon Real Estate</title>
+<meta name="description" content="Book a quick phone call with Krishna Ambilwade — Saskatoon real estate and property management. Pick a time that works for you." />
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;1,9..144,300;1,9..144,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+
+<!-- ============================================================
+     CONVERSION TRACKING — booking page view
+     This page = someone reached the booking step. Paste your
+     Google Ads / Meta Pixel / GA4 "Book a Call - page view"
+     conversion snippet below. (Booking-COMPLETE tracking is a
+     separate add-on via GHL calendar settings or a postMessage
+     listener — not included here.)
+     ============================================================ -->
+<!-- <script> ... your conversion pixel here ... </script> -->
+
+<style>
+  :root {
+    --cream:#FAF7F2; --cream-warm:#F2EDE4; --ink:#1A1A1A; --ink-soft:#3A3A3A;
+    --muted:#6B6B6B; --line:#E5E0D7; --forest:#1F3A2E; --forest-deep:#14271F;
+    --forest-soft:#2C4D3E; --sage:#C8D5C0; --sage-pale:#E4EAE0; --gold:#D9B978;
+    --serif:'Fraunces','Cormorant Garamond',Georgia,serif;
+    --sans:'Inter',-apple-system,BlinkMacSystemFont,'Helvetica Neue',sans-serif;
+    --ease:cubic-bezier(0.22,1,0.36,1);
+  }
+  *,*::before,*::after { box-sizing:border-box; }
+  body { margin:0; font-family:var(--sans); color:var(--ink); background:var(--cream);
+    -webkit-font-smoothing:antialiased; line-height:1.55; min-height:100vh;
+    display:flex; flex-direction:column; }
+  a { color:inherit; text-decoration:none; }
+
+  .cal-bar { padding:22px 40px; display:flex; align-items:center; justify-content:space-between; }
+  .wordmark { display:inline-flex; flex-direction:column; line-height:1; color:var(--ink); }
+  .wordmark__name { font-family:var(--serif); font-weight:400; font-size:22px; letter-spacing:-0.01em; }
+  .wordmark__tag { font-size:9px; font-weight:500; letter-spacing:0.22em; text-transform:uppercase; margin-top:4px; opacity:0.85; }
+  .cal-bar__back { font-size:12px; font-weight:500; letter-spacing:0.08em; text-transform:uppercase; color:var(--forest); }
+  .cal-bar__back:hover { opacity:0.65; }
+
+  .cal { flex:1; padding:34px 24px 70px; }
+  .cal__head { max-width:760px; margin:0 auto 26px; text-align:center; }
+  .cal__eyebrow { display:inline-flex; align-items:center; gap:12px; justify-content:center;
+    font-size:11px; font-weight:500; letter-spacing:0.28em; text-transform:uppercase;
+    color:var(--forest); margin-bottom:16px; }
+  .cal__eyebrow::before, .cal__eyebrow::after { content:""; width:26px; height:1px; background:var(--forest); opacity:0.65; }
+  .cal__title { font-family:var(--serif); font-weight:300; font-size:clamp(30px,4.4vw,46px);
+    line-height:1.08; letter-spacing:-0.02em; color:var(--ink); margin:0 0 14px; }
+  .cal__title em { font-style:italic; color:var(--forest); }
+  .cal__sub { font-size:15.5px; font-weight:300; line-height:1.6; color:var(--ink-soft); margin:0 auto; max-width:480px; }
+
+  .cal__embed { max-width:900px; margin:0 auto; background:var(--cream);
+    border:1px solid var(--line); border-radius:14px; overflow:hidden;
+    box-shadow:0 20px 60px -38px rgba(20,39,31,0.45); }
+  .cal__embed iframe { width:100%; min-height:720px; border:none; display:block; background:var(--cream); }
+
+  .cal__fallback { text-align:center; font-size:13px; color:var(--muted); margin:20px auto 0; }
+  .cal__fallback a { color:var(--forest); font-weight:500; }
+
+  .cal-foot { padding:24px 40px 30px; text-align:center; font-size:12px; font-weight:300; color:var(--muted); }
+  .cal-foot a { color:var(--forest); }
+
+  @media (max-width:640px) {
+    .cal-bar { padding:18px 22px; }
+    .cal { padding:24px 14px 60px; }
+    .cal__embed iframe { min-height:640px; }
+  }
+</style>
+</head>
+<body>
+
+  <header class="cal-bar">
+    <a href="/" class="wordmark">
+      <span class="wordmark__name">Krishna Ambilwade</span>
+      <span class="wordmark__tag">Saskatoon Real Estate</span>
+    </a>
+    <a href="/" class="cal-bar__back">← Back to site</a>
+  </header>
+
+  <main class="cal">
+    <div class="cal__head">
+      <span class="cal__eyebrow">Let's talk</span>
+      <h1 class="cal__title">Book a call with <em>Krishna</em>.</h1>
+      <p class="cal__sub">Pick a time that suits you for a quick, no-pressure phone call. Whether you're buying, selling, renting, or investing — happy to help.</p>
+    </div>
+
+    <div class="cal__embed">
+      <!-- GHL booking widget -->
+      <iframe
+        src="https://api.altxmedia.com/widget/bookings/talk-to-krishna"
+        scrolling="no"
+        id="talk_to_krishna_cal"
+        title="Book a call with Krishna"></iframe>
+    </div>
+
+    <p class="cal__fallback">
+      Calendar not loading? Call <a href="tel:+13068506744">(306) 850-6744</a> or
+      <a href="https://api.altxmedia.com/widget/bookings/talk-to-krishna" target="_blank" rel="noopener">open the booking page in a new tab</a>.
+    </p>
+  </main>
+
+  <footer class="cal-foot">
+    Krishna Ambilwade · Saskatoon Real Estate &amp; Property Management · (306) 850-6744 · info@meetkrishna.com
+  </footer>
+
+  <!-- GHL auto-resize script: sizes the iframe to its content height -->
+  <script src="https://api.altxmedia.com/js/form_embed.js" type="text/javascript"></script>
+
+</body>
+</html>
