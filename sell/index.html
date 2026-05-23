@@ -1062,6 +1062,15 @@
     });
   }
 
+  // Prefill from the homepage "What's my home worth?" widget, if present.
+  try {
+    const pf = JSON.parse(sessionStorage.getItem('sellPrefill') || 'null');
+    if (pf && (pf.email || pf.address)) {
+      quizState.answers.contact = { email: pf.email || '', address: pf.address || '' };
+      sessionStorage.removeItem('sellPrefill');
+    }
+  } catch (err) {}
+
   buildProgress();
   renderStep();
 </script>

@@ -1740,6 +1740,16 @@
     });
   }
 
+  // Prefill from the homepage "What's my rental worth?" widget, if present.
+  try {
+    const pf = JSON.parse(sessionStorage.getItem('pmPrefill') || 'null');
+    if (pf && (pf.email || pf.address)) {
+      if (pf.address) quizState.answers.address = pf.address;
+      quizState.answers.contact = { email: pf.email || '' };
+      sessionStorage.removeItem('pmPrefill');
+    }
+  } catch (err) {}
+
   buildProgress();
   renderStep();
 </script>

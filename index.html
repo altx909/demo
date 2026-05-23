@@ -2839,7 +2839,7 @@
           A free, no-obligation valuation based on recent comparable sales in your Saskatoon
           neighbourhood — usually back to you within 24 hours.
         </p>
-        <form class="tool-card__form" onsubmit="event.preventDefault(); this.querySelector('button').textContent='Sent — check your inbox';">
+        <form class="tool-card__form" onsubmit="return handleValuation(event, this, 'seller')">
           <input type="text" placeholder="Property address" required aria-label="Property address" />
           <input type="email" placeholder="Your email" required aria-label="Your email" />
           <button type="submit">
@@ -2866,7 +2866,7 @@
           See what your property could earn in today's Saskatoon rental market —
           and what the numbers look like under professional management.
         </p>
-        <form class="tool-card__form" onsubmit="event.preventDefault(); this.querySelector('button').textContent='Sent — check your inbox';">
+        <form class="tool-card__form" onsubmit="return handleValuation(event, this, 'investor')">
           <input type="text" placeholder="Property address" required aria-label="Property address" />
           <input type="email" placeholder="Your email" required aria-label="Your email" />
           <button type="submit">
@@ -2882,6 +2882,59 @@
     </div>
   </div>
 </section>
+
+<!-- ============================================
+     HOMEPAGE VALUATION WIDGETS — capture + carry into quiz
+     Fires the lead to GHL immediately (so it's never lost),
+     stashes prefill in sessionStorage, then routes into the
+     matching quiz where address/email arrive pre-filled.
+     ============================================ -->
+<script>
+  function handleValuation(e, form, kind) {
+    e.preventDefault();
+    const address = (form.querySelector('input[type="text"]')  || {}).value?.trim() || '';
+    const email   = (form.querySelector('input[type="email"]') || {}).value?.trim() || '';
+    if (!email) return false; // native "required" should already enforce this
+
+    const isSeller = kind === 'seller';
+
+    const payload = isSeller ? {
+      contact:      { email },
+      customFields: { seller_property_address: address },
+      tags:         ['seller-quiz', 'home-value-widget'],
+      consent:      {},
+      sourcePage:   'home-valuation-widget'
+    } : {
+      contact:      { email },
+      customFields: { investor_property_address: address },
+      tags:         ['Investor-Quiz', 'rental-value-widget'],
+      consent:      {},
+      sourcePage:   'home-rental-widget'
+    };
+
+    // Fire-and-forget; keepalive lets it complete through the redirect.
+    try {
+      fetch('/api/quiz-submit', {
+        method:  'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body:    JSON.stringify(payload),
+        keepalive: true
+      });
+    } catch (err) { /* non-blocking — we still route them onward */ }
+
+    try {
+      sessionStorage.setItem(
+        isSeller ? 'sellPrefill' : 'pmPrefill',
+        JSON.stringify({ email, address })
+      );
+    } catch (err) {}
+
+    const btn = form.querySelector('button');
+    if (btn) btn.textContent = 'One moment…';
+    window.location.href = isSeller ? '/sell/#quiz' : '/property-management/#quiz';
+    return false;
+  }
+</script>
 
 <!-- ============================================
      PROOF — Saskatoon Neighbourhoods + Testimonials
