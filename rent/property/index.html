@@ -1793,14 +1793,14 @@
   function buildPayload() {
     const a = quizState.answers;
     const c = a.contact || {};
-    const tags = ['Source:Property-' + property.id];
-    if (a.timing === 'now')      tags.push('Tenant-HOT');
-    if (a.timing === '30')       tags.push('Tenant-WARM');
-    if (a.timing === 'browsing') tags.push('Tenant-COLD');
-    if (a.pets && a.pets !== 'none') tags.push('Has-Pets', `Pet-${a.pets}`);
-    if (a.income && a.income.includes('social-assistance')) tags.push('Income-SA-Review');
-    if (a.currentStatus === 'out-of-town') tags.push('Relocation');
-    if (c.optIn) tags.push('New-Listing-Alerts');
+    const tags = ['tenant-quiz', 'rent-completed', 'tenant-property-inquiry'];
+    if (a.timing === 'now')      tags.push('tenant-hot');
+    if (a.timing === '30')       tags.push('tenant-warm');
+    if (a.timing === 'browsing') tags.push('tenant-cold');
+    if (a.pets && a.pets !== 'none') tags.push('has-pets', `pet-${a.pets}`);
+    if (a.income && a.income.includes('social-assistance')) tags.push('income-sa-review');
+    if (a.currentStatus === 'out-of-town') tags.push('relocation');
+    if (c.optIn) tags.push('new-listing-alerts');
 
     return {
       contact: { firstName: c.name || '', email: c.email || '', phone: c.phone || '' },
@@ -1814,17 +1814,33 @@
         preferred_area: (a.area || []).join(', '),
         income_source: (a.income || []).join(', '),
         currently_renting: a.currentStatus,
-        property_of_interest: property.id
+        // Auto-captured from the listing the tenant is viewing:
+        property_of_interest: [property.title, property.address].filter(Boolean).join(' — '),
+        property_address: property.address || '',
+        property_slug: property.slug || '',
+        property_url: property.slug ? ('https://meetkrishna.com/rent/property/' + property.slug + '/') : '',
+        property_id: property.id || ''
       },
       tags,
       consent: { newListingAlerts: !!c.optIn },
-      sourcePage: `property-${property.id}`
+      sourcePage: 'rent-property'
     };
   }
 
-  function submitToBackend(payload) {
-    console.log('[QUIZ SUBMIT — payload ready for GHL]', payload);
-    return Promise.resolve(true);
+  async function submitToBackend(payload) {
+    try {
+      const res = await fetch('/api/quiz-submit', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+        keepalive: true
+      });
+      if (!res.ok) { console.error('Quiz submission failed:', res.status, await res.text()); return false; }
+      return await res.json();
+    } catch (err) {
+      console.error('Quiz submission error:', err);
+      return false;
+    }
   }
 
   function renderFinal() {
