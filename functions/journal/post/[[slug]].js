@@ -49,7 +49,7 @@ export async function onRequest(context) {
 async function fetchPostMeta(env, slug) {
   if (!env.SANITY_PROJECT_ID || !env.SANITY_DATASET) return null;
   const query = `*[_type == "journalPost" && slug.current == $slug][0]{
-    title, excerpt, metaTitle, metaDescription,
+    title, excerpt, metaTitle, metaDescription, author, publishedAt, _updatedAt,
     "image": featuredImage.asset->url
   }`;
   const u = `https://${env.SANITY_PROJECT_ID}.api.sanity.io/${SANITY_API_VERSION}/data/query/${env.SANITY_DATASET}` +
@@ -89,11 +89,45 @@ function injectMeta(html, post, url) {
     `<meta name="twitter:title" content="${e(rawTitle)}" />`,
     `<meta name="twitter:description" content="${e(desc)}" />`,
     img ? `<meta name="twitter:image" content="${e(img)}" />` : '',
-    `<link rel="canonical" href="${e(pageUrl)}" />`
+    `<link rel="canonical" href="${e(pageUrl)}" />`,
+    jsonLd(post, pageUrl, rawTitle, desc, img)
   ].filter(Boolean).join('\n');
 
   html = html.replace(/<title>[\s\S]*?<\/title>/, `<title>${e(fullTitle)}</title>`);
   html = html.replace(/<meta name="description"[^>]*>/, `<meta name="description" content="${e(desc)}" />`);
   html = html.replace('<!--SSR_HEAD-->', tags);
   return html;
+}
+
+function jsonLd(post, pageUrl, title, desc, img) {
+  const AGENT = 'https://meetkrishna.com/#krishna';
+  const graph = [
+    {
+      '@type': 'Article',
+      'headline': title,
+      'description': desc,
+      'mainEntityOfPage': {'@type': 'WebPage', '@id': pageUrl},
+      'author': {'@type': 'Person', 'name': post.author || 'Krishna Ambilwade'},
+      'publisher': {
+        '@type': 'RealEstateAgent', '@id': AGENT, 'name': 'Krishna Ambilwade',
+        'logo': {'@type': 'ImageObject', 'url': 'https://meetkrishna.com/apple-touch-icon.png'}
+      }
+    },
+    {
+      '@type': 'BreadcrumbList',
+      'itemListElement': [
+        {'@type': 'ListItem', 'position': 1, 'name': 'Home', 'item': 'https://meetkrishna.com/'},
+        {'@type': 'ListItem', 'position': 2, 'name': 'Journal', 'item': 'https://meetkrishna.com/journal/'},
+        {'@type': 'ListItem', 'position': 3, 'name': title, 'item': pageUrl}
+      ]
+    }
+  ];
+  const article = graph[0];
+  if (img) article.image = img;
+  if (post.publishedAt) article.datePublished = post.publishedAt;
+  if (post._updatedAt || post.publishedAt) article.dateModified = post._updatedAt || post.publishedAt;
+  const data = {'@context': 'https://schema.org', '@graph': graph};
+  // Safe to embed in HTML <script>: only need to neutralize </script>
+  const safe = JSON.stringify(data).replace(/<\//g, '<\\/');
+  return `<script type="application/ld+json">${safe}</script>`;
 }
