@@ -1711,13 +1711,13 @@
     const w = a.walkthrough || {};
     const heat = calculateLeadHeat();
 
-    const tags = ['Investor-Quiz', 'pm-completed', `Investor-${heat}`];
-    if (a.portfolio)  tags.push(`Portfolio:${a.portfolio}`);
-    if (a.experience) tags.push(`Experience:${a.experience}`);
-    if (a.status)     tags.push(`Status:${a.status}`);
-    if (a.pmHistory)  tags.push(`PMHistory:${a.pmHistory}`);
-    if (a.pmHistory === 'current-other') tags.push('Considering-Switch');
-    if (c.optIn) tags.push('Investor-Updates');
+    const tags = ['investor-quiz', 'pm-completed', `investor-${heat.toLowerCase()}`];
+    if (a.portfolio)  tags.push(`portfolio:${a.portfolio}`);
+    if (a.experience) tags.push(`experience:${a.experience}`);
+    if (a.status)     tags.push(`status:${a.status}`);
+    if (a.pmHistory)  tags.push(`pmhistory:${a.pmHistory}`);
+    if (a.pmHistory === 'current-other') tags.push('considering-switch');
+    if (c.optIn) tags.push('investor-updates');
 
     // Compute break-even hint (rough monthly cost)
     const monthlyCost = (f.mortgage || 0) + (f.tax || 0) + (f.insurance || 0);

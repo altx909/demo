@@ -1057,17 +1057,17 @@
     const a = quizState.answers;
     const c = a.contact || {};
     const heat = calculateLeadHeat();
-    const tags = ['Buyer-Quiz', 'buy-completed', `Buyer-${heat}`];
-    if (a.timing === 'now')       tags.push('Timing-Next-3-Months');
-    if (a.timing === '3-6')       tags.push('Timing-3-to-6');
-    if (a.timing === '6-12')      tags.push('Timing-6-to-12');
-    if (a.timing === 'exploring') tags.push('Timing-Exploring');
-    if (a.motivation) tags.push(`Motivation:${a.motivation}`);
-    if (a.financial)  tags.push(`Financial:${a.financial}`);
-    if (a.budget)     tags.push(`Budget:${a.budget}`);
-    if (a.concern)    tags.push(`Concern:${a.concern}`);
-    if (a.financial === 'neither') tags.push('Needs-Education');
-    if (c.optIn) tags.push('New-Listing-Alerts');
+    const tags = ['buyer-quiz', 'buy-completed', `buyer-${heat.toLowerCase()}`];
+    if (a.timing === 'now')       tags.push('timing-next-3-months');
+    if (a.timing === '3-6')       tags.push('timing-3-to-6');
+    if (a.timing === '6-12')      tags.push('timing-6-to-12');
+    if (a.timing === 'exploring') tags.push('timing-exploring');
+    if (a.motivation) tags.push(`motivation:${a.motivation}`);
+    if (a.financial)  tags.push(`financial:${a.financial}`);
+    if (a.budget)     tags.push(`budget:${a.budget}`);
+    if (a.concern)    tags.push(`concern:${a.concern}`);
+    if (a.financial === 'neither') tags.push('needs-education');
+    if (c.optIn) tags.push('new-listing-alerts');
     return {
       contact: {
         firstName: c.name || '',
