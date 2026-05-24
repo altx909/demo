@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+  <rect width="64" height="64" rx="14" fill="#FAF7F2"/>
+  <rect x="0.5" y="0.5" width="63" height="63" rx="13.5" fill="none" stroke="#E5E0D7"/>
+  <text x="33" y="46" text-anchor="middle"
+        font-family="Fraunces, 'Cormorant Garamond', Georgia, 'Times New Roman', serif"
+        font-style="italic" font-weight="500" font-size="46" fill="#1F3A2E">K</text>
+</svg>
