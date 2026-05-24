@@ -22,6 +22,8 @@ const POST_QUERY = `*[_type == "journalPost" && slug.current == $slug][0]{
   author,
   category,
   tags,
+  metaTitle,
+  metaDescription,
   body[]{
     ...,
     _type == "image" => { "_type": _type, "url": asset->url, alt, caption }
@@ -90,6 +92,8 @@ function normalize(p) {
     author: p.author || 'Krishna Ambilwade',
     category: p.category || '',
     tags: p.tags || [],
+    metaTitle: p.metaTitle || '',
+    metaDescription: p.metaDescription || '',
     bodyHtml: portableTextToHtml(p.body)
   };
 }
