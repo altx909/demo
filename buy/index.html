@@ -20,6 +20,7 @@
 <meta name="twitter:image" content="https://meetkrishna.com/images/service-buy.jpg" />
 <link rel="canonical" href="https://meetkrishna.com/buy/" />
 <script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://meetkrishna.com/"}, {"@type": "ListItem", "position": 2, "name": "Buy a Home", "item": "https://meetkrishna.com/buy/"}]}, {"@type": "Service", "serviceType": "Real estate buyer agent", "name": "Home Buying in Saskatoon", "url": "https://meetkrishna.com/buy/", "areaServed": {"@type": "City", "name": "Saskatoon"}, "provider": {"@type": "RealEstateAgent", "@id": "https://meetkrishna.com/#krishna", "name": "Krishna Ambilwade"}}]}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "How much do I need for a down payment in Saskatoon?", "acceptedAnswer": {"@type": "Answer", "text": "In Canada the minimum is 5% on the first $500,000 of the price and 10% on the portion above that. On a typical Saskatoon home around $450,000, that's roughly $25,000. With less than 20% down you'll also pay mortgage default insurance, which is added to your loan."}}, {"@type": "Question", "name": "I'm a first-time buyer — what programs can help?", "acceptedAnswer": {"@type": "Answer", "text": "Quite a few. You can save up to $40,000 tax-free in a First Home Savings Account (FHSA), withdraw up to $60,000 from your RRSP under the Home Buyers' Plan, and claim both the federal ($1,500) and Saskatchewan ($1,575) first-time homebuyer tax credits. First-time buyers can also use a 30-year amortization to lower payments."}}, {"@type": "Question", "name": "How do I know what I can afford?", "acceptedAnswer": {"@type": "Answer", "text": "Lenders apply a federal stress test — you have to qualify at the higher of your contract rate plus 2%, or 5.25%. The best first step is a mortgage pre-approval, which tells you your real budget and can hold a rate while you shop."}}, {"@type": "Question", "name": "What are the closing costs when buying in Saskatchewan?", "acceptedAnswer": {"@type": "Answer", "text": "Good news: Saskatchewan has no land transfer tax. Budget roughly 1.5–4% of the price for a title transfer registration fee (about 0.4%), legal fees, a home inspection, and adjustments."}}, {"@type": "Question", "name": "What does it cost to work with a buyer's agent?", "acceptedAnswer": {"@type": "Answer", "text": "In a typical resale purchase, the buyer's agent is paid from the seller's side — so having Krishna represent you usually costs nothing out of pocket. We'll always confirm the details for your specific purchase up front."}}]}</script>
 
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -604,6 +605,25 @@
     .footer__grid { grid-template-columns: 1fr; gap: 40px; padding-bottom: 40px; }
     .footer__bottom { flex-direction: column; align-items: flex-start; }
   }
+
+  /* ---------------- FAQ (shared component) ---------------- */
+  .faq { background: var(--cream-warm); padding: 110px 40px; }
+  .faq__inner { max-width: 880px; margin: 0 auto; }
+  .faq__head { text-align: center; margin-bottom: 52px; }
+  .faq__eyebrow { display:inline-flex; align-items:center; justify-content:center; gap:14px; font-size:11px; font-weight:500; letter-spacing:0.28em; text-transform:uppercase; color:var(--forest); margin-bottom:22px; }
+  .faq__eyebrow::before, .faq__eyebrow::after { content:""; width:28px; height:1px; background:var(--forest); opacity:0.6; }
+  .faq__title { font-family:var(--serif); font-weight:300; font-size:clamp(32px,4.4vw,50px); line-height:1.08; letter-spacing:-0.02em; color:var(--ink); margin:0; }
+  .faq__title em { font-style:italic; color:var(--forest); }
+  .faq__list { border-top:1px solid var(--line); }
+  .faq__item { border-bottom:1px solid var(--line); }
+  .faq__q { width:100%; background:transparent; border:none; padding:26px 4px; text-align:left; cursor:pointer; display:flex; justify-content:space-between; align-items:center; gap:24px; font-family:var(--serif); font-weight:400; font-size:19px; color:var(--ink); transition:color 200ms var(--ease); }
+  .faq__q:hover { color:var(--forest); }
+  .faq__icon { width:28px; height:28px; border-radius:50%; border:1px solid var(--line); display:inline-flex; align-items:center; justify-content:center; color:var(--forest); transition:transform 350ms var(--ease), background 250ms var(--ease); flex-shrink:0; }
+  .faq__item.open .faq__icon { transform:rotate(45deg); background:var(--sage-pale); }
+  .faq__a { overflow:hidden; max-height:0; transition:max-height 450ms var(--ease); }
+  .faq__a-inner { padding:0 4px 26px; font-size:15px; line-height:1.7; color:var(--ink-soft); }
+  .faq__item.open .faq__a { max-height:600px; }
+  @media (max-width:640px){ .faq { padding:72px 20px; } .faq__q { font-size:17px; } }
 </style>
 </head>
 <body>
@@ -718,6 +738,39 @@
 </section>
 
 <!-- ============================================ FOOTER ============================================ -->
+
+<!-- ============================================ FAQ ============================================ -->
+<section class="faq" id="faq">
+  <div class="faq__inner">
+    <div class="faq__head">
+      <span class="faq__eyebrow">Common questions</span>
+      <h2 class="faq__title">Buying questions, <em>answered</em>.</h2>
+    </div>
+    <div class="faq__list">
+      <div class="faq__item">
+        <button class="faq__q">How much do I need for a down payment in Saskatoon?<span class="faq__icon"><svg width="12" height="12" viewBox="0 0 12 12"><path d="M6 1v10M1 6h10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></span></button>
+        <div class="faq__a"><div class="faq__a-inner">In Canada the minimum is 5% on the first $500,000 of the price and 10% on the portion above that. On a typical Saskatoon home around $450,000, that's roughly $25,000. With less than 20% down you'll also pay mortgage default insurance, which is added to your loan.</div></div>
+      </div>
+      <div class="faq__item">
+        <button class="faq__q">I'm a first-time buyer — what programs can help?<span class="faq__icon"><svg width="12" height="12" viewBox="0 0 12 12"><path d="M6 1v10M1 6h10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></span></button>
+        <div class="faq__a"><div class="faq__a-inner">Quite a few. You can save up to $40,000 tax-free in a First Home Savings Account (FHSA), withdraw up to $60,000 from your RRSP under the Home Buyers' Plan, and claim both the federal ($1,500) and Saskatchewan ($1,575) first-time homebuyer tax credits. First-time buyers can also use a 30-year amortization to lower payments.</div></div>
+      </div>
+      <div class="faq__item">
+        <button class="faq__q">How do I know what I can afford?<span class="faq__icon"><svg width="12" height="12" viewBox="0 0 12 12"><path d="M6 1v10M1 6h10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></span></button>
+        <div class="faq__a"><div class="faq__a-inner">Lenders apply a federal stress test — you have to qualify at the higher of your contract rate plus 2%, or 5.25%. The best first step is a mortgage pre-approval, which tells you your real budget and can hold a rate while you shop.</div></div>
+      </div>
+      <div class="faq__item">
+        <button class="faq__q">What are the closing costs when buying in Saskatchewan?<span class="faq__icon"><svg width="12" height="12" viewBox="0 0 12 12"><path d="M6 1v10M1 6h10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></span></button>
+        <div class="faq__a"><div class="faq__a-inner">Good news: Saskatchewan has no land transfer tax. Budget roughly 1.5–4% of the price for a title transfer registration fee (about 0.4%), legal fees, a home inspection, and adjustments.</div></div>
+      </div>
+      <div class="faq__item">
+        <button class="faq__q">What does it cost to work with a buyer's agent?<span class="faq__icon"><svg width="12" height="12" viewBox="0 0 12 12"><path d="M6 1v10M1 6h10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></span></button>
+        <div class="faq__a"><div class="faq__a-inner">In a typical resale purchase, the buyer's agent is paid from the seller's side — so having Krishna represent you usually costs nothing out of pocket. We'll always confirm the details for your specific purchase up front.</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
 <footer class="footer">
   <div class="footer__inner">
     <div class="footer__grid">
@@ -1095,6 +1148,19 @@
 
   buildProgress();
   renderStep();
+</script>
+
+
+<script>
+  /* FAQ accordion (single-open) */
+  document.querySelectorAll('.faq__item').forEach(function(item){
+    var q = item.querySelector('.faq__q');
+    q.addEventListener('click', function(){
+      var isOpen = item.classList.contains('open');
+      document.querySelectorAll('.faq__item.open').forEach(function(i){ if (i !== item) i.classList.remove('open'); });
+      item.classList.toggle('open', !isOpen);
+    });
+  });
 </script>
 
 </body>
