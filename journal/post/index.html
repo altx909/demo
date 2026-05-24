@@ -189,10 +189,9 @@
   <a href="#owner-portal" class="util">Owner Portal</a><a href="#tenant-portal" class="util">Tenant Portal</a>
 </div>
 
-<!-- ARTICLE (populated by JS) -->
-<main id="postRoot">
-  <div class="state"><div class="spinner"></div>Loading…</div>
-</main>
+<!-- ARTICLE — server-rendered into the SSR_BODY region by functions/journal/post/[[slug]].js;
+     falls back to client-side fetch if the function didn't render it. -->
+<main id="postRoot"><!--SSR_BODY--><div class="state" id="postLoading"><div class="spinner"></div>Loading…</div><!--/SSR_BODY--></main>
 
 <!-- FOOTER -->
 <footer class="footer">
@@ -204,7 +203,7 @@
         <p class="footer__brand-desc">Honest, attentive service for Saskatoon's buyers, sellers, renters, and investors. One name, one standard — across every doorway.</p>
         <div class="footer__social">
           <a href="#instagram" aria-label="Instagram"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><rect x="1.5" y="1.5" width="13" height="13" rx="3.5" stroke="currentColor" stroke-width="1.3"/><circle cx="8" cy="8" r="3" stroke="currentColor" stroke-width="1.3"/><circle cx="11.5" cy="4.5" r="0.7" fill="currentColor"/></svg></a>
-          <a href="#facebook" aria-label="Facebook"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M9 14V8.5h2L11.5 6H9V4.6c0-.6.2-1.1 1.1-1.1H11.5V1.1L10 1c-2 0-3 1.2-3 3V6H5v2.5h2V14h2z" fill="currentColor"/></svg></a>
+          <a href="https://www.facebook.com/profile.php?id=61557947674277" target="_blank" rel="noopener" aria-label="Facebook"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M9 14V8.5h2L11.5 6H9V4.6c0-.6.2-1.1 1.1-1.1H11.5V1.1L10 1c-2 0-3 1.2-3 3V6H5v2.5h2V14h2z" fill="currentColor"/></svg></a>
           <a href="#linkedin" aria-label="LinkedIn"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><rect x="2" y="6" width="2.5" height="8" fill="currentColor"/><circle cx="3.25" cy="3" r="1.4" fill="currentColor"/><path d="M7 6h2.4v1.2c.4-.7 1.3-1.4 2.6-1.4 2 0 2.5 1.3 2.5 3V14h-2.5V9.4c0-1-.4-1.5-1.2-1.5s-1.4.6-1.4 1.6V14H7V6z" fill="currentColor"/></svg></a>
         </div>
       </div>
@@ -383,7 +382,19 @@
     });
   }
 
-  loadPost();
+  // If the server already rendered the article (SSR), skip the re-fetch and
+  // just wire the share controls. Otherwise, load + render client-side.
+  (function init() {
+    const ssr = root.querySelector('article[data-ssr="1"]');
+    if (ssr) {
+      const loading = document.getElementById('postLoading');
+      if (loading) loading.remove();
+      const pageUrl = window.location.origin + window.location.pathname;
+      wireShare(pageUrl, ssr.getAttribute('data-share-title') || document.title);
+    } else {
+      loadPost();
+    }
+  })();
 </script>
 
 </body>
