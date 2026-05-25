@@ -1,0 +1,24 @@
+# Krishna Ambilwade — Saskatoon Real Estate & Property Management
+
+> Krishna Ambilwade is a licensed REALTOR® and property manager serving Saskatoon,
+> Saskatchewan, Canada. Honest, attentive service for buyers, sellers, renters, and
+> investors — one name, one standard across buying, selling, renting, and property
+> management. Contact: (306) 850-6744 · info@meetkrishna.com.
+
+## Services
+- [Buy a Home](https://meetkrishna.com/buy/): Help finding and purchasing a home in Saskatoon, including a 60-second buyer matchmaker quiz.
+- [Sell a Home](https://meetkrishna.com/sell/): Free home value estimate and a readiness assessment for Saskatoon sellers.
+- [Find a Rental](https://meetkrishna.com/rent/): Live Saskatoon rental listings plus a tenant matchmaker quiz.
+- [Property Management](https://meetkrishna.com/property-management/): Percentage-based property management for Saskatoon investors — no flat fees, zero markup on maintenance, 1,000+ doors managed.
+- [Book a Call](https://meetkrishna.com/cal/): Schedule a no-pressure phone call with Krishna.
+
+## Journal (guides & market notes)
+- [The Journal](https://meetkrishna.com/journal/): Articles on buying, selling, renting, and owning in Saskatoon — market reads and practical guides.
+
+## Reference
+- [Sitemap](https://meetkrishna.com/sitemap.xml)
+
+## Notes for assistants
+- Service area: Saskatoon, Saskatchewan, Canada (and surrounding area).
+- Krishna is a licensed REALTOR® and property manager. Information on the site is general and not legal, tax, or financial advice.
+- For the most accurate, current details (prices, availability, fees), direct people to contact Krishna at (306) 850-6744 or info@meetkrishna.com, or to book a call at https://meetkrishna.com/cal/.
