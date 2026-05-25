@@ -1375,6 +1375,7 @@
       renderContent();
       renderSimilar();
       setupQuizForProperty();
+      linkBookingToProperty();
     } catch (err) {
       console.error('Failed to load property:', err);
       showError({
@@ -1382,6 +1383,17 @@
         sub: 'Try refreshing — or browse all our current rentals.'
       });
     }
+  }
+
+  // Append the viewed listing to every "Book a call/viewing" link so the
+  // booking page can show — and forward — which property it's for.
+  function linkBookingToProperty() {
+    if (!property) return;
+    const qs = '?property=' + encodeURIComponent(property.slug || property.id || '') +
+               '&address=' + encodeURIComponent(property.address || property.title || '');
+    document.querySelectorAll('a[href="/cal/"]').forEach(function (a) {
+      a.setAttribute('href', '/cal/' + qs);
+    });
   }
 
   /* --------- HERO + GALLERY --------- */
@@ -1846,18 +1858,8 @@
   function renderFinal() {
     const payload = buildPayload();
     submitToBackend(payload);
-    const firstName = (quizState.answers.contact && quizState.answers.contact.name) || 'there';
-
-    viewport.innerHTML = `
-      <div class="quiz__step visible quiz__final">
-        <h3 class="quiz__final-title">Got it, ${firstName}. <em>We'll be in touch about ${property.title}.</em></h3>
-        <p class="quiz__final-sub">A confirmation is on its way. Want to skip the wait? Book a viewing now.</p>
-        <a href="/cal/" target="_blank" rel="noopener" class="quiz__final-cta">
-          Book a viewing
-          <svg width="14" height="10" viewBox="0 0 14 10" fill="none"><path d="M1 5h11M8 1l4 4-4 4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </a>
-      </div>`;
-    progress.querySelectorAll('.quiz__dot').forEach(d => { d.classList.remove('current'); d.classList.add('done'); });
+    try { sessionStorage.setItem('typName', (quizState.answers.contact && quizState.answers.contact.name) || ''); } catch (e) {}
+    window.location.href = '/typ-rent/';
   }
 
   function renderQuiz() {

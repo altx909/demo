@@ -61,6 +61,7 @@
     box-shadow:0 20px 60px -38px rgba(20,39,31,0.45); }
   .cal__embed iframe { width:100%; min-height:720px; border:none; display:block; background:var(--cream); }
 
+  .cal__for { margin:14px auto 0; display:inline-block; font-size:13px; font-weight:500; color:var(--forest); background:var(--sage-pale); border-radius:999px; padding:7px 16px; }
   .cal__fallback { text-align:center; font-size:13px; color:var(--muted); margin:20px auto 0; }
   .cal__fallback a { color:var(--forest); font-weight:500; }
 
@@ -89,6 +90,7 @@
       <span class="cal__eyebrow">Let's talk</span>
       <h1 class="cal__title">Book a call with <em>Krishna</em>.</h1>
       <p class="cal__sub">Pick a time that suits you for a quick, no-pressure phone call. Whether you're buying, selling, renting, or investing — happy to help.</p>
+      <p class="cal__for" id="calFor" hidden></p>
     </div>
 
     <div class="cal__embed">
@@ -110,6 +112,28 @@
     Krishna Ambilwade · Saskatoon Real Estate &amp; Property Management · (306) 850-6744 · info@meetkrishna.com<br />
     Designed by <a href="https://altxmedia.com" target="_blank" rel="noopener" style="color:var(--forest)">AltX Media</a>
   </footer>
+
+  <!-- If arriving from a listing's "Book a viewing", show + forward the property -->
+  <script>
+    (function () {
+      var p = new URLSearchParams(window.location.search);
+      var address = (p.get('address') || '').trim();
+      var property = (p.get('property') || '').trim();
+      if (address || property) {
+        var el = document.getElementById('calFor');
+        if (el) { el.textContent = 'Booking a viewing for: ' + (address || property); el.hidden = false; }
+        // Forward the context to the GHL widget (used if the calendar is configured to read it).
+        var iframe = document.getElementById('talk_to_krishna_cal');
+        if (iframe) {
+          var sep = iframe.src.indexOf('?') === -1 ? '?' : '&';
+          var extra = [];
+          if (property) extra.push('property=' + encodeURIComponent(property));
+          if (address) extra.push('property_address=' + encodeURIComponent(address));
+          iframe.src = iframe.src + sep + extra.join('&');
+        }
+      }
+    })();
+  </script>
 
   <!-- GHL auto-resize script: sizes the iframe to its content height -->
   <script src="https://api.altxmedia.com/js/form_embed.js" type="text/javascript"></script>

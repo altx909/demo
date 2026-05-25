@@ -1163,5 +1163,79 @@
   });
 </script>
 
+
+<!-- ============================================ SOCIAL PROOF TOAST ============================================ -->
+<style>
+  .kproof { position:fixed; left:20px; bottom:20px; z-index:45; max-width:320px;
+    display:flex; align-items:center; gap:12px; padding:12px 38px 12px 12px;
+    background:#FAF7F2; border:1px solid #E5E0D7; border-radius:14px;
+    box-shadow:0 18px 44px -20px rgba(20,39,31,0.45); font-family:'Inter',-apple-system,BlinkMacSystemFont,'Helvetica Neue',sans-serif;
+    opacity:0; transform:translateY(14px); pointer-events:none;
+    transition:opacity 400ms cubic-bezier(0.22,1,0.36,1), transform 400ms cubic-bezier(0.22,1,0.36,1); }
+  .kproof.kproof--show { opacity:1; transform:translateY(0); pointer-events:auto; }
+  .kproof__avatar { width:38px; height:38px; flex-shrink:0; border-radius:50%;
+    background:#1F3A2E; color:#FAF7F2; display:flex; align-items:center; justify-content:center;
+    font-weight:600; font-size:16px; font-family:'Fraunces','Cormorant Garamond',Georgia,serif; }
+  .kproof__body { min-width:0; }
+  .kproof__text { margin:0; font-size:13.5px; line-height:1.35; color:#1A1A1A; }
+  .kproof__text strong { font-weight:600; }
+  .kproof__meta { margin:3px 0 0; font-size:11px; letter-spacing:0.04em; color:#6B6B6B; display:flex; align-items:center; gap:6px; }
+  .kproof__dot { width:6px; height:6px; border-radius:50%; background:#1F3A2E; display:inline-block; }
+  .kproof__close { position:absolute; top:8px; right:10px; background:none; border:none; cursor:pointer;
+    font-size:16px; line-height:1; color:#6B6B6B; padding:2px; opacity:0.6; transition:opacity 200ms ease; }
+  .kproof__close:hover { opacity:1; }
+  @media (max-width:640px){ .kproof { left:12px; right:12px; bottom:12px; max-width:none; } }
+  @media (prefers-reduced-motion: reduce){ .kproof { transition:opacity 300ms ease; transform:none; } .kproof.kproof--show { transform:none; } }
+</style>
+<div class="kproof" id="kproof" role="status" aria-live="polite" aria-hidden="true">
+  <div class="kproof__avatar" id="kproofAvatar">J</div>
+  <div class="kproof__body">
+    <p class="kproof__text" id="kproofText"></p>
+    <p class="kproof__meta"><span class="kproof__dot"></span><span id="kproofMeta">Recently in Saskatoon</span></p>
+  </div>
+  <button class="kproof__close" id="kproofClose" aria-label="Dismiss">&times;</button>
+</div>
+<script>
+  (function(){
+    var ITEMS = [
+      { name:'Jordan', verb:'rented', area:'Sutherland' },
+      { name:'Maddie', verb:'purchased', area:'Aspen Ridge' },
+      { name:'Naomi',  verb:'rented', area:'Nutana' },
+      { name:'Penny',  verb:'sold', area:'Evergreen' },
+      { name:'Amit',   verb:'rented', area:'Downtown' }
+    ];
+    var el = document.getElementById('kproof');
+    if (!el) return;
+    var textEl = document.getElementById('kproofText');
+    var avEl = document.getElementById('kproofAvatar');
+    var closeEl = document.getElementById('kproofClose');
+    var i = Math.floor(Math.random() * ITEMS.length), hideT, nextT, stopped = false;
+    try { if (sessionStorage.getItem('kproofClosed') === '1') return; } catch(e){}
+
+    function render(item){
+      avEl.textContent = item.name.charAt(0);
+      textEl.innerHTML = '<strong>' + item.name + '</strong> ' + item.verb + ' in ' + item.area;
+    }
+    function show(){
+      if (stopped) return;
+      render(ITEMS[i]);
+      i = (i + 1) % ITEMS.length;
+      el.classList.add('kproof--show');
+      el.setAttribute('aria-hidden','false');
+      hideT = setTimeout(function(){
+        el.classList.remove('kproof--show');
+        el.setAttribute('aria-hidden','true');
+      }, 5000);            // visible 5s
+      nextT = setTimeout(show, 8000); // new one every 8s
+    }
+    closeEl.addEventListener('click', function(){
+      stopped = true; clearTimeout(hideT); clearTimeout(nextT);
+      el.classList.remove('kproof--show'); el.setAttribute('aria-hidden','true');
+      try { sessionStorage.setItem('kproofClosed','1'); } catch(e){}
+    });
+    setTimeout(show, 4000); // first appears after 4s
+  })();
+</script>
+
 </body>
 </html>
