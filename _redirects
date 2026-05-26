@@ -7,3 +7,13 @@
 /journal/post/*  /journal/post/index.html  200
 /admin https://krishna-realty.sanity.studio 301
 https://www.meetkrishna.com/* https://meetkrishna.com/:splat 301
+
+# ---- Legacy URLs from the previous site → closest current page (fixes GSC 404s) ----
+/about-us.html          /#about        301
+/about-us               /#about        301
+/available-rentals.html /rent/         301
+/available-rentals      /rent/         301
+/contact-us.html        /cal/          301
+/contact-us             /cal/          301
+/pre-approval           /buy/          301
+/pre-approval.html      /buy/          301
