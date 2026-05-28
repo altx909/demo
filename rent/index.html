@@ -2327,17 +2327,22 @@
   }
 
   async function submitToBackend(payload) {
-    /* Wire to Cloudflare Worker once GHL endpoint exists.
-       Example:
-         await fetch('/api/quiz-submit', {
-           method: 'POST',
-           headers: { 'Content-Type': 'application/json' },
-           body: JSON.stringify(payload),
+    try {
+      const res = await fetch('/api/quiz-submit', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
         keepalive: true
-         });
-    */
-    console.log('[QUIZ SUBMIT — payload ready for GHL]', payload);
-    return Promise.resolve(true);
+      });
+      if (!res.ok) {
+        console.error('Quiz submission failed:', res.status, await res.text());
+        return false;
+      }
+      return await res.json();
+    } catch (err) {
+      console.error('Quiz submission error:', err);
+      return false;
+    }
   }
 
   function renderFinal() {
