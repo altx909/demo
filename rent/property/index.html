@@ -279,36 +279,46 @@
   }
   .btn-secondary:hover { background: var(--forest); color: var(--cream); }
 
-  /* ---------------- QUICK FACTS ---------------- */
+  /* ---------------- FACTS TICKER ---------------- */
   .facts {
     background: var(--cream-warm);
-    padding: 36px 40px;
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+    overflow: hidden;
+    padding: 0;
   }
-  .facts__inner {
-    max-width: 1320px;
-    margin: 0 auto;
+  .facts__track {
     display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 24px 40px;
+    width: max-content;
+    animation: factsTicker 28s linear infinite;
+  }
+  .facts__track:hover { animation-play-state: paused; }
+  @keyframes factsTicker {
+    0%   { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
+  .facts__set {
+    display: flex;
+    align-items: stretch;
   }
   .fact {
-    display: flex; flex-direction: column; gap: 4px;
-    flex: 0 0 auto;
+    display: flex; flex-direction: column; justify-content: center; gap: 3px;
+    padding: 18px 28px;
+    border-right: 1px solid var(--line);
+    flex-shrink: 0;
   }
-  .fact--secondary { /* hidden on mobile, shown in details section instead */ }
   .fact__label {
-    font-size: 10px; font-weight: 500;
-    letter-spacing: 0.22em; text-transform: uppercase;
+    font-size: 9px; font-weight: 500;
+    letter-spacing: 0.24em; text-transform: uppercase;
     color: var(--muted);
   }
   .fact__value {
     font-family: var(--serif); font-weight: 400;
-    font-size: clamp(15px, 1.4vw, 20px); line-height: 1.2;
+    font-size: 18px; line-height: 1.2;
     color: var(--ink); letter-spacing: -0.01em;
     white-space: nowrap;
   }
-  .fact__value small { font-size: 13px; color: var(--muted); font-weight: 300; }
+  .fact__value small { font-size: 12px; color: var(--muted); font-weight: 300; }
 
   /* ---------------- CONTENT SECTIONS ---------------- */
   .content {
@@ -932,8 +942,7 @@
     .prop-hero { padding: 0 24px 48px; }
     .gallery { height: 420px; grid-template-columns: 2fr 1fr; }
     .gallery__cell:nth-child(4), .gallery__cell:nth-child(5) { display: none; }
-    .facts { padding: 28px 24px; }
-    .facts__inner { gap: 20px 28px; }
+    .facts { padding: 0; }
     .content { padding: 70px 24px; }
     .content__section { margin-bottom: 60px; }
     .nbhd { grid-template-columns: 1fr; gap: 28px; }
@@ -960,8 +969,7 @@
     .gallery__cell:nth-child(1) { grid-row: 1; }
     .gallery__cell:nth-child(3) { display: none; }
     .facts { padding: 24px 20px; }
-    .facts__inner { gap: 16px 24px; }
-    .fact--secondary { display: none; }
+    .fact { padding: 14px 20px; }
     .content { padding: 56px 20px; }
     .highlights { grid-template-columns: 1fr; gap: 0; }
     .quiz { padding: 56px 20px; }
@@ -1045,10 +1053,10 @@
   <!-- Rendered by JS -->
 </section>
 
-<!-- ============================================ QUICK FACTS ============================================ -->
-<section class="facts">
-  <div class="facts__inner" id="propFacts">
-    <!-- Rendered by JS -->
+<!-- ============================================ FACTS TICKER ============================================ -->
+<section class="facts" id="factsStrip">
+  <div class="facts__track" id="factsTrack">
+    <!-- Two identical sets for seamless loop — rendered by JS -->
   </div>
 </section>
 
@@ -1557,54 +1565,49 @@
     document.getElementById('viewAllBtn')?.addEventListener('click', () => openLightbox(0));
   }
 
-  /* --------- QUICK FACTS --------- */
+  /* --------- FACTS TICKER + FULL PICTURE --------- */
   function renderFacts() {
-    const primary = [
-      { label: 'Bedrooms',  value: property.beds === 0 ? 'Studio' : property.beds },
-      { label: 'Bathrooms', value: property.baths },
-      { label: 'Size',      value: property.sqft ? `${property.sqft.toLocaleString()}<small> sqft</small>` : null },
-      { label: 'Parking',   value: property.parking },
-      { label: 'Laundry',   value: property.laundry },
-      { label: 'Pets',      value: property.petsDescriptor },
-    ].filter(f => f.value !== null && f.value !== '');
-
-    const secondary = [
-      { label: 'Available', value: property.available },
-      { label: 'Lease',     value: property.leaseLength },
-      { label: 'Deposit',   value: `$${property.deposit.toLocaleString()}` },
-      { label: 'Furnished', value: property.furnished ? 'Yes' : 'No' },
-      { label: 'Heating',   value: property.heating || null },
-      { label: 'A/C',       value: property.airConditioning ? 'Yes' : null },
-      { label: 'Year Built',value: property.yearBuilt || null },
-      { label: 'Floor',     value: property.floor || null },
+    const allFacts = [
+      { label: 'Bedrooms',   value: property.beds === 0 ? 'Studio' : property.beds },
+      { label: 'Bathrooms',  value: property.baths },
+      { label: 'Size',       value: property.sqft ? `${property.sqft.toLocaleString()}<small> sqft</small>` : null },
+      { label: 'Parking',    value: property.parking },
+      { label: 'Laundry',    value: property.laundry },
+      { label: 'Pets',       value: property.petsDescriptor },
+      { label: 'Available',  value: property.available },
+      { label: 'Lease',      value: property.leaseLength },
+      { label: 'Deposit',    value: `$${property.deposit.toLocaleString()}` },
+      { label: 'Furnished',  value: property.furnished ? 'Yes' : 'No' },
+      { label: 'Heating',    value: property.heating || null },
+      { label: 'A/C',        value: property.airConditioning ? 'Yes' : null },
+      { label: 'Year Built', value: property.yearBuilt || null },
+      { label: 'Floor',      value: property.floor || null },
       { label: 'Pet Deposit',value: property.petDeposit ? `$${property.petDeposit.toLocaleString()}` : null },
-      { label: 'App. Fee',  value: property.applicationFee ? `$${property.applicationFee.toLocaleString()}` : null },
+      { label: 'App. Fee',   value: property.applicationFee ? `$${property.applicationFee.toLocaleString()}` : null },
     ].filter(f => f.value !== null && f.value !== '' && f.value !== 0);
 
-    // Strip: all facts on desktop, primary only on mobile (secondary hidden via CSS)
-    document.getElementById('propFacts').innerHTML = [
-      ...primary.map(f => `
-        <div class="fact">
-          <span class="fact__label">${f.label}</span>
-          <span class="fact__value">${f.value}</span>
-        </div>`),
-      ...secondary.map(f => `
-        <div class="fact fact--secondary">
-          <span class="fact__label">${f.label}</span>
-          <span class="fact__value">${f.value}</span>
-        </div>`)
-    ].join('');
+    // Build one set of ticker items
+    const setHTML = `<div class="facts__set">${allFacts.map(f => `
+      <div class="fact">
+        <span class="fact__label">${f.label}</span>
+        <span class="fact__value">${f.value}</span>
+      </div>`).join('')}</div>`;
 
-    // Details section: secondary facts rendered below in content
-    if (secondary.length) {
-      document.getElementById('detailsSection').style.display = '';
-      document.getElementById('propDetailsList').innerHTML = secondary.map(f => `
-        <div class="prop-detail">
-          <span class="prop-detail__label">${f.label}</span>
-          <span class="prop-detail__value">${f.value}</span>
-        </div>
-      `).join('');
-    }
+    // Two copies side-by-side = seamless infinite loop
+    document.getElementById('factsTrack').innerHTML = setHTML + setHTML;
+
+    // Speed: ~40px per second relative to number of items
+    const duration = Math.max(20, allFacts.length * 2.8);
+    document.getElementById('factsTrack').style.animationDuration = `${duration}s`;
+
+    // Full picture section — all facts in a grid
+    document.getElementById('detailsSection').style.display = '';
+    document.getElementById('propDetailsList').innerHTML = allFacts.map(f => `
+      <div class="prop-detail">
+        <span class="prop-detail__label">${f.label}</span>
+        <span class="prop-detail__value">${f.value}</span>
+      </div>
+    `).join('');
   }
 
   /* --------- DESCRIPTION + HIGHLIGHTS + AMENITIES + UTILITIES + NBHD + APPLICATION --------- */
