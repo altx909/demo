@@ -290,21 +290,23 @@
   .facts__track {
     display: flex;
     width: max-content;
-    animation: factsTicker 28s linear infinite;
+    animation: factsTicker 32s linear infinite;
   }
   .facts__track:hover { animation-play-state: paused; }
+  /* 3 identical sets — animate by exactly one set width (–33.333%)
+     so the snap-back is invisible and the loop is perfectly seamless */
   @keyframes factsTicker {
     0%   { transform: translateX(0); }
-    100% { transform: translateX(-50%); }
+    100% { transform: translateX(-33.333%); }
   }
   .facts__set {
     display: flex;
     align-items: stretch;
   }
   .fact {
-    display: flex; flex-direction: column; justify-content: center; gap: 3px;
-    padding: 18px 28px;
-    border-right: 1px solid var(--line);
+    display: flex; flex-direction: column; justify-content: center; gap: 4px;
+    padding: 22px 52px;
+    border-left: 1px solid var(--line);
     flex-shrink: 0;
   }
   .fact__label {
@@ -969,7 +971,7 @@
     .gallery__cell:nth-child(1) { grid-row: 1; }
     .gallery__cell:nth-child(3) { display: none; }
     .facts { padding: 24px 20px; }
-    .fact { padding: 14px 20px; }
+    .fact { padding: 16px 32px; }
     .content { padding: 56px 20px; }
     .highlights { grid-template-columns: 1fr; gap: 0; }
     .quiz { padding: 56px 20px; }
@@ -1593,11 +1595,12 @@
         <span class="fact__value">${f.value}</span>
       </div>`).join('')}</div>`;
 
-    // Two copies side-by-side = seamless infinite loop
-    document.getElementById('factsTrack').innerHTML = setHTML + setHTML;
+    // THREE copies — animation moves by exactly -33.333% (one set width)
+    // so the snap-back is invisible regardless of subpixel rounding
+    document.getElementById('factsTrack').innerHTML = setHTML + setHTML + setHTML;
 
-    // Speed: ~40px per second relative to number of items
-    const duration = Math.max(20, allFacts.length * 2.8);
+    // ~3.5s per fact keeps it readable without feeling slow
+    const duration = Math.max(24, allFacts.length * 3.5);
     document.getElementById('factsTrack').style.animationDuration = `${duration}s`;
 
     // Full picture section — all facts in a grid
