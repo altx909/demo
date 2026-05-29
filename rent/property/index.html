@@ -288,8 +288,8 @@
     max-width: 1320px;
     margin: 0 auto;
     display: grid;
-    grid-template-columns: repeat(6, 1fr);
-    gap: 20px;
+    grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+    gap: 20px 24px;
   }
   .fact {
     display: flex; flex-direction: column; gap: 4px;
@@ -861,6 +861,42 @@
   .footer__legal a { font-size: 11.5px; color: rgba(250,247,242,0.55); transition: color 200ms var(--ease); }
   .footer__legal a:hover { color: var(--cream); }
 
+  /* ---------------- PROMOTIONS ---------------- */
+  .promo-banners { max-width: 1080px; margin: 0 auto; padding: 0 40px; }
+  .promo-banner {
+    display: flex; align-items: center; gap: 16px;
+    background: #fef9ec; border: 1px solid #e8c84a;
+    border-radius: 8px; padding: 16px 22px; margin-bottom: 12px;
+  }
+  .promo-banner__icon { font-size: 22px; flex-shrink: 0; }
+  .promo-banner__headline { font-family: var(--serif); font-size: 17px; color: var(--ink); }
+  .promo-banner__fine { font-size: 13px; color: var(--muted); margin-left: 8px; }
+
+  /* ---------------- AMENITIES ---------------- */
+  .amenity-groups { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 28px; }
+  .amenity-group__title {
+    font-size: 11px; font-weight: 500; letter-spacing: 0.22em;
+    text-transform: uppercase; color: var(--muted); margin: 0 0 14px;
+  }
+  .amenity-chips { display: flex; flex-wrap: wrap; gap: 8px; }
+  .amenity-chip {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 6px 12px; background: var(--sage-pale);
+    border-radius: 999px; font-size: 13px; color: var(--ink);
+  }
+
+  /* ---------------- APPLICATION INFO ---------------- */
+  .app-info {
+    background: var(--cream-warm); border-radius: 8px;
+    padding: 28px 32px; margin-bottom: 0;
+  }
+  .app-info__title {
+    font-family: var(--serif); font-weight: 400;
+    font-size: 20px; color: var(--ink); margin: 0 0 16px;
+  }
+  .app-req-list { list-style: none; margin: 0 0 20px; padding: 0; display: flex; flex-direction: column; gap: 8px; }
+  .app-req-list li { font-size: 14.5px; color: var(--ink-soft); display: flex; align-items: center; gap: 10px; }
+
   /* ---------------- RESPONSIVE ---------------- */
   @media (max-width: 1024px) {
     .nav { padding: 14px 24px; }
@@ -872,11 +908,13 @@
     .gallery { height: 420px; grid-template-columns: 2fr 1fr; }
     .gallery__cell:nth-child(4), .gallery__cell:nth-child(5) { display: none; }
     .facts { padding: 28px 24px; }
-    .facts__inner { grid-template-columns: repeat(3, 1fr); gap: 20px 16px; }
+    .facts__inner { grid-template-columns: repeat(auto-fill, minmax(110px, 1fr)); gap: 20px 16px; }
     .content { padding: 70px 24px; }
     .content__section { margin-bottom: 60px; }
     .nbhd { grid-template-columns: 1fr; gap: 28px; }
     .utilities { grid-template-columns: 1fr; gap: 16px; }
+    .amenity-groups { grid-template-columns: 1fr; gap: 20px; }
+    .promo-banners { padding: 0 24px; }
     .quiz { padding: 70px 24px; }
     .similar { padding: 70px 24px; }
     .similar__grid { grid-template-columns: repeat(2, 1fr); gap: 22px; }
@@ -897,7 +935,7 @@
     .gallery__cell:nth-child(1) { grid-row: 1; }
     .gallery__cell:nth-child(3) { display: none; }
     .facts { padding: 24px 20px; }
-    .facts__inner { grid-template-columns: repeat(2, 1fr); }
+    .facts__inner { grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); }
     .content { padding: 56px 20px; }
     .highlights { grid-template-columns: 1fr; gap: 0; }
     .quiz { padding: 56px 20px; }
@@ -988,6 +1026,9 @@
   </div>
 </section>
 
+<!-- ============================================ PROMOTIONS ============================================ -->
+<div class="promo-banners" id="promoBanners" style="display:none; padding-top:28px;"></div>
+
 <!-- ============================================ CONTENT ============================================ -->
 <div class="content">
 
@@ -1001,6 +1042,12 @@
     <span class="section-eyebrow">What makes it great</span>
     <h2 class="section-title">The <em>highlights</em>.</h2>
     <div class="highlights" id="highlightsList"></div>
+  </section>
+
+  <section class="content__section" id="amenitiesSection" style="display:none;">
+    <span class="section-eyebrow">Inside &amp; around the building</span>
+    <h2 class="section-title">Everything <em>included</em>.</h2>
+    <div class="amenity-groups" id="amenityGroups"></div>
   </section>
 
   <section class="content__section">
@@ -1028,6 +1075,12 @@
         <ul id="nbhdList"></ul>
       </div>
     </div>
+  </section>
+
+  <section class="content__section" id="appInfoSection" style="display:none;">
+    <span class="section-eyebrow">Applying for this home</span>
+    <h2 class="section-title">What you'll <em>need</em>.</h2>
+    <div class="app-info" id="appInfoBox"></div>
   </section>
 
 </div>
@@ -1457,6 +1510,11 @@
           Book a viewing
           <svg width="14" height="10" viewBox="0 0 14 10" fill="none"><path d="M1 5h11M8 1l4 4-4 4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </a>
+        ${property.virtualTourUrl ? `
+        <a href="${property.virtualTourUrl}" target="_blank" rel="noopener" class="btn-secondary">
+          Virtual tour
+          <svg width="14" height="10" viewBox="0 0 14 10" fill="none"><path d="M1 5h11M8 1l4 4-4 4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>` : ''}
       </div>
     `;
 
@@ -1470,18 +1528,24 @@
   /* --------- QUICK FACTS --------- */
   function renderFacts() {
     const facts = [
-      { label: 'Bedrooms', value: property.beds === 0 ? 'Studio' : property.beds },
+      { label: 'Bedrooms',  value: property.beds === 0 ? 'Studio' : property.beds },
       { label: 'Bathrooms', value: property.baths },
-      { label: 'Size', value: `${property.sqft.toLocaleString()}<small> sqft</small>` },
-      { label: 'Parking', value: property.parking },
-      { label: 'Laundry', value: property.laundry },
-      { label: 'Pets', value: property.petsDescriptor },
+      { label: 'Size',      value: property.sqft ? `${property.sqft.toLocaleString()}<small> sqft</small>` : null },
+      { label: 'Parking',   value: property.parking },
+      { label: 'Laundry',   value: property.laundry },
+      { label: 'Pets',      value: property.petsDescriptor },
       { label: 'Available', value: property.available },
-      { label: 'Lease', value: property.leaseLength },
-      { label: 'Deposit', value: `$${property.deposit.toLocaleString()}` },
-      { label: 'Furnished', value: property.furnished ? 'Yes' : 'No' }
-    ];
-    document.getElementById('propFacts').innerHTML = facts.slice(0, 6).map(f => `
+      { label: 'Lease',     value: property.leaseLength },
+      { label: 'Deposit',   value: `$${property.deposit.toLocaleString()}` },
+      { label: 'Furnished', value: property.furnished ? 'Yes' : 'No' },
+      { label: 'Heating',   value: property.heating || null },
+      { label: 'A/C',       value: property.airConditioning ? 'Yes' : null },
+      { label: 'Year Built',value: property.yearBuilt || null },
+      { label: 'Floor',     value: property.floor || null },
+      { label: 'Pet Deposit',value: property.petDeposit ? `$${property.petDeposit.toLocaleString()}` : null },
+      { label: 'App. Fee',  value: property.applicationFee ? `$${property.applicationFee.toLocaleString()}` : null },
+    ].filter(f => f.value !== null && f.value !== '' && f.value !== 0);
+    document.getElementById('propFacts').innerHTML = facts.map(f => `
       <div class="fact">
         <span class="fact__label">${f.label}</span>
         <span class="fact__value">${f.value}</span>
@@ -1489,7 +1553,7 @@
     `).join('');
   }
 
-  /* --------- DESCRIPTION + HIGHLIGHTS + UTILITIES + NBHD --------- */
+  /* --------- DESCRIPTION + HIGHLIGHTS + AMENITIES + UTILITIES + NBHD + APPLICATION --------- */
   function renderContent() {
     document.getElementById('aboutBody').innerHTML =
       property.description.map(p => `<p>${p}</p>`).join('');
@@ -1502,6 +1566,38 @@
         <span>${h}</span>
       </div>
     `).join('');
+
+    // Promotions
+    const promos = property.promotions || [];
+    if (promos.length) {
+      const el = document.getElementById('promoBanners');
+      el.style.display = '';
+      el.innerHTML = promos.map(pr => `
+        <div class="promo-banner">
+          <span class="promo-banner__icon">🎉</span>
+          <span class="promo-banner__headline">${pr.headline}</span>
+          ${pr.finePrint ? `<span class="promo-banner__fine">${pr.finePrint}</span>` : ''}
+        </div>
+      `).join('');
+    }
+
+    // Amenities
+    const groups = [
+      { title: 'In-suite', items: property.inSuiteAmenities || [] },
+      { title: 'Building', items: property.buildingAmenities || [] },
+      { title: 'Community', items: property.communityAmenities || [] },
+    ].filter(g => g.items.length > 0);
+    if (groups.length) {
+      document.getElementById('amenitiesSection').style.display = '';
+      document.getElementById('amenityGroups').innerHTML = groups.map(g => `
+        <div>
+          <p class="amenity-group__title">${g.title}</p>
+          <div class="amenity-chips">
+            ${g.items.map(a => `<span class="amenity-chip">${checkSvg} ${a}</span>`).join('')}
+          </div>
+        </div>
+      `).join('');
+    }
 
     document.getElementById('includedList').innerHTML = property.included.map(i => `
       <li><span style="color:var(--forest);">${checkSvg}</span> ${i}</li>
@@ -1522,6 +1618,25 @@
     document.getElementById('nbhdList').innerHTML = property.nearby.map(n => `
       <li><strong>${n.name}</strong><span>${n.distance}</span></li>
     `).join('');
+
+    // Application requirements
+    const reqs = property.applicationRequirements || [];
+    const appLink = property.applicationLink || '';
+    if (reqs.length || appLink) {
+      document.getElementById('appInfoSection').style.display = '';
+      document.getElementById('appInfoBox').innerHTML = `
+        <h3 class="app-info__title">Application requirements</h3>
+        ${reqs.length ? `
+          <ul class="app-req-list">
+            ${reqs.map(r => `<li>${checkSvg} ${r}</li>`).join('')}
+          </ul>` : ''}
+        ${appLink ? `
+          <a href="${appLink}" target="_blank" rel="noopener" class="cta" style="margin-top:4px;">
+            Apply online
+            <svg class="arrow" width="14" height="10" viewBox="0 0 14 10" fill="none"><path d="M1 5h11M8 1l4 4-4 4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>` : ''}
+      `;
+    }
   }
 
   /* --------- SIMILAR PROPERTIES --------- */
