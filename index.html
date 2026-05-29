@@ -8,7 +8,7 @@
 <link rel="alternate icon" href="/favicon.ico" sizes="any" />
 <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
 <title>Krishna Ambilwade — Saskatoon Real Estate & Property Management</title>
-<meta name="description" content="Krishna Ambilwade is a Saskatoon realtor and property manager. Honest, attentive service for buyers, sellers, renters, and investors across the city." />
+<meta name="description" content="Krishna Ambilwade is a Saskatoon REALTOR® and property manager. Honest, attentive service for buyers, sellers, renters, and investors across the city." />
 <meta name="geo.region" content="CA-SK" />
 <meta name="geo.placename" content="Saskatoon" />
 <meta name="geo.position" content="52.1332;-106.6700" />
@@ -16,12 +16,12 @@
 <meta property="og:type" content="website" />
 <meta property="og:site_name" content="Krishna Ambilwade · Saskatoon Real Estate" />
 <meta property="og:title" content="Krishna Ambilwade — Saskatoon Real Estate &amp; Property Management" />
-<meta property="og:description" content="Krishna Ambilwade is a Saskatoon realtor and property manager. Honest, attentive service for buyers, sellers, renters, and investors across the city." />
+<meta property="og:description" content="Krishna Ambilwade is a Saskatoon REALTOR® and property manager. Honest, attentive service for buyers, sellers, renters, and investors across the city." />
 <meta property="og:url" content="https://meetkrishna.com/" />
 <meta property="og:image" content="https://meetkrishna.com/images/hero-saskatoon.jpg" />
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:title" content="Krishna Ambilwade — Saskatoon Real Estate &amp; Property Management" />
-<meta name="twitter:description" content="Krishna Ambilwade is a Saskatoon realtor and property manager. Honest, attentive service for buyers, sellers, renters, and investors across the city." />
+<meta name="twitter:description" content="Krishna Ambilwade is a Saskatoon REALTOR® and property manager. Honest, attentive service for buyers, sellers, renters, and investors across the city." />
 <meta name="twitter:image" content="https://meetkrishna.com/images/hero-saskatoon.jpg" />
 <script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "RealEstateAgent", "@id": "https://meetkrishna.com/#krishna", "name": "Krishna Ambilwade", "description": "Saskatoon realtor and property manager — honest, attentive service for buyers, sellers, renters, and investors.", "url": "https://meetkrishna.com/", "image": "https://meetkrishna.com/images/krishna-portrait.webp", "logo": "https://meetkrishna.com/apple-touch-icon.png", "telephone": "+1-306-850-6744", "email": "info@meetkrishna.com", "areaServed": {"@type": "City", "name": "Saskatoon"}, "address": {"@type": "PostalAddress", "addressLocality": "Saskatoon", "addressRegion": "SK", "addressCountry": "CA"}, "knowsAbout": ["Buying a home", "Selling a home", "Rentals", "Property management", "Saskatoon real estate"], "sameAs": ["https://www.facebook.com/profile.php?id=61557947674277"]}, {"@type": "WebSite", "@id": "https://meetkrishna.com/#website", "url": "https://meetkrishna.com/", "name": "Krishna Ambilwade — Saskatoon Real Estate", "publisher": {"@id": "https://meetkrishna.com/#krishna"}}]}</script>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "What areas does Krishna serve?", "acceptedAnswer": {"@type": "Answer", "text": "Saskatoon and the surrounding area — helping people buy, sell, and rent, and managing properties for investors across the city's neighbourhoods."}}, {"@type": "Question", "name": "What services do you offer?", "acceptedAnswer": {"@type": "Answer", "text": "Four, under one roof: helping buyers purchase, sellers list and sell, renters find a home, and investors manage their properties — one point of contact for all of it."}}, {"@type": "Question", "name": "How do I get started?", "acceptedAnswer": {"@type": "Answer", "text": "Take the quick quiz that fits your situation — buy, sell, or rent — or book a no-obligation call. We'll take it from there at your pace."}}, {"@type": "Question", "name": "What does it cost to work with Krishna?", "acceptedAnswer": {"@type": "Answer", "text": "For buyers, representation is usually paid from the seller's side. For sellers, commission is agreed up front. Property management is a percentage of rent with no flat fees. We're always upfront about costs."}}, {"@type": "Question", "name": "Is Krishna a licensed REALTOR®?", "acceptedAnswer": {"@type": "Answer", "text": "Yes — a licensed REALTOR® and property manager serving Saskatoon, Saskatchewan."}}]}</script>
@@ -2117,6 +2117,144 @@
   .cta-final__contact-item svg { color: var(--sage); }
 
   /* ---------------- FOOTER ---------------- */
+
+  /* ── AWARD SECTION ── */
+  .award {
+    background: var(--ink);
+    padding: 80px 40px;
+  }
+  .award__inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: center;
+  }
+  .award__photo-wrap {
+    position: relative;
+    border-radius: 4px;
+    overflow: hidden;
+  }
+  .award__photo-wrap img {
+    width: 100%;
+    height: 480px;
+    object-fit: cover;
+    object-position: top;
+    filter: sepia(20%) contrast(1.05) brightness(0.92);
+    display: block;
+  }
+  .award__photo-wrap::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(10,20,10,0.45) 0%, transparent 60%);
+    pointer-events: none;
+  }
+  .award__content {
+    color: var(--cream);
+  }
+  .award__eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: #C9A96E;
+    margin-bottom: 24px;
+  }
+  .award__eyebrow::before {
+    content: '';
+    width: 28px;
+    height: 1px;
+    background: #C9A96E;
+    opacity: 0.7;
+  }
+  .award__title {
+    font-family: var(--serif);
+    font-weight: 300;
+    font-size: clamp(32px, 4vw, 48px);
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    color: var(--cream);
+    margin: 0 0 20px;
+  }
+  .award__title em {
+    font-style: italic;
+    color: #C9A96E;
+  }
+  .award__sub {
+    font-size: 16px;
+    line-height: 1.7;
+    color: rgba(250,247,242,0.7);
+    margin: 0 0 36px;
+  }
+  .award__badge {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(201,169,110,0.25);
+    border-radius: 8px;
+    padding: 20px 24px;
+  }
+  .award__badge img {
+    width: 72px;
+    height: 72px;
+    object-fit: contain;
+    flex-shrink: 0;
+  }
+  .award__badge-text {
+    font-size: 13px;
+    line-height: 1.6;
+    color: rgba(250,247,242,0.8);
+  }
+  .award__badge-text strong {
+    display: block;
+    font-size: 15px;
+    color: #C9A96E;
+    font-weight: 600;
+    margin-bottom: 2px;
+  }
+  @media (max-width: 768px) {
+    .award { padding: 60px 20px; }
+    .award__inner { grid-template-columns: 1fr; gap: 36px; }
+    .award__photo-wrap img { height: 340px; }
+  }
+
+  /* ── FOOTER AWARD BADGE ── */
+  .footer__award {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-top: 24px;
+    padding: 14px 16px;
+    background: rgba(201,169,110,0.08);
+    border: 1px solid rgba(201,169,110,0.2);
+    border-radius: 6px;
+  }
+  .footer__award img {
+    width: 44px;
+    height: 44px;
+    object-fit: contain;
+    flex-shrink: 0;
+  }
+  .footer__award-text {
+    font-size: 11px;
+    line-height: 1.5;
+    color: rgba(250,247,242,0.6);
+    letter-spacing: 0.02em;
+  }
+  .footer__award-text strong {
+    display: block;
+    color: #C9A96E;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+  }
+
   .footer {
     background: var(--forest-deep);
     color: var(--cream);
@@ -2310,7 +2448,145 @@
 
   @media (max-width: 1024px) {
     .cta-final { padding: 100px 24px; }
-    .footer { padding: 72px 24px 28px; }
+  
+  /* ── AWARD SECTION ── */
+  .award {
+    background: var(--ink);
+    padding: 80px 40px;
+  }
+  .award__inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: center;
+  }
+  .award__photo-wrap {
+    position: relative;
+    border-radius: 4px;
+    overflow: hidden;
+  }
+  .award__photo-wrap img {
+    width: 100%;
+    height: 480px;
+    object-fit: cover;
+    object-position: top;
+    filter: sepia(20%) contrast(1.05) brightness(0.92);
+    display: block;
+  }
+  .award__photo-wrap::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(10,20,10,0.45) 0%, transparent 60%);
+    pointer-events: none;
+  }
+  .award__content {
+    color: var(--cream);
+  }
+  .award__eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: #C9A96E;
+    margin-bottom: 24px;
+  }
+  .award__eyebrow::before {
+    content: '';
+    width: 28px;
+    height: 1px;
+    background: #C9A96E;
+    opacity: 0.7;
+  }
+  .award__title {
+    font-family: var(--serif);
+    font-weight: 300;
+    font-size: clamp(32px, 4vw, 48px);
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    color: var(--cream);
+    margin: 0 0 20px;
+  }
+  .award__title em {
+    font-style: italic;
+    color: #C9A96E;
+  }
+  .award__sub {
+    font-size: 16px;
+    line-height: 1.7;
+    color: rgba(250,247,242,0.7);
+    margin: 0 0 36px;
+  }
+  .award__badge {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(201,169,110,0.25);
+    border-radius: 8px;
+    padding: 20px 24px;
+  }
+  .award__badge img {
+    width: 72px;
+    height: 72px;
+    object-fit: contain;
+    flex-shrink: 0;
+  }
+  .award__badge-text {
+    font-size: 13px;
+    line-height: 1.6;
+    color: rgba(250,247,242,0.8);
+  }
+  .award__badge-text strong {
+    display: block;
+    font-size: 15px;
+    color: #C9A96E;
+    font-weight: 600;
+    margin-bottom: 2px;
+  }
+  @media (max-width: 768px) {
+    .award { padding: 60px 20px; }
+    .award__inner { grid-template-columns: 1fr; gap: 36px; }
+    .award__photo-wrap img { height: 340px; }
+  }
+
+  /* ── FOOTER AWARD BADGE ── */
+  .footer__award {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-top: 24px;
+    padding: 14px 16px;
+    background: rgba(201,169,110,0.08);
+    border: 1px solid rgba(201,169,110,0.2);
+    border-radius: 6px;
+  }
+  .footer__award img {
+    width: 44px;
+    height: 44px;
+    object-fit: contain;
+    flex-shrink: 0;
+  }
+  .footer__award-text {
+    font-size: 11px;
+    line-height: 1.5;
+    color: rgba(250,247,242,0.6);
+    letter-spacing: 0.02em;
+  }
+  .footer__award-text strong {
+    display: block;
+    color: #C9A96E;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+  }
+
+  .footer { padding: 72px 24px 28px; }
     .footer__grid {
       grid-template-columns: 1fr 1fr;
       gap: 48px;
@@ -2321,7 +2597,145 @@
     .cta-final__buttons { flex-direction: column; align-items: stretch; }
     .cta-final__btn { justify-content: center; }
     .cta-final__contact { gap: 16px; flex-direction: column; align-items: center; }
-    .footer { padding: 64px 20px 24px; }
+  
+  /* ── AWARD SECTION ── */
+  .award {
+    background: var(--ink);
+    padding: 80px 40px;
+  }
+  .award__inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: center;
+  }
+  .award__photo-wrap {
+    position: relative;
+    border-radius: 4px;
+    overflow: hidden;
+  }
+  .award__photo-wrap img {
+    width: 100%;
+    height: 480px;
+    object-fit: cover;
+    object-position: top;
+    filter: sepia(20%) contrast(1.05) brightness(0.92);
+    display: block;
+  }
+  .award__photo-wrap::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(10,20,10,0.45) 0%, transparent 60%);
+    pointer-events: none;
+  }
+  .award__content {
+    color: var(--cream);
+  }
+  .award__eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: #C9A96E;
+    margin-bottom: 24px;
+  }
+  .award__eyebrow::before {
+    content: '';
+    width: 28px;
+    height: 1px;
+    background: #C9A96E;
+    opacity: 0.7;
+  }
+  .award__title {
+    font-family: var(--serif);
+    font-weight: 300;
+    font-size: clamp(32px, 4vw, 48px);
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    color: var(--cream);
+    margin: 0 0 20px;
+  }
+  .award__title em {
+    font-style: italic;
+    color: #C9A96E;
+  }
+  .award__sub {
+    font-size: 16px;
+    line-height: 1.7;
+    color: rgba(250,247,242,0.7);
+    margin: 0 0 36px;
+  }
+  .award__badge {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(201,169,110,0.25);
+    border-radius: 8px;
+    padding: 20px 24px;
+  }
+  .award__badge img {
+    width: 72px;
+    height: 72px;
+    object-fit: contain;
+    flex-shrink: 0;
+  }
+  .award__badge-text {
+    font-size: 13px;
+    line-height: 1.6;
+    color: rgba(250,247,242,0.8);
+  }
+  .award__badge-text strong {
+    display: block;
+    font-size: 15px;
+    color: #C9A96E;
+    font-weight: 600;
+    margin-bottom: 2px;
+  }
+  @media (max-width: 768px) {
+    .award { padding: 60px 20px; }
+    .award__inner { grid-template-columns: 1fr; gap: 36px; }
+    .award__photo-wrap img { height: 340px; }
+  }
+
+  /* ── FOOTER AWARD BADGE ── */
+  .footer__award {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-top: 24px;
+    padding: 14px 16px;
+    background: rgba(201,169,110,0.08);
+    border: 1px solid rgba(201,169,110,0.2);
+    border-radius: 6px;
+  }
+  .footer__award img {
+    width: 44px;
+    height: 44px;
+    object-fit: contain;
+    flex-shrink: 0;
+  }
+  .footer__award-text {
+    font-size: 11px;
+    line-height: 1.5;
+    color: rgba(250,247,242,0.6);
+    letter-spacing: 0.02em;
+  }
+  .footer__award-text strong {
+    display: block;
+    color: #C9A96E;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+  }
+
+  .footer { padding: 64px 20px 24px; }
     .footer__grid {
       grid-template-columns: 1fr;
       gap: 40px;
@@ -3282,6 +3696,28 @@
   </div>
 </section>
 
+
+<section class="award">
+  <div class="award__inner">
+    <div class="award__photo-wrap">
+      <img src="/images/krishna-consumer-award.png" alt="Krishna Ambilwade — Consumer Choice Award 2026" loading="lazy" />
+    </div>
+    <div class="award__content">
+      <div class="award__eyebrow">Recognition</div>
+      <h2 class="award__title">Saskatoon's <em>choice</em> for real estate excellence.</h2>
+      <p class="award__sub">Krishna Ambilwade has been recognized with the Consumer Choice Award for Business Excellence — voted by Saskatoon residents for outstanding service, integrity, and results.</p>
+      <div class="award__badge">
+        <img src="/images/consumer-choice-award-2026.png" alt="Consumer Choice Award 2026" />
+        <div class="award__badge-text">
+          <strong>Consumer Choice Award 2026</strong>
+          Business Excellence · Saskatoon, SK<br>
+          Real Estate &amp; Property Management
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
 <footer class="footer" id="footer">
   <div class="footer__inner">
 
@@ -3315,6 +3751,16 @@
               <path d="M7 6h2.4v1.2c.4-.7 1.3-1.4 2.6-1.4 2 0 2.5 1.3 2.5 3V14h-2.5V9.4c0-1-.4-1.5-1.2-1.5s-1.4.6-1.4 1.6V14H7V6z" fill="currentColor"/>
             </svg>
           </a>
+        </div>
+      </div>
+
+
+        <div class="footer__award">
+          <img src="/images/consumer-choice-award-2026.png" alt="Consumer Choice Award 2026" />
+          <div class="footer__award-text">
+            <strong>Consumer Choice Award 2026</strong>
+            Business Excellence · Saskatoon, SK
+          </div>
         </div>
       </div>
 
