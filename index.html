@@ -620,11 +620,11 @@
   /* Portrait side */
   .meet__media {
     position: sticky;
-    top: 120px;
+    top: 100px;
   }
   .meet__media-frame {
     position: relative;
-    aspect-ratio: 4 / 5;
+    aspect-ratio: 4 / 3;
     overflow: hidden;
     border-radius: 4px;
     box-shadow:
@@ -635,6 +635,7 @@
     width: 100%;
     height: 100%;
     object-fit: cover;
+    object-position: center top;
     display: block;
     transition: transform 1200ms var(--ease);
     filter: saturate(0.92) contrast(1.02);
@@ -658,6 +659,26 @@
     height: 1px;
     background: var(--forest);
     opacity: 0.6;
+  }
+
+  /* Video embed below portrait */
+  .meet__video {
+    margin-top: 20px;
+    position: relative;
+    aspect-ratio: 16 / 9;
+    border-radius: 4px;
+    overflow: hidden;
+    box-shadow:
+      0 20px 40px -16px rgba(20, 39, 31, 0.22),
+      0 10px 24px -12px rgba(20, 39, 31, 0.12);
+  }
+  .meet__video iframe {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
+    display: block;
   }
 
   /* Body side */
@@ -821,7 +842,7 @@
       grid-template-columns: 1fr;
       gap: 40px;
     }
-    .meet__media { position: relative; top: 0; max-width: 460px; }
+    .meet__media { position: relative; top: 0; max-width: 520px; }
     .meet__body::before { font-size: 360px; top: -60px; right: -60px; opacity: 0.45; }
     .meet__credentials {
       margin-top: 48px;
@@ -2921,6 +2942,15 @@
         />
       </div>
       <div class="meet__media-caption">Krishna Ambilwade · Saskatoon, SK</div>
+      <div class="meet__video">
+        <iframe
+          src="https://www.youtube.com/embed/RlpNGTYteeY?rel=0&modestbranding=1"
+          title="Krishna Ambilwade — Saskatoon Real Estate"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowfullscreen
+          loading="lazy"
+        ></iframe>
+      </div>
     </div>
 
     <!-- Story -->
