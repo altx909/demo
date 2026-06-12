@@ -147,5 +147,17 @@
   <!-- GHL auto-resize script: sizes the iframe to its content height -->
   <script src="https://api.altxmedia.com/js/form_embed.js" type="text/javascript"></script>
 
+<!-- Click-to-call conversion (Google Ads) -->
+<script>
+document.addEventListener('click', function (e) {
+  var a = e.target.closest('a[href^="tel:"]');
+  if (!a) return;
+  gtag('event', 'conversion', {
+    'send_to': 'AW-18231976623/PABJCKKz6r0cEK_F1_VD',
+    'value': 1.0,
+    'currency': 'CAD'
+  });
+});
+</script>
 </body>
 </html>
