@@ -1,0 +1,900 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=AW-18231976623"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'AW-18231976623');
+</script>
+
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+<link rel="alternate icon" href="/favicon.ico" sizes="any" />
+<link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+<title>Find Your Saskatoon Rental — 60-Second Matchmaker | Krishna Ambilwade</title>
+<meta name="description" content="Answer 10 quick questions and we'll match you to the right Saskatoon rental — managed properties, real listings, no bait-and-switch. Takes about 60 seconds." />
+<meta name="geo.region" content="CA-SK" />
+<meta name="geo.placename" content="Saskatoon" />
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="Krishna Ambilwade · Saskatoon Real Estate" />
+<meta property="og:title" content="Find Your Saskatoon Rental — 60-Second Matchmaker" />
+<meta property="og:description" content="Answer 10 quick questions and we'll match you to the right Saskatoon rental. Takes about 60 seconds." />
+<meta property="og:url" content="https://meetkrishna.com/rent-quiz/" />
+<meta property="og:image" content="https://meetkrishna.com/images/hero-saskatoon.jpg" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="Find Your Saskatoon Rental — 60-Second Matchmaker" />
+<meta name="twitter:description" content="Answer 10 quick questions and we'll match you to the right Saskatoon rental. Takes about 60 seconds." />
+<meta name="twitter:image" content="https://meetkrishna.com/images/hero-saskatoon.jpg" />
+<link rel="canonical" href="https://meetkrishna.com/rent-quiz/" />
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;1,9..144,300;1,9..144,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+
+<style>
+  /* =========================================================
+     Krishna Ambilwade — Standalone Rental Matchmaker
+     Quiz-only landing page (for Marketplace / paid traffic).
+     Inherits the editorial-cinematic system from the rent page.
+     ========================================================= */
+
+  :root {
+    --cream:        #FAF7F2;
+    --cream-warm:   #F2EDE4;
+    --ink:          #1A1A1A;
+    --ink-soft:     #3A3A3A;
+    --muted:        #6B6B6B;
+    --line:         #E5E0D7;
+    --forest:       #1F3A2E;
+    --forest-deep:  #14271F;
+    --forest-soft:  #2C4D3E;
+    --sage:         #C8D5C0;
+    --sage-pale:    #E4EAE0;
+    --gold:         #C9A961;
+    --gold-pale:    #D9B978;
+
+    --serif: 'Fraunces', 'Cormorant Garamond', Georgia, serif;
+    --sans:  'Inter', -apple-system, BlinkMacSystemFont, 'Helvetica Neue', sans-serif;
+    --ease: cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    font-family: var(--sans);
+    color: var(--ink);
+    background: var(--forest-deep);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    line-height: 1.55;
+    overflow-x: hidden;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+  a { color: inherit; text-decoration: none; }
+  button { font-family: inherit; }
+
+  /* ---------------- MINIMAL HEADER ---------------- */
+  .topbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px 40px;
+    background: var(--cream);
+    border-bottom: 1px solid var(--line);
+  }
+  .wordmark {
+    display: flex;
+    flex-direction: column;
+    line-height: 1;
+    color: var(--ink);
+  }
+  .wordmark__name {
+    font-family: var(--serif);
+    font-weight: 400;
+    font-size: 22px;
+    letter-spacing: -0.01em;
+  }
+  .wordmark__tag {
+    font-family: var(--sans);
+    font-weight: 500;
+    font-size: 9px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    margin-top: 4px;
+    opacity: 0.85;
+  }
+  .topbar__cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 22px;
+    background: var(--forest);
+    color: var(--cream);
+    border-radius: 999px;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    transition: background 250ms var(--ease), transform 250ms var(--ease);
+    white-space: nowrap;
+  }
+  .topbar__cta:hover { background: var(--forest-deep); transform: translateY(-1px); }
+  .topbar__cta .arrow { transition: transform 300ms var(--ease); }
+  .topbar__cta:hover .arrow { transform: translateX(4px); }
+
+  /* ---------------- QUIZ SECTION ---------------- */
+  .quiz {
+    background: var(--forest-deep);
+    color: var(--cream);
+    padding: 96px 40px;
+    position: relative;
+    overflow: hidden;
+    flex: 1;
+    display: flex;
+    align-items: center;
+  }
+  .quiz::before {
+    content: "Match.";
+    position: absolute;
+    bottom: -120px;
+    left: -40px;
+    font-family: var(--serif);
+    font-style: italic;
+    font-weight: 300;
+    font-size: 380px;
+    line-height: 1;
+    color: rgba(200, 213, 192, 0.045);
+    pointer-events: none;
+  }
+
+  .quiz__inner {
+    position: relative;
+    z-index: 1;
+    max-width: 720px;
+    margin: 0 auto;
+    width: 100%;
+  }
+  .quiz__head {
+    text-align: center;
+    margin-bottom: 44px;
+  }
+  .quiz__eyebrow {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 14px;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: var(--sage);
+    margin-bottom: 20px;
+  }
+  .quiz__eyebrow::before, .quiz__eyebrow::after {
+    content: "";
+    width: 28px;
+    height: 1px;
+    background: var(--sage);
+    opacity: 0.5;
+  }
+  .quiz__title {
+    font-family: var(--serif);
+    font-weight: 300;
+    font-size: clamp(32px, 4.2vw, 48px);
+    line-height: 1.08;
+    letter-spacing: -0.02em;
+    color: var(--cream);
+    margin: 0 0 14px;
+  }
+  .quiz__title em { font-style: italic; color: var(--sage); }
+  .quiz__sub {
+    font-size: 15px;
+    font-weight: 300;
+    line-height: 1.6;
+    color: rgba(250,247,242,0.78);
+    margin: 0;
+  }
+
+  /* Progress dots */
+  .quiz__progress {
+    display: flex;
+    justify-content: center;
+    gap: 7px;
+    margin-bottom: 40px;
+  }
+  .quiz__dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 999px;
+    background: rgba(200, 213, 192, 0.22);
+    transition: background 300ms var(--ease), width 300ms var(--ease);
+  }
+  .quiz__dot.done { background: var(--sage); }
+  .quiz__dot.current {
+    background: var(--cream);
+    width: 24px;
+  }
+
+  /* Step viewport */
+  .quiz__viewport {
+    position: relative;
+    min-height: 380px;
+  }
+  .quiz__step {
+    opacity: 0;
+    transform: translateY(12px);
+    transition: opacity 400ms var(--ease), transform 400ms var(--ease);
+    pointer-events: none;
+    position: absolute;
+    inset: 0;
+  }
+  .quiz__step.visible {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+    position: relative;
+  }
+
+  .quiz__question {
+    font-family: var(--serif);
+    font-weight: 300;
+    font-size: clamp(24px, 3vw, 34px);
+    line-height: 1.18;
+    color: var(--cream);
+    text-align: center;
+    margin: 0 0 28px;
+  }
+  .quiz__hint {
+    font-size: 13px;
+    color: rgba(250,247,242,0.6);
+    text-align: center;
+    margin: -16px 0 24px;
+    font-style: italic;
+  }
+
+  .quiz__options {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-bottom: 32px;
+  }
+  .quiz__options.single-col { grid-template-columns: 1fr; }
+  .quiz__options.chips {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 8px;
+  }
+
+  .quiz__option {
+    background: rgba(250,247,242,0.06);
+    border: 1px solid rgba(200,213,192,0.22);
+    color: var(--cream);
+    padding: 18px 22px;
+    border-radius: 8px;
+    font-family: var(--sans);
+    font-size: 14.5px;
+    font-weight: 400;
+    cursor: pointer;
+    text-align: left;
+    transition: background 250ms var(--ease), border-color 250ms var(--ease), transform 250ms var(--ease);
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .quiz__option:hover {
+    background: rgba(250,247,242,0.10);
+    border-color: var(--sage);
+    transform: translateY(-1px);
+  }
+  .quiz__option.selected {
+    background: rgba(200,213,192,0.18);
+    border-color: var(--sage);
+    color: var(--cream);
+  }
+  .quiz__option .check {
+    width: 18px; height: 18px;
+    border-radius: 999px;
+    border: 1.5px solid rgba(200,213,192,0.4);
+    flex-shrink: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 250ms var(--ease), border-color 250ms var(--ease);
+  }
+  .quiz__option.selected .check {
+    background: var(--sage);
+    border-color: var(--sage);
+  }
+  .quiz__option.selected .check::after {
+    content: "✓";
+    color: var(--forest-deep);
+    font-size: 11px;
+    font-weight: 700;
+  }
+
+  .quiz__chip {
+    background: rgba(250,247,242,0.06);
+    border: 1px solid rgba(200,213,192,0.22);
+    color: var(--cream);
+    padding: 11px 18px;
+    border-radius: 999px;
+    font-size: 13px;
+    cursor: pointer;
+    transition: background 250ms var(--ease), border-color 250ms var(--ease);
+  }
+  .quiz__chip:hover { background: rgba(250,247,242,0.10); border-color: var(--sage); }
+  .quiz__chip.selected {
+    background: var(--sage);
+    color: var(--forest-deep);
+    border-color: var(--sage);
+    font-weight: 500;
+  }
+
+  /* Form fields */
+  .quiz__form {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 24px;
+  }
+  .quiz__field {
+    width: 100%;
+    padding: 16px 18px;
+    background: rgba(250,247,242,0.06);
+    border: 1px solid rgba(200,213,192,0.22);
+    border-radius: 8px;
+    color: var(--cream);
+    font-family: var(--sans);
+    font-size: 15px;
+    transition: border-color 200ms var(--ease), background 200ms var(--ease);
+  }
+  .quiz__field::placeholder { color: rgba(250,247,242,0.45); }
+  .quiz__field:focus {
+    outline: none;
+    border-color: var(--sage);
+    background: rgba(250,247,242,0.10);
+  }
+  .quiz__checkbox {
+    display: inline-flex;
+    align-items: flex-start;
+    gap: 10px;
+    cursor: pointer;
+    padding: 10px 4px;
+    font-size: 13.5px;
+    color: rgba(250,247,242,0.85);
+    line-height: 1.5;
+  }
+  .quiz__checkbox input { display: none; }
+  .quiz__checkbox-box {
+    width: 18px; height: 18px;
+    border-radius: 4px;
+    border: 1.5px solid rgba(200,213,192,0.4);
+    flex-shrink: 0;
+    margin-top: 2px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 200ms var(--ease), border-color 200ms var(--ease);
+  }
+  .quiz__checkbox input:checked + .quiz__checkbox-box {
+    background: var(--sage);
+    border-color: var(--sage);
+  }
+  .quiz__checkbox input:checked + .quiz__checkbox-box::after {
+    content: "✓";
+    color: var(--forest-deep);
+    font-size: 11px;
+    font-weight: 700;
+  }
+
+  /* Step nav */
+  .quiz__nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+    margin-top: 16px;
+  }
+  .quiz__btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 13px 26px;
+    border-radius: 999px;
+    font-family: var(--sans);
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 250ms var(--ease);
+    border: 1px solid transparent;
+  }
+  .quiz__btn--ghost {
+    background: transparent;
+    color: rgba(250,247,242,0.65);
+    border-color: rgba(250,247,242,0.15);
+  }
+  .quiz__btn--ghost:hover {
+    background: rgba(250,247,242,0.06);
+    color: var(--cream);
+  }
+  .quiz__btn--primary {
+    background: var(--cream);
+    color: var(--forest-deep);
+    border-color: var(--cream);
+  }
+  .quiz__btn--primary:hover {
+    background: var(--sage);
+    border-color: var(--sage);
+    transform: translateY(-1px);
+  }
+  .quiz__btn:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+    transform: none;
+  }
+  .quiz__btn .arrow { transition: transform 300ms var(--ease); }
+  .quiz__btn:hover .arrow { transform: translateX(4px); }
+
+  /* ---------------- MINIMAL FOOTER ---------------- */
+  .minifoot {
+    background: var(--forest-deep);
+    color: rgba(250,247,242,0.55);
+    text-align: center;
+    font-size: 12px;
+    padding: 24px 20px 32px;
+    border-top: 1px solid rgba(200,213,192,0.12);
+  }
+  .minifoot a { color: var(--sage); }
+
+  /* ---------------- RESPONSIVE ---------------- */
+  @media (max-width: 720px) {
+    .topbar { padding: 16px 20px; }
+    .topbar__cta { padding: 10px 16px; font-size: 10px; }
+    .quiz { padding: 56px 20px; }
+    .quiz__options { grid-template-columns: 1fr; }
+    .quiz__nav { flex-direction: column-reverse; gap: 10px; }
+    .quiz__nav .quiz__btn { width: 100%; justify-content: center; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ============================================ HEADER ============================================ -->
+<header class="topbar">
+  <a href="/" class="wordmark">
+    <span class="wordmark__name">Krishna Ambilwade</span>
+    <span class="wordmark__tag">Saskatoon Real Estate</span>
+  </a>
+  <a href="/cal/" target="_blank" rel="noopener" class="topbar__cta">
+    Book a Call
+    <svg class="arrow" width="14" height="10" viewBox="0 0 14 10" fill="none">
+      <path d="M1 5h11M8 1l4 4-4 4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </a>
+</header>
+
+<!-- ============================================ QUIZ ============================================ -->
+<section class="quiz" id="quiz">
+  <div class="quiz__inner">
+    <div class="quiz__head">
+      <span class="quiz__eyebrow">Find your match</span>
+      <h2 class="quiz__title">Tell us about you. <em>We'll match you to the right place.</em></h2>
+      <p class="quiz__sub">Ten quick questions. About 60 seconds. Mostly tapping.</p>
+    </div>
+
+    <div class="quiz__progress" id="quizProgress" aria-label="Quiz progress"></div>
+
+    <div class="quiz__viewport" id="quizViewport"></div>
+  </div>
+</section>
+
+<footer class="minifoot">
+  Managed rentals in Saskatoon · <a href="/rent/">Browse all listings</a> · &copy; Krishna Ambilwade
+</footer>
+
+<script>
+  /* ============================================
+     QUIZ — 10-step button-driven matchmaker
+     Posts answers to /api/quiz-submit (maps to GHL custom
+     fields) then redirects to /typ-rent/.
+     ============================================ */
+  const QUIZ_STEPS = [
+    {
+      id: 'who',
+      type: 'single',
+      question: "Quick intro — who's this rental for?",
+      options: [
+        { value: 'me', label: 'Me' },
+        { value: 'family', label: 'Me & my family' },
+        { value: 'roommates', label: 'A group / roommates' },
+        { value: 'someone-else', label: 'Someone else' }
+      ]
+    },
+    {
+      id: 'timing',
+      type: 'single',
+      question: 'When are you hoping to move in?',
+      options: [
+        { value: 'now', label: 'Right away' },
+        { value: '30', label: 'Next 30 days' },
+        { value: '60', label: 'Next 60 days' },
+        { value: 'browsing', label: 'Just browsing' }
+      ]
+    },
+    {
+      id: 'household',
+      type: 'single',
+      question: 'How many people will live there?',
+      hint: 'Including kids',
+      options: [
+        { value: '1', label: 'Just me' },
+        { value: '2', label: '2' },
+        { value: '3', label: '3' },
+        { value: '4', label: '4' },
+        { value: '5+', label: '5 or more' }
+      ]
+    },
+    {
+      id: 'pets',
+      type: 'single',
+      question: 'Any pets?',
+      options: [
+        { value: 'none', label: 'No pets' },
+        { value: 'cat', label: '1 cat' },
+        { value: 'cats', label: '2+ cats' },
+        { value: 'small-dog', label: 'Small dog (under 25 lbs)' },
+        { value: 'large-dog', label: 'Medium / large dog' },
+        { value: 'multiple', label: 'Multiple / other' }
+      ]
+    },
+    {
+      id: 'bedrooms',
+      type: 'single',
+      question: 'How many bedrooms do you need?',
+      options: [
+        { value: '0', label: 'Studio' },
+        { value: '1', label: '1' },
+        { value: '2', label: '2' },
+        { value: '3', label: '3' },
+        { value: '4', label: '4 or more' }
+      ]
+    },
+    {
+      id: 'budget',
+      type: 'single',
+      question: "What's your monthly rent budget?",
+      options: [
+        { value: '1000', label: 'Under $1,000' },
+        { value: '1500', label: '$1,000 – $1,500' },
+        { value: '2000', label: '$1,500 – $2,000' },
+        { value: '2500', label: '$2,000 – $2,500' },
+        { value: '3500', label: '$2,500 +' }
+      ]
+    },
+    {
+      id: 'area',
+      type: 'multi',
+      question: 'Where in Saskatoon?',
+      hint: 'Pick as many as you like',
+      options: [
+        { value: 'anywhere', label: 'Anywhere in the city' },
+        { value: 'Downtown', label: 'Downtown' },
+        { value: 'Stonebridge', label: 'Stonebridge' },
+        { value: 'Lawson Heights', label: 'Lawson Heights' },
+        { value: 'Nutana', label: 'Nutana' },
+        { value: 'Briarwood', label: 'Briarwood' },
+        { value: 'Evergreen', label: 'Evergreen' },
+        { value: 'Riverside', label: 'Riverside' },
+        { value: 'Varsity View', label: 'Varsity View' },
+        { value: 'Westmount', label: 'Westmount' }
+      ],
+      style: 'chips'
+    },
+    {
+      id: 'income',
+      type: 'multi',
+      question: 'Quick one — how do you cover rent?',
+      hint: 'Multi-select if your situation is mixed',
+      options: [
+        { value: 'employment', label: 'Employment / steady wages' },
+        { value: 'self-employed', label: 'Self-employed / business' },
+        { value: 'student', label: 'Student / loans' },
+        { value: 'pension', label: 'Pension / retirement' },
+        { value: 'social-assistance', label: 'Social assistance' },
+        { value: 'mixed', label: 'Mix of sources' }
+      ]
+    },
+    {
+      id: 'currentStatus',
+      type: 'single',
+      question: 'Currently renting?',
+      options: [
+        { value: 'lease', label: 'Yes — on a lease' },
+        { value: 'month-to-month', label: 'Yes — month-to-month' },
+        { value: 'family', label: 'Living with family' },
+        { value: 'out-of-town', label: 'Moving from out of town' }
+      ]
+    },
+    {
+      id: 'contact',
+      type: 'form',
+      question: 'Last step — where can Krishna reach you?',
+      hint: 'We will only use this to send matches and follow up.'
+    }
+  ];
+
+  const TOTAL_STEPS = QUIZ_STEPS.length;
+
+  /* ---- Capture the property of interest from the URL ----
+     Uses the SAME convention the property pages already use for booking
+     links:  ?property=<slug>&address=<full address>
+     e.g.  /rent-quiz/?property=stonebridge-townhouse&address=821%20Stonebridge%20Blvd
+     so leads land in the exact same GHL fields as property-page inquiries.
+     Also grabs basic source attribution if present. */
+  const params = new URLSearchParams(window.location.search);
+  const pageContext = {
+    propertySlug:    params.get('property') || params.get('prop') || params.get('listing') || '',
+    propertyAddress: params.get('address') || '',
+    source:
+      params.get('source') || params.get('utm_source') ||
+      (params.get('fbclid') ? 'facebook' : ''),
+    campaign: params.get('utm_campaign') || ''
+  };
+  pageContext.hasProperty = !!(pageContext.propertySlug || pageContext.propertyAddress);
+
+  const quizState = {
+    current: 0,
+    answers: {} // { stepId: value (string) | values (array) | { name, email, phone, optIn } }
+  };
+
+  const viewport = document.getElementById('quizViewport');
+  const progress = document.getElementById('quizProgress');
+
+  function buildProgress() {
+    progress.innerHTML = '';
+    for (let i = 0; i <= TOTAL_STEPS; i++) {
+      const dot = document.createElement('span');
+      dot.className = 'quiz__dot';
+      progress.appendChild(dot);
+    }
+    updateProgress();
+  }
+
+  function updateProgress() {
+    progress.querySelectorAll('.quiz__dot').forEach((dot, i) => {
+      dot.classList.remove('done', 'current');
+      if (i < quizState.current) dot.classList.add('done');
+      else if (i === quizState.current) dot.classList.add('current');
+    });
+  }
+
+  function canContinue(step) {
+    const ans = quizState.answers[step.id];
+    if (step.type === 'single') return !!ans;
+    if (step.type === 'multi') return Array.isArray(ans) && ans.length > 0;
+    if (step.type === 'form') {
+      return ans && ans.name && ans.email;
+    }
+    return false;
+  }
+
+  function renderStep() {
+    if (quizState.current >= TOTAL_STEPS) return renderFinal();
+    const step = QUIZ_STEPS[quizState.current];
+    const ans = quizState.answers[step.id];
+
+    let optionsHTML = '';
+    if (step.type === 'single') {
+      optionsHTML = `
+        <div class="quiz__options ${step.options.length > 4 ? 'single-col' : ''}">
+          ${step.options.map(o => `
+            <button class="quiz__option ${ans === o.value ? 'selected' : ''}" data-value="${o.value}">
+              <span class="check"></span>
+              <span>${o.label}</span>
+            </button>
+          `).join('')}
+        </div>`;
+    } else if (step.type === 'multi' && step.style === 'chips') {
+      const sel = Array.isArray(ans) ? ans : [];
+      optionsHTML = `
+        <div class="quiz__options chips">
+          ${step.options.map(o => `
+            <button class="quiz__chip ${sel.includes(o.value) ? 'selected' : ''}" data-value="${o.value}">
+              ${o.label}
+            </button>
+          `).join('')}
+        </div>`;
+    } else if (step.type === 'multi') {
+      const sel = Array.isArray(ans) ? ans : [];
+      optionsHTML = `
+        <div class="quiz__options ${step.options.length > 4 ? 'single-col' : ''}">
+          ${step.options.map(o => `
+            <button class="quiz__option ${sel.includes(o.value) ? 'selected' : ''}" data-value="${o.value}">
+              <span class="check"></span>
+              <span>${o.label}</span>
+            </button>
+          `).join('')}
+        </div>`;
+    } else if (step.type === 'form') {
+      const a = ans || {};
+      optionsHTML = `
+        <div class="quiz__form">
+          <input class="quiz__field" type="text" placeholder="First name" data-field="name" value="${a.name || ''}" required />
+          <input class="quiz__field" type="email" placeholder="Email" data-field="email" value="${a.email || ''}" required />
+          <input class="quiz__field" type="tel" placeholder="Phone (optional)" data-field="phone" value="${a.phone || ''}" />
+          <label class="quiz__checkbox">
+            <input type="checkbox" data-field="optIn" ${a.optIn ? 'checked' : ''} />
+            <span class="quiz__checkbox-box"></span>
+            <span>Notify me when matching listings hit the market</span>
+          </label>
+        </div>`;
+    }
+
+    viewport.innerHTML = `
+      <div class="quiz__step visible">
+        <h3 class="quiz__question">${step.question}</h3>
+        ${step.hint ? `<p class="quiz__hint">${step.hint}</p>` : ''}
+        ${optionsHTML}
+        <div class="quiz__nav">
+          <button class="quiz__btn quiz__btn--ghost" id="qBack" ${quizState.current === 0 ? 'style="visibility:hidden"' : ''}>
+            ← Back
+          </button>
+          <button class="quiz__btn quiz__btn--primary" id="qNext" ${canContinue(step) ? '' : 'disabled'}>
+            ${quizState.current === TOTAL_STEPS - 1 ? 'See My Matches' : 'Continue'}
+            <svg class="arrow" width="14" height="10" viewBox="0 0 14 10" fill="none">
+              <path d="M1 5h11M8 1l4 4-4 4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </button>
+        </div>
+      </div>
+    `;
+
+    // Single-select handlers
+    if (step.type === 'single') {
+      viewport.querySelectorAll('.quiz__option').forEach(btn => {
+        btn.addEventListener('click', () => {
+          quizState.answers[step.id] = btn.dataset.value;
+          renderStep();
+        });
+      });
+    }
+    // Multi-select handlers
+    if (step.type === 'multi') {
+      const sel = Array.isArray(quizState.answers[step.id]) ? [...quizState.answers[step.id]] : [];
+      const els = viewport.querySelectorAll(step.style === 'chips' ? '.quiz__chip' : '.quiz__option');
+      els.forEach(btn => {
+        btn.addEventListener('click', () => {
+          const v = btn.dataset.value;
+          // "anywhere" or any "all" sentinel value clears others
+          if (v === 'anywhere') {
+            quizState.answers[step.id] = sel.includes('anywhere') ? [] : ['anywhere'];
+          } else {
+            const idx = sel.indexOf(v);
+            if (idx > -1) sel.splice(idx, 1);
+            else {
+              const i = sel.indexOf('anywhere');
+              if (i > -1) sel.splice(i, 1);
+              sel.push(v);
+            }
+            quizState.answers[step.id] = sel;
+          }
+          renderStep();
+        });
+      });
+    }
+    // Form handlers
+    if (step.type === 'form') {
+      const formData = quizState.answers[step.id] || {};
+      viewport.querySelectorAll('[data-field]').forEach(el => {
+        el.addEventListener('input', () => {
+          if (el.type === 'checkbox') formData[el.dataset.field] = el.checked;
+          else formData[el.dataset.field] = el.value.trim();
+          quizState.answers[step.id] = formData;
+          document.getElementById('qNext').disabled = !canContinue(step);
+        });
+      });
+    }
+
+    document.getElementById('qBack')?.addEventListener('click', () => {
+      if (quizState.current > 0) { quizState.current--; updateProgress(); renderStep(); }
+    });
+    document.getElementById('qNext')?.addEventListener('click', () => {
+      if (!canContinue(step)) return;
+      quizState.current++;
+      updateProgress();
+      renderStep();
+    });
+
+    updateProgress();
+  }
+
+  function buildPayload() {
+    /* Shape this payload to match GHL custom fields. The Cloudflare Worker
+       reads this object and POSTs to GHL with the correct field IDs. */
+    const a = quizState.answers;
+    const c = a.contact || {};
+    const tags = ['tenant-quiz', 'rent-completed'];
+    if (a.timing === 'now')      tags.push('tenant-hot');
+    if (a.timing === '30')       tags.push('tenant-warm');
+    if (a.timing === 'browsing') tags.push('tenant-cold');
+    if (a.pets && a.pets !== 'none') tags.push('has-pets', `pet-${a.pets}`);
+    if (a.income && a.income.includes('social-assistance')) tags.push('income-sa-review');
+    if (a.currentStatus === 'out-of-town') tags.push('relocation');
+    if (c.optIn) tags.push('new-listing-alerts');
+    if (pageContext.hasProperty) tags.push('tenant-property-inquiry');
+    if (pageContext.source) tags.push(`src-${pageContext.source}`);
+
+    return {
+      contact: {
+        firstName: c.name || '',
+        email: c.email || '',
+        phone: c.phone || ''
+      },
+      customFields: {
+        looking_for_type: a.who,
+        move_in_timeline: a.timing,
+        household_size: a.household,
+        pets: a.pets,
+        bedrooms_needed: a.bedrooms,
+        target_rent_budget: a.budget,
+        preferred_area: (a.area || []).join(', '),
+        income_source: (a.income || []).join(', '),
+        currently_renting: a.currentStatus,
+        // Auto-captured from the listing the tenant came from (same fields as property pages):
+        property_of_interest: pageContext.propertyAddress || pageContext.propertySlug || '',
+        property_address: pageContext.propertyAddress || '',
+        property_slug: pageContext.propertySlug || '',
+        property_url: pageContext.propertySlug
+          ? ('https://meetkrishna.com/rent/property/' + pageContext.propertySlug + '/')
+          : ''
+      },
+      tags,
+      consent: { newListingAlerts: !!c.optIn },
+      sourcePage: 'rent-quiz',
+      source: pageContext.source,
+      campaign: pageContext.campaign
+    };
+  }
+
+  async function submitToBackend(payload) {
+    try {
+      const res = await fetch('/api/quiz-submit', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+        keepalive: true
+      });
+      if (!res.ok) {
+        console.error('Quiz submission failed:', res.status, await res.text());
+        return false;
+      }
+      return await res.json();
+    } catch (err) {
+      console.error('Quiz submission error:', err);
+      return false;
+    }
+  }
+
+  function renderFinal() {
+    const payload = buildPayload();
+    submitToBackend(payload);
+    try { sessionStorage.setItem('typName', (quizState.answers.contact && quizState.answers.contact.name) || ''); } catch (e) {}
+    window.location.href = '/typ-rent/';
+  }
+
+  buildProgress();
+  renderStep();
+</script>
+
+</body>
+</html>
