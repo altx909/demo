@@ -20,7 +20,8 @@ const STATIC_PAGES = [
   {loc: '/rent/',                  changefreq: 'daily',   priority: '0.8'},
   {loc: '/property-management/',   changefreq: 'monthly', priority: '0.7'},
   {loc: '/journal/',               changefreq: 'weekly',  priority: '0.7'},
-  // /cal/, /card/, /pre-approval/ intentionally excluded — utility/redirect pages
+  {loc: '/pre-approval/',          changefreq: 'monthly', priority: '0.7'},
+  // /cal/, /card/ intentionally excluded — utility pages
 ];
 
 export async function onRequestGet({env, request}) {
