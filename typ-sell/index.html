@@ -121,7 +121,7 @@
       <h1 class="typ__title" id="typTitle">Your request is in. <em>We'll be in touch shortly.</em></h1>
       <p class="typ__sub">Krishna will review your details and prepare your home value estimate. Someone from the team will reach out shortly to talk it through — no pressure, no obligation.</p>
       <div class="typ__actions">
-        <a href="/cal/" target="_blank" rel="noopener" class="typ__primary">
+        <a href="/cal/" target="_blank" rel="noopener noreferrer" class="typ__primary">
           Book a call with Krishna
           <svg class="arrow" width="14" height="10" viewBox="0 0 14 10" fill="none">
             <path d="M1 5h11M8 1l4 4-4 4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
@@ -134,7 +134,7 @@
 
   <footer class="typ-foot">
     Questions in the meantime? Call <a href="tel:+13068506744">(306) 850-6744</a> or email <a href="mailto:info@meetkrishna.com">info@meetkrishna.com</a>.<br />
-    Designed by <a href="https://altxmedia.com" target="_blank" rel="noopener" style="color:var(--forest)">AltX Media</a>
+    Designed by <a href="https://altxmedia.com" target="_blank" rel="noopener noreferrer" style="color:var(--forest)">AltX Media</a>
   </footer>
 
   <script>
@@ -144,7 +144,8 @@
       if (nm) {
         var first = nm.split(' ')[0];
         var el = document.getElementById('typTitle');
-        el.innerHTML = 'Thank you, ' + first.replace(/[<>]/g,'') + '. <em>Your home valuation is on its way.</em>';
+        el.textContent = 'Thank you, ' + first + '. ';
+        var em = document.createElement('em'); em.textContent = 'You’re all set.'; el.appendChild(em);
         sessionStorage.removeItem('typName');
       }
     } catch (e) {}

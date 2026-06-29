@@ -18,6 +18,12 @@
 <title>Are you ready to buy a home? — Krishna Ambilwade</title>
 <meta name="description" content="A 60-second matchmaker for Saskatoon renters thinking about homeownership. Honest answer on where you stand — no pressure, no jargon." />
 
+
+<link rel="canonical" href="https://meetkrishna.com/buy/quiz/" />
+<meta property="og:title" content="Are you ready to buy a home? — Krishna Ambilwade" />
+<meta property="og:description" content="A 60-second matchmaker for Saskatoon renters thinking about homeownership." />
+<meta property="og:image" content="https://meetkrishna.com/images/krishna-portrait.webp" />
+<meta property="og:url" content="https://meetkrishna.com/buy/quiz/" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;1,9..144,300;1,9..144,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
@@ -453,7 +459,7 @@
     <a href="../../" class="footer__link">meetkrishna.com</a>
   </div>
   <div class="footer__copy">
-    © 2026 Krishna Ambilwade · Licensed REALTOR® · Saskatoon, SK · Designed by <a href="https://altxmedia.com" target="_blank" rel="noopener" style="color:#C8D5C0">AltX Media</a>
+    © 2026 Krishna Ambilwade · Licensed REALTOR® · Saskatoon, SK · Designed by <a href="https://altxmedia.com" target="_blank" rel="noopener noreferrer" style="color:#C8D5C0">AltX Media</a>
   </div>
 </footer>
 
@@ -747,8 +753,8 @@
     window.location.href = '/typ-buy/';
     return;
 
-    const primaryTarget   = branch.primary.newTab ? ' target="_blank" rel="noopener"' : '';
-    const secondaryTarget = branch.secondary.newTab ? ' target="_blank" rel="noopener"' : '';
+    const primaryTarget   = branch.primary.newTab ? ' target="_blank" rel="noopener noreferrer"' : '';
+    const secondaryTarget = branch.secondary.newTab ? ' target="_blank" rel="noopener noreferrer"' : '';
     const firstName       = (quizState.answers.contact?.name) || 'there';
 
     viewport.innerHTML = `

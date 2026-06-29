@@ -2846,7 +2846,7 @@
   </div>
 
   <div class="nav__utils">
-    <a href="/cal/" target="_blank" rel="noopener" class="cta">
+    <a href="/cal/" target="_blank" rel="noopener noreferrer" class="cta">
       Book a Call
       <svg class="arrow" width="14" height="10" viewBox="0 0 14 10" fill="none">
         <path d="M1 5h11M8 1l4 4-4 4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
@@ -2876,7 +2876,7 @@
   <a href="property-management/">Property Management</a>
   <a href="#about">About</a>
   <a href="/journal/">Journal</a>
-  <a href="/cal/" target="_blank" rel="noopener" class="mobile-menu__cta">Book a Call <svg width="14" height="10" viewBox="0 0 14 10" fill="none"><path d="M1 5h11M8 1l4 4-4 4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+  <a href="/cal/" target="_blank" rel="noopener noreferrer" class="mobile-menu__cta">Book a Call <svg width="14" height="10" viewBox="0 0 14 10" fill="none"><path d="M1 5h11M8 1l4 4-4 4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
 </div>
 
 <!-- ============================================
@@ -3046,7 +3046,7 @@
 
     <!-- CTAs — full width, centered -->
     <div class="meet__cta-row">
-      <a href="/cal/" target="_blank" rel="noopener" class="link-arrow">
+      <a href="/cal/" target="_blank" rel="noopener noreferrer" class="link-arrow">
         Book a 15-minute coffee
         <svg width="14" height="10" viewBox="0 0 14 10" fill="none">
           <path d="M1 5h11M8 1l4 4-4 4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
@@ -3644,7 +3644,7 @@
     </p>
 
     <div class="cta-final__buttons">
-      <a href="/cal/" target="_blank" rel="noopener" class="cta-final__btn cta-final__btn--primary">
+      <a href="/cal/" target="_blank" rel="noopener noreferrer" class="cta-final__btn cta-final__btn--primary">
         Book a 15-minute call
         <svg class="arrow" width="14" height="10" viewBox="0 0 14 10" fill="none">
           <path d="M1 5h11M8 1l4 4-4 4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
@@ -3761,7 +3761,7 @@
               <circle cx="11.5" cy="4.5" r="0.7" fill="currentColor"/>
             </svg>
           </a>
-          <a href="https://www.facebook.com/profile.php?id=61557947674277" target="_blank" rel="noopener" aria-label="Facebook">
+          <a href="https://www.facebook.com/profile.php?id=61557947674277" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
             <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
               <path d="M9 14V8.5h2L11.5 6H9V4.6c0-.6.2-1.1 1.1-1.1H11.5V1.1L10 1c-2 0-3 1.2-3 3V6H5v2.5h2V14h2z" fill="currentColor"/>
             </svg>
@@ -3834,7 +3834,7 @@
 
     <div class="footer__bottom">
       <div class="footer__copy">
-        © 2026 Krishna Ambilwade · Licensed REALTOR® &amp; Property Manager · Boyes Group Realty Inc · Saskatchewan, Canada · Designed by <a href="https://altxmedia.com" target="_blank" rel="noopener" style="color:#C8D5C0">AltX Media</a>
+        © 2026 Krishna Ambilwade · Licensed REALTOR® &amp; Property Manager · Boyes Group Realty Inc · Saskatchewan, Canada · Designed by <a href="https://altxmedia.com" target="_blank" rel="noopener noreferrer" style="color:#C8D5C0">AltX Media</a>
       </div>
       <nav class="footer__legal" aria-label="Legal">
         <a href="#privacy">Privacy</a>
@@ -3952,29 +3952,30 @@
     return `<span><strong>${value}</strong> ${label}</span>`;
   }
 
+  function esc(s) { return String(s || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
   function cardHTML(p) {
     return `
       <a class="property-card" href="${p.href}">
         <div class="property-card__media">
-          <span class="property-card__badge">${p.status}</span>
+          <span class="property-card__badge">${esc(p.status)}</span>
           <button class="property-card__save" aria-label="Save property" onclick="event.preventDefault();">
             ${HEART_SVG}
           </button>
-          <img src="${p.image}" alt="${p.address}" loading="lazy" />
+          <img src="${p.image}" alt="${esc(p.address)}" loading="lazy" />
         </div>
         <div class="property-card__body">
           <div class="property-card__price">
-            ${p.price}${p.priceSuffix ? `<small>${p.priceSuffix}</small>` : ''}
+            ${esc(p.price)}${p.priceSuffix ? `<small>${esc(p.priceSuffix)}</small>` : ''}
           </div>
-          <div class="property-card__address">${p.address}</div>
+          <div class="property-card__address">${esc(p.address)}</div>
           <div class="property-card__specs">
             ${fmtSpec(p.beds, 'beds')}
             ${fmtSpec(p.baths, 'baths')}
             ${fmtSpec(p.sqft.toLocaleString(), 'sqft')}
           </div>
           <div class="property-card__meta">
-            <span class="property-card__type">${p.type}</span>
-            <span class="property-card__hood">${p.neighbourhood}</span>
+            <span class="property-card__type">${esc(p.type)}</span>
+            <span class="property-card__hood">${esc(p.neighbourhood)}</span>
           </div>
         </div>
       </a>

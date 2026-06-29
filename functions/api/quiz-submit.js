@@ -13,8 +13,23 @@
  *   GHL_WEBHOOK_URL  (set in Cloudflare Pages → Settings → Environment variables)
  */
 
+const ALLOWED_ORIGIN = 'https://meetkrishna.com';
+const MAX_BODY_BYTES = 8_000; // ponytail: simple size guard, upgrade to KV rate-limit if spam occurs
+
 export async function onRequestPost({ request, env }) {
   try {
+    // Origin check — reject requests from outside the site
+    const origin = request.headers.get('Origin') || '';
+    if (origin && origin !== ALLOWED_ORIGIN) {
+      return json({ error: 'Forbidden' }, 403);
+    }
+
+    // Size guard — prevent large payloads
+    const contentLength = parseInt(request.headers.get('Content-Length') || '0');
+    if (contentLength > MAX_BODY_BYTES) {
+      return json({ error: 'Payload too large' }, 413);
+    }
+
     const payload = await request.json();
 
     // Light validation — email is the contact dedupe key in GHL
@@ -46,12 +61,11 @@ export async function onRequestPost({ request, env }) {
   }
 }
 
-// Optional: friendly response for OPTIONS preflight (only if calling cross-origin)
 export async function onRequestOptions() {
   return new Response(null, {
     status: 204,
     headers: {
-      'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Origin': ALLOWED_ORIGIN,
       'Access-Control-Allow-Methods': 'POST, OPTIONS',
       'Access-Control-Allow-Headers': 'Content-Type'
     }

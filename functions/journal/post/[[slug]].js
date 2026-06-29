@@ -40,7 +40,9 @@ export async function onRequest(context) {
       if (post) {
         const pageUrl = url.origin + url.pathname;
         html = injectMeta(html, post, pageUrl);
-        html = html.replace(/<!--SSR_BODY-->[\s\S]*?<!--\/SSR_BODY-->/, () => renderArticle(post, pageUrl));
+        const rendered = html.replace(/<!--SSR_BODY-->[\s\S]*?<!--\/SSR_BODY-->/, () => renderArticle(post, pageUrl));
+        if (rendered === html) console.warn('journal SSR: <!--SSR_BODY--> marker missing from shell');
+        html = rendered;
       }
     } catch (err) {
       console.error('journal SSR error:', err && err.message);
