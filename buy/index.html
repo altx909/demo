@@ -788,23 +788,31 @@
   </div>
 </section>
 
-<!-- ============================================ FULL SASKATOON MARKET ============================================ -->
+<!-- ============================================ MAP SEARCH ============================================ -->
 <section class="mls-section mls-section--market" id="market">
   <div class="mls-section__inner">
     <div class="mls-section__head">
-      <span class="mls-eyebrow">Saskatoon MLS</span>
-      <h2 class="mls-title">Browse the full <em>market.</em></h2>
-      <p class="mls-sub">Every active listing in Saskatoon. Filter by price, property type, bedrooms, and more.</p>
+      <span class="mls-eyebrow">Saskatoon MLS · Map View</span>
+      <h2 class="mls-title">Find your neighbourhood, <em>visually.</em></h2>
+      <p class="mls-sub">Click any pin to explore the listing. Zoom, filter, and browse Saskatoon's active market on the map.</p>
     </div>
     <iframe
-      src="/buy/market/"
-      title="Saskatoon MLS Search"
+      src="/buy/map/"
+      title="Saskatoon MLS Map Search"
       width="100%"
-      height="1000"
+      height="700"
       frameborder="0"
-      style="border:none; display:block; width:100%; min-height:1000px;"
+      style="border:none; display:block; width:100%; min-height:700px; border-radius: 8px; overflow: hidden;"
       loading="lazy"
     ></iframe>
+    <div style="text-align:center; margin-top: 40px;">
+      <a href="/listings/" class="cta" style="font-size:13px; padding: 14px 28px;">
+        Search all listings
+        <svg class="arrow" width="14" height="10" viewBox="0 0 14 10" fill="none">
+          <path d="M1 5h11M8 1l4 4-4 4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </a>
+    </div>
   </div>
 </section>
 
