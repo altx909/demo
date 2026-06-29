@@ -623,6 +623,19 @@
   .faq__a-inner { padding:0 4px 26px; font-size:15px; line-height:1.7; color:var(--ink-soft); }
   .faq__item.open .faq__a { max-height:600px; }
   @media (max-width:640px){ .faq { padding:72px 20px; } .faq__q { font-size:17px; } }
+
+  /* BUY DROPDOWN */
+  .nav__dropdown { position: relative; }
+  .nav__dropdown-toggle { font-size: 13px; padding: 6px 0; cursor: pointer; display: inline-flex; align-items: center; gap: 4px; position: relative; transition: opacity 200ms; }
+  .nav__dropdown-toggle svg { transition: transform 250ms cubic-bezier(0.22,1,0.36,1); }
+  .nav__dropdown:hover .nav__dropdown-toggle svg { transform: rotate(180deg); }
+  .nav__dropdown-menu { position: absolute; top: 100%; left: 50%; transform: translateX(-50%) translateY(-6px); background: var(--cream); border: 1px solid var(--line); border-radius: 10px; padding: 6px; min-width: 170px; box-shadow: 0 8px 32px rgba(26,26,26,0.10); opacity: 0; pointer-events: none; transition: opacity 200ms, transform 200ms; z-index: 10; }
+  .nav__dropdown:hover .nav__dropdown-menu { opacity: 1; pointer-events: auto; transform: translateX(-50%) translateY(0); }
+  .nav__dropdown-menu::before { content: ""; position: absolute; top: -16px; left: 0; right: 0; height: 16px; }
+  .nav__dropdown-menu a { display: flex; padding: 10px 14px; font-size: 12.5px; color: var(--ink-soft, #3A3A3A); border-radius: 6px; transition: background 150ms, color 150ms; opacity: 1 !important; border-bottom: none !important; }
+  .nav__dropdown-menu a:hover { background: var(--sage-pale, #E4EAE0); color: var(--forest, #1F3A2E); }
+  .mobile-menu a.sub { font-family: var(--sans, 'Inter', sans-serif) !important; font-size: 15px !important; font-weight: 400 !important; letter-spacing: 0.04em; padding: 8px 0 8px 18px !important; opacity: 0.65; border-bottom: none !important; }
+  .mobile-menu a.sub-end { border-bottom: 1px solid rgba(250,247,242,0.12) !important; }
 </style>
 </head>
 <body>
@@ -634,7 +647,17 @@
     <span class="wordmark__tag">Saskatoon Real Estate</span>
   </a>
   <div class="nav__links">
-    <a href="/buy/">Buy</a>
+        <div class="nav__dropdown">
+      <span class="nav__dropdown-toggle">
+        Buy
+        <svg width="10" height="6" viewBox="0 0 10 6" fill="none"><path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </span>
+      <div class="nav__dropdown-menu">
+        <a href="/buy/">Featured Listings</a>
+        <a href="/map-search/">Map Search</a>
+        <a href="/listings/">All Listings</a>
+      </div>
+    </div>
     <a href="/sell/" class="active">Sell</a>
     <a href="/rent/">Rent</a>
     <a href="/property-management/">Property Management</a>
@@ -662,7 +685,10 @@
       <path d="M2 2l18 18M20 2L2 20" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
     </svg>
   </button>
-  <a href="/buy/">Buy</a>
+      <a href="/buy/">Buy</a>
+  <a href="/buy/" class="sub">Featured Listings</a>
+  <a href="/map-search/" class="sub">Map Search</a>
+  <a href="/listings/" class="sub sub-end">All Listings</a>
   <a href="/sell/">Sell</a>
   <a href="/rent/">Rent</a>
   <a href="/property-management/">Property Management</a>
