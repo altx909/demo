@@ -16,7 +16,7 @@
 <link rel="alternate icon" href="/favicon.ico" sizes="any" />
 <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
 <title>Buy a Home in Saskatoon — Krishna Ambilwade</title>
-<meta name="description" content="Saskatoon's full home-buying experience, coming soon. In the meantime, take the 60-second matchmaker quiz and Krishna will match you the moment your home hits the market." />
+<meta name="description" content="Browse every active listing in Saskatoon — live MLS data. Search by price, type, and neighbourhood, or take the matchmaker quiz and let Krishna find your perfect home." />
 <meta name="geo.region" content="CA-SK" />
 <meta name="geo.placename" content="Saskatoon" />
 <meta name="geo.position" content="52.1332;-106.6700" />
@@ -24,12 +24,12 @@
 <meta property="og:type" content="website" />
 <meta property="og:site_name" content="Krishna Ambilwade · Saskatoon Real Estate" />
 <meta property="og:title" content="Buy a Home in Saskatoon — Krishna Ambilwade" />
-<meta property="og:description" content="Saskatoon's full home-buying experience, coming soon. In the meantime, take the 60-second matchmaker quiz and Krishna will match you the moment your home hits the market." />
+<meta property="og:description" content="Browse every active listing in Saskatoon — live MLS data. Search by price, type, and neighbourhood, or take the matchmaker quiz and let Krishna find your perfect home." />
 <meta property="og:url" content="https://meetkrishna.com/buy/" />
 <meta property="og:image" content="https://meetkrishna.com/images/buy-property-saskatoon.webp" />
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:title" content="Buy a Home in Saskatoon — Krishna Ambilwade" />
-<meta name="twitter:description" content="Saskatoon's full home-buying experience, coming soon. In the meantime, take the 60-second matchmaker quiz and Krishna will match you the moment your home hits the market." />
+<meta name="twitter:description" content="Browse every active listing in Saskatoon — live MLS data. Search by price, type, and neighbourhood, or take the matchmaker quiz and let Krishna find your perfect home." />
 <meta name="twitter:image" content="https://meetkrishna.com/images/buy-property-saskatoon.webp" />
 <link rel="canonical" href="https://meetkrishna.com/buy/" />
 <script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://meetkrishna.com/"}, {"@type": "ListItem", "position": 2, "name": "Buy a Home", "item": "https://meetkrishna.com/buy/"}]}, {"@type": "Service", "serviceType": "Real estate buyer agent", "name": "Home Buying in Saskatoon", "url": "https://meetkrishna.com/buy/", "areaServed": {"@type": "City", "name": "Saskatoon"}, "provider": {"@type": "RealEstateAgent", "@id": "https://meetkrishna.com/#krishna", "name": "Krishna Ambilwade"}}]}</script>
@@ -158,7 +158,7 @@
     overflow: hidden;
   }
   .buy-hero::before {
-    content: "Soon.";
+    content: "Live.";
     position: absolute;
     bottom: -110px; right: -50px;
     font-family: var(--serif);
@@ -653,6 +653,39 @@
   .faq__a-inner { padding:0 4px 26px; font-size:15px; line-height:1.7; color:var(--ink-soft); }
   .faq__item.open .faq__a { max-height:600px; }
   @media (max-width:640px){ .faq { padding:72px 20px; } .faq__q { font-size:17px; } }
+
+  /* ---------------- MLS SECTIONS ---------------- */
+  .mls-section {
+    padding: 100px 40px;
+    border-top: 1px solid var(--line);
+  }
+  .mls-section--featured { background: var(--cream); }
+  .mls-section--market   { background: var(--cream-warm); }
+  .mls-section__inner    { max-width: 1320px; margin: 0 auto; }
+  .mls-section__head     { text-align: center; margin-bottom: 52px; }
+  .mls-eyebrow {
+    display: inline-flex; align-items: center; justify-content: center; gap: 14px;
+    font-size: 11px; font-weight: 500;
+    letter-spacing: 0.28em; text-transform: uppercase;
+    color: var(--forest); margin-bottom: 20px;
+  }
+  .mls-eyebrow::before, .mls-eyebrow::after {
+    content: ""; width: 28px; height: 1px; background: var(--forest); opacity: 0.6;
+  }
+  .mls-title {
+    font-family: var(--serif); font-weight: 300;
+    font-size: clamp(32px, 4.4vw, 52px);
+    line-height: 1.08; letter-spacing: -0.02em;
+    color: var(--ink); margin: 0 0 14px;
+  }
+  .mls-title em { font-style: italic; color: var(--forest); }
+  .mls-sub {
+    font-size: 15px; font-weight: 300; line-height: 1.65;
+    color: var(--ink-soft); margin: 0 auto; max-width: 520px;
+  }
+  .mls-widget { width: 100%; }
+  @media (max-width: 1024px) { .mls-section { padding: 72px 24px; } }
+  @media (max-width: 640px)  { .mls-section { padding: 52px 20px; } .buy-hero::before { font-size: 220px; } }
 </style>
 </head>
 <body>
@@ -710,38 +743,28 @@
   <div class="buy-hero__inner">
 
     <span class="buy-hero__eyebrow">
-      Building the buy experience
+      Live MLS · Saskatoon
       <span class="live-dot" aria-hidden="true"></span>
     </span>
 
     <h1 class="buy-hero__title">
-      Saskatoon's full market, <em>almost ready.</em>
+      Saskatoon's full market, <em>live.</em>
     </h1>
 
     <p class="buy-hero__sub">
-      We're pulling together every home for sale across Saskatoon — from MLS to off-market opportunities. Until that's live, tell us what you're looking for. The moment your match hits the market, you'll be the first to know.
+      Every active listing in Saskatoon, updated in real time. Browse Krishna's featured properties or search the full market below — filtered by price, type, and neighbourhood.
     </p>
-
-    <!-- Loading bar -->
-    <div class="loading-bar" role="status" aria-label="Progress: 50% complete">
-      <div class="loading-bar__track">
-        <div class="loading-bar__fill"></div>
-      </div>
-      <div class="loading-bar__caption">
-        Connecting to MLS · <strong id="loadingPct">0%</strong> complete
-      </div>
-    </div>
 
     <!-- CTAs -->
     <div class="buy-hero__actions">
-      <a href="#quiz" class="cta">
-        Take the matchmaker quiz
+      <a href="#market" class="cta">
+        Browse all listings
         <svg class="arrow" width="14" height="10" viewBox="0 0 14 10" fill="none">
           <path d="M1 5h11M8 1l4 4-4 4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
         </svg>
       </a>
-      <a href="/cal/" target="_blank" rel="noopener" class="btn-secondary">
-        Book a call with Krishna
+      <a href="#quiz" class="btn-secondary">
+        Take the matchmaker quiz
         <svg width="14" height="10" viewBox="0 0 14 10" fill="none">
           <path d="M1 5h11M8 1l4 4-4 4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
         </svg>
@@ -750,6 +773,56 @@
 
   </div>
 </section>
+
+<!-- ============================================ FEATURED LISTINGS ============================================ -->
+<section class="mls-section mls-section--featured" id="featured-listings">
+  <div class="mls-section__inner">
+    <div class="mls-section__head">
+      <span class="mls-eyebrow">Featured</span>
+      <h2 class="mls-title">Krishna's active <em>listings.</em></h2>
+      <p class="mls-sub">Personally selected properties — each one representing honest value in today's Saskatoon market.</p>
+    </div>
+    <div class="mls-widget" id="widget-featured"></div>
+  </div>
+</section>
+
+<!-- ============================================ FULL SASKATOON MARKET ============================================ -->
+<section class="mls-section mls-section--market" id="market">
+  <div class="mls-section__inner">
+    <div class="mls-section__head">
+      <span class="mls-eyebrow">Saskatoon MLS</span>
+      <h2 class="mls-title">Browse the full <em>market.</em></h2>
+      <p class="mls-sub">Every active listing in Saskatoon. Filter by price, property type, bedrooms, and more.</p>
+    </div>
+    <div class="mls-widget" id="widget-market"></div>
+  </div>
+</section>
+
+<script>
+/* Load both myRealPage widgets into separate containers.
+   Sequential load avoids the duplicate id="mrpscript" conflict. */
+(function() {
+  function loadWidget(containerId, src, delay) {
+    setTimeout(function() {
+      var s = document.createElement('script');
+      s.id = 'mrpscript';
+      s.src = src;
+      s.async = true;
+      document.getElementById(containerId).appendChild(s);
+    }, delay);
+  }
+  loadWidget(
+    'widget-featured',
+    'https://idx.myrealpage.com/wps/rest/67223/l/idx2/mylistings/tmpl~v2,noframe~true/-/mylistings.def/in.js',
+    0
+  );
+  loadWidget(
+    'widget-market',
+    'https://idx.myrealpage.com/wps/rest/67223/l/idx2/recip/tmpl~v2,idx_v2_map_pos~52.13827684214377%7C-106.64499521841373,idx_v2_map_radius~8/-/idx.browse.searchform/in.js',
+    800
+  );
+})();
+</script>
 
 <!-- ============================================ BUYER MATCHMAKER QUIZ ============================================ -->
 <section class="quiz" id="quiz">
