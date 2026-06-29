@@ -3884,7 +3884,7 @@
 
   async function loadSaleListings() {
     try {
-      const res = await fetch('/.netlify/functions/my-listings');
+      const res = await fetch('/api/my-listings');
       if (!res.ok) throw new Error(res.status);
       PROPERTIES.sale = await res.json();
       const activeTab = document.querySelector('.listings__toggle button.active');
