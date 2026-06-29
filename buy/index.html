@@ -101,7 +101,7 @@
   }
 
   /* BUY DROPDOWN */
-  .nav__dropdown { position: relative; }
+  .nav__dropdown { position: relative; padding-bottom: 16px; }
   .nav__dropdown-toggle {
     font-size: 13px; padding: 6px 0; cursor: pointer;
     display: inline-flex; align-items: center; gap: 4px;
@@ -114,7 +114,7 @@
   .nav__dropdown-toggle svg { transition: transform 250ms var(--ease); }
   .nav__dropdown:hover .nav__dropdown-toggle svg { transform: rotate(180deg); }
   .nav__dropdown-menu {
-    position: absolute; top: calc(100% + 14px); left: 50%;
+    position: absolute; top: 100%; left: 50%;
     transform: translateX(-50%) translateY(-6px);
     background: var(--cream); border: 1px solid var(--line);
     border-radius: 10px; padding: 6px; min-width: 170px;
@@ -172,6 +172,15 @@
   .mobile-menu a {
     font-family: var(--serif); font-weight: 300; font-size: 32px;
     padding: 14px 0; border-bottom: 1px solid rgba(250,247,242,0.12);
+  }
+  .mobile-menu a.sub {
+    font-family: var(--sans) !important; font-size: 15px !important;
+    font-weight: 400 !important; letter-spacing: 0.04em;
+    padding: 8px 0 8px 18px !important;
+    opacity: 0.65; border-bottom: none !important;
+  }
+  .mobile-menu a.sub-end {
+    border-bottom: 1px solid rgba(250,247,242,0.12) !important;
   }
   .mobile-menu .util {
     font-family: var(--sans); font-size: 13px;
@@ -822,9 +831,9 @@
     </svg>
   </button>
   <a href="/buy/">Buy</a>
-  <a href="/buy/" class="sub" style="font-family:var(--sans);font-size:16px;padding:8px 0 8px 18px;opacity:0.7;border-bottom:none;">Featured Listings</a>
-  <a href="/map-search/" class="sub" style="font-family:var(--sans);font-size:16px;padding:8px 0 8px 18px;opacity:0.7;border-bottom:none;">Map Search</a>
-  <a href="/listings/" class="sub" style="font-family:var(--sans);font-size:16px;padding:8px 0 8px 18px;opacity:0.7;border-bottom:1px solid rgba(250,247,242,0.12);">All Listings</a>
+  <a href="/buy/" class="sub">Featured Listings</a>
+  <a href="/map-search/" class="sub">Map Search</a>
+  <a href="/listings/" class="sub sub-end">All Listings</a>
   <a href="/sell/">Sell</a>
   <a href="/rent/">Rent</a>
   <a href="/property-management/">Property Management</a>
@@ -894,7 +903,7 @@
 
       <!-- Map Search Card -->
       <a href="/map-search/" class="explore-card">
-        <div class="explore-card__img" style="background-image:url('/images/hero-saskatoon.jpg')"></div>
+        <div class="explore-card__img" style="background-image:url('/images/saskatoon-map.webp')"></div>
         <div class="explore-card__body">
           <span class="explore-card__label">Map Search</span>
           <h3 class="explore-card__title">Find your neighbourhood, <em>visually.</em></h3>
@@ -908,7 +917,7 @@
 
       <!-- All Listings Card -->
       <a href="/listings/" class="explore-card">
-        <div class="explore-card__img" style="background-image:url('/images/buy-property-saskatoon.webp')"></div>
+        <div class="explore-card__img" style="background-image:url('/images/hero-saskatoon.jpg')"></div>
         <div class="explore-card__body">
           <span class="explore-card__label">All Listings</span>
           <h3 class="explore-card__title">Search the full market, <em>filtered.</em></h3>
