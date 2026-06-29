@@ -782,9 +782,7 @@
       <h2 class="mls-title">Krishna's active <em>listings.</em></h2>
       <p class="mls-sub">Personally selected properties — each one representing honest value in today's Saskatoon market.</p>
     </div>
-    <div class="mls-widget">
-      <script id="mrpscript" src="https://idx.myrealpage.com/wps/rest/67223/l/idx2/mylistings/tmpl~v2,noframe~true/-/mylistings.def/in.js" async></script>
-    </div>
+    <div class="mls-widget" id="widget-featured"></div>
   </div>
 </section>
 
@@ -796,15 +794,7 @@
       <h2 class="mls-title">Find your neighbourhood, <em>visually.</em></h2>
       <p class="mls-sub">Click any pin to explore the listing. Zoom, filter, and browse Saskatoon's active market on the map.</p>
     </div>
-    <iframe
-      src="/buy/map/"
-      title="Saskatoon MLS Map Search"
-      width="100%"
-      height="700"
-      frameborder="0"
-      style="border:none; display:block; width:100%; min-height:700px; border-radius: 8px; overflow: hidden;"
-      loading="lazy"
-    ></iframe>
+    <div id="widget-map" style="min-height: 680px;"></div>
     <div style="text-align:center; margin-top: 40px;">
       <a href="/listings/" class="cta" style="font-size:13px; padding: 14px 28px;">
         Search all listings
@@ -815,6 +805,26 @@
     </div>
   </div>
 </section>
+
+<script>
+/* Sequential load: featured first, map after featured renders.
+   Both share id="mrpscript" — rename first before loading second. */
+(function() {
+  var s1 = document.createElement('script');
+  s1.id = 'mrpscript';
+  s1.src = 'https://idx.myrealpage.com/wps/rest/67223/l/idx2/mylistings/tmpl~v2,noframe~true/-/mylistings.def/in.js';
+  document.getElementById('widget-featured').appendChild(s1);
+
+  setTimeout(function() {
+    var old = document.getElementById('mrpscript');
+    if (old) old.removeAttribute('id');
+    var s2 = document.createElement('script');
+    s2.id = 'mrpscript';
+    s2.src = 'https://idx.myrealpage.com/wps/rest/67223/l/idx2/recip/tmpl~v2,idx_v2_map_pos~52.14376817546159%7C-106.65181899999999,idx_v2_map_radius~9/-/idx.search/in.js';
+    document.getElementById('widget-map').appendChild(s2);
+  }, 4000);
+})();
+</script>
 
 <!-- ============================================ BUYER MATCHMAKER QUIZ ============================================ -->
 <section class="quiz" id="quiz">
