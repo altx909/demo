@@ -705,8 +705,6 @@
     <a href="/journal/">Journal</a>
   </div>
   <div class="nav__utils">
-    <a href="#owner-portal" class="util">Owner Portal</a>
-    <a href="#tenant-portal" class="util">Tenant Portal</a>
     <a href="/cal/" target="_blank" rel="noopener" class="cta">
       Book a Call
       <svg class="arrow" width="14" height="10" viewBox="0 0 14 10" fill="none">
@@ -733,8 +731,6 @@
   <a href="/property-management/">Property Management</a>
   <a href="/#about">About</a>
   <a href="/journal/">Journal</a>
-  <a href="#owner-portal" class="util">Owner Portal</a>
-  <a href="#tenant-portal" class="util">Tenant Portal</a>
   <a href="/cal/" target="_blank" rel="noopener" class="mobile-menu__cta">Book a Call <svg width="14" height="10" viewBox="0 0 14 10" fill="none"><path d="M1 5h11M8 1l4 4-4 4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
 </div>
 
@@ -794,7 +790,7 @@
       <h2 class="mls-title">Find your neighbourhood, <em>visually.</em></h2>
       <p class="mls-sub">Click any pin to explore the listing. Zoom, filter, and browse Saskatoon's active market on the map.</p>
     </div>
-    <div id="widget-map" style="min-height: 680px;"></div>
+    <div id="widget-map" style="width:100%; height:700px; display:block; position:relative;"></div>
     <div style="text-align:center; margin-top: 40px;">
       <a href="/listings/" class="cta" style="font-size:13px; padding: 14px 28px;">
         Search all listings
@@ -807,22 +803,23 @@
 </section>
 
 <script>
-/* Sequential load: featured first, map after featured renders.
-   Both share id="mrpscript" — rename first before loading second. */
 (function() {
+  // Load featured listings
   var s1 = document.createElement('script');
   s1.id = 'mrpscript';
   s1.src = 'https://idx.myrealpage.com/wps/rest/67223/l/idx2/mylistings/tmpl~v2,noframe~true/-/mylistings.def/in.js';
   document.getElementById('widget-featured').appendChild(s1);
 
+  // Load map after featured settles — no id on s2 so it renders into its parent div
   setTimeout(function() {
     var old = document.getElementById('mrpscript');
     if (old) old.removeAttribute('id');
     var s2 = document.createElement('script');
     s2.id = 'mrpscript';
+    s2.async = true;
     s2.src = 'https://idx.myrealpage.com/wps/rest/67223/l/idx2/recip/tmpl~v2,idx_v2_map_pos~52.14376817546159%7C-106.65181899999999,idx_v2_map_radius~9/-/idx.search/in.js';
     document.getElementById('widget-map').appendChild(s2);
-  }, 4000);
+  }, 3000);
 })();
 </script>
 
