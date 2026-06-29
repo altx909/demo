@@ -3275,7 +3275,7 @@
     </div>
 
     <div class="listings__cta">
-      <a href="#all-listings" class="link-arrow" id="viewAllLink">
+      <a href="/listings/" class="link-arrow" id="viewAllLink">
         View all properties for sale
         <svg width="14" height="10" viewBox="0 0 14 10" fill="none">
           <path d="M1 5h11M8 1l4 4-4 4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
@@ -3878,55 +3878,26 @@
          neighbourhood, type, status, href }
      ========================================================= */
 
-  /* Rent listings come from Sanity via /api/rentals (loaded async below).
-     Sale listings stay mocked until MyRealPage is wired up. */
-  let PROPERTIES = {
-    sale: [
-      {
-        id: 'mrp-001',
-        image: 'https://images.unsplash.com/photo-1568605114967-8130f3a36994?auto=format&fit=crop&w=1200&q=80',
-        price: '$749,000', address: '247 Stonebridge Crescent',
-        beds: 4, baths: 3, sqft: 2400, neighbourhood: 'Stonebridge',
-        type: 'Single Family', status: 'New Listing', href: '#mrp-001'
-      },
-      {
-        id: 'mrp-002',
-        image: 'https://images.unsplash.com/photo-1605276374104-dee2a0ed3cd6?auto=format&fit=crop&w=1200&q=80',
-        price: '$1,245,000', address: '108 Briarwood Lane',
-        beds: 5, baths: 4, sqft: 3800, neighbourhood: 'Briarwood',
-        type: 'Executive Home', status: 'Featured', href: '#mrp-002'
-      },
-      {
-        id: 'mrp-003',
-        image: 'https://images.unsplash.com/photo-1592595896551-12b371d546d5?auto=format&fit=crop&w=1200&q=80',
-        price: '$389,000', address: '402 — 220 1st Ave N',
-        beds: 2, baths: 2, sqft: 1100, neighbourhood: 'Downtown',
-        type: 'Condo', status: 'For Sale', href: '#mrp-003'
-      },
-      {
-        id: 'mrp-004',
-        image: 'https://images.unsplash.com/photo-1613977257363-707ba9348227?auto=format&fit=crop&w=1200&q=80',
-        price: '$599,000', address: '512 Rosewood Boulevard',
-        beds: 3, baths: 3, sqft: 1950, neighbourhood: 'Rosewood',
-        type: 'New Construction', status: 'Just Listed', href: '#mrp-004'
-      },
-      {
-        id: 'mrp-005',
-        image: 'https://images.unsplash.com/photo-1564013799919-ab600027ffc6?auto=format&fit=crop&w=1200&q=80',
-        price: '$329,000', address: '115 8th Street East',
-        beds: 3, baths: 1, sqft: 1050, neighbourhood: 'Nutana',
-        type: 'Bungalow', status: 'For Sale', href: '#mrp-005'
-      },
-      {
-        id: 'mrp-006',
-        image: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1200&q=80',
-        price: '$1,890,000', address: '89 Lakeview Estates',
-        beds: 5, baths: 4, sqft: 4500, neighbourhood: 'Lakeview',
-        type: 'Riverfront Estate', status: 'Featured', href: '#mrp-006'
+  /* Sale listings fetched live from Krishna's MLS via /.netlify/functions/my-listings.
+     Rent listings come from Sanity via /api/rentals. Both loaded async below. */
+  let PROPERTIES = { sale: [], rent: [] };
+
+  async function loadSaleListings() {
+    try {
+      const res = await fetch('/.netlify/functions/my-listings');
+      if (!res.ok) throw new Error(res.status);
+      PROPERTIES.sale = await res.json();
+      const activeTab = document.querySelector('.listings__toggle button.active');
+      if (!activeTab || activeTab.dataset.type === 'sale') render('sale');
+      const saleTab = document.querySelector('.listings__toggle button[data-type="sale"]');
+      if (saleTab) {
+        const span = saleTab.querySelector('.count');
+        if (span) span.textContent = String(PROPERTIES.sale.length).padStart(2, '0');
       }
-    ],
-    rent: []  // populated by loadHomeRentals() below
-  };
+    } catch (err) {
+      console.error('Failed to load sale listings:', err);
+    }
+  }
 
   /* Transform a Sanity-shaped rental → homepage card shape */
   function rentToCard(r) {
@@ -4039,7 +4010,7 @@
     }, 220);
 
     if (viewAll) {
-      viewAll.href = type === 'sale' ? '#all-listings' : './rent/';
+      viewAll.href = type === 'sale' ? '/listings/' : '/rent/';
       viewAll.innerHTML = (type === 'sale'
         ? 'View all properties for sale'
         : 'View all available rentals')
@@ -4060,11 +4031,13 @@
     });
   });
 
-  // Initial render — sale tab first (mock data ready)
+  // Show loading skeleton while real listings fetch
   render('sale');
 
-  // Kick off the rent listings fetch from Sanity. The grid will refresh
-  // automatically when data arrives if the rent tab is currently active.
+  // Fetch live MLS listings from Krishna's myRealPage account
+  loadSaleListings();
+
+  // Fetch rent listings from Sanity
   loadHomeRentals();
 
   // Allow the rental band in Services to deep-link to the rentals tab
