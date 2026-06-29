@@ -780,6 +780,23 @@
     color: var(--ink-soft); margin: 0 auto; max-width: 520px;
   }
   .mls-widget { width: 100%; }
+  .property-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 40px 28px; }
+  .property-card { text-decoration: none; color: inherit; display: flex; flex-direction: column; gap: 18px; cursor: pointer; }
+  .property-card__media { position: relative; aspect-ratio: 4/3; overflow: hidden; border-radius: 4px; background: var(--cream-warm); }
+  .property-card__media img { width: 100%; height: 100%; object-fit: cover; transition: transform 1300ms var(--ease); display: block; }
+  .property-card:hover .property-card__media img { transform: scale(1.05); }
+  .property-card__badge { position: absolute; top: 16px; left: 16px; padding: 7px 14px; background: var(--cream); color: var(--forest); font-size: 10px; font-weight: 500; letter-spacing: 0.20em; text-transform: uppercase; border-radius: 999px; z-index: 2; box-shadow: 0 4px 12px rgba(20,39,31,0.10); }
+  .property-card__body { display: flex; flex-direction: column; gap: 8px; padding: 0 4px; }
+  .property-card__price { font-family: var(--serif); font-weight: 400; font-size: 26px; line-height: 1; color: var(--ink); letter-spacing: -0.01em; }
+  .property-card__address { font-size: 14.5px; color: var(--ink-soft); line-height: 1.45; }
+  .property-card__specs { display: flex; gap: 18px; margin-top: 8px; padding-top: 14px; border-top: 1px solid var(--line); font-size: 12.5px; color: var(--muted); }
+  .property-card__specs strong { color: var(--ink); font-weight: 500; font-size: 13.5px; }
+  .property-card__meta { display: flex; justify-content: space-between; align-items: center; margin-top: 2px; }
+  .property-card__type { font-size: 10.5px; font-weight: 500; letter-spacing: 0.20em; text-transform: uppercase; color: var(--muted); }
+  .property-card__hood { font-family: var(--serif); font-style: italic; font-size: 14px; color: var(--forest); }
+  .featured-cta { margin-top: 48px; text-align: center; }
+  .featured-cta a { display: inline-flex; align-items: center; gap: 8px; font-size: 12px; font-weight: 500; letter-spacing: 0.18em; text-transform: uppercase; color: var(--forest); border-bottom: 1px solid var(--forest); padding-bottom: 4px; transition: opacity 200ms; }
+  .featured-cta a:hover { opacity: 0.65; }
   @media (max-width: 1024px) { .mls-section { padding: 72px 24px; } }
   @media (max-width: 640px)  { .mls-section { padding: 52px 20px; } .buy-hero::before { font-size: 220px; } }
 </style>
@@ -887,7 +904,10 @@
       <h2 class="mls-title">Krishna's active <em>listings.</em></h2>
       <p class="mls-sub">Personally selected properties — each one representing honest value in today's Saskatoon market.</p>
     </div>
-    <div class="mls-widget" id="widget-featured"></div>
+    <div class="property-grid" id="featuredGrid"></div>
+    <div class="featured-cta">
+      <a href="/listings/">View all Saskatoon listings <svg width="14" height="10" viewBox="0 0 14 10" fill="none"><path d="M1 5h11M8 1l4 4-4 4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+    </div>
   </div>
 </section>
 
@@ -935,11 +955,47 @@
 </section>
 
 <script>
-(function() {
-  var s = document.createElement('script');
-  s.id = 'mrpscript';
-  s.src = 'https://idx.myrealpage.com/wps/rest/67223/l/idx2/mylistings/tmpl~v2,noframe~true/-/mylistings.def/in.js';
-  document.getElementById('widget-featured').appendChild(s);
+(async function() {
+  const grid = document.getElementById('featuredGrid');
+  if (!grid) return;
+
+  const HEART = `<svg width="16" height="14" viewBox="0 0 16 14" fill="none"><path d="M8 13s-6-3.7-6-8a3.5 3.5 0 016-2.45A3.5 3.5 0 0114 5c0 4.3-6 8-6 8z" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/></svg>`;
+
+  function cardHTML(p) {
+    return `
+      <a class="property-card" href="${p.href}" target="_blank" rel="noopener">
+        <div class="property-card__media">
+          <span class="property-card__badge">${p.status || 'For Sale'}</span>
+          <img src="${p.image}" alt="${p.address}" loading="lazy" />
+        </div>
+        <div class="property-card__body">
+          <div class="property-card__price">${p.price}</div>
+          <div class="property-card__address">${p.address}${p.neighbourhood ? ' &mdash; ' + p.neighbourhood : ''}</div>
+          <div class="property-card__specs">
+            <span><strong>${p.beds}</strong> beds</span>
+            <span><strong>${p.baths}</strong> baths</span>
+            ${p.sqft ? `<span><strong>${p.sqft.toLocaleString()}</strong> sqft</span>` : ''}
+          </div>
+          <div class="property-card__meta">
+            <span class="property-card__type">${p.type || 'Residential'}</span>
+            ${p.mls ? `<span class="property-card__hood">MLS® ${p.mls}</span>` : ''}
+          </div>
+        </div>
+      </a>`;
+  }
+
+  try {
+    const res = await fetch('/api/my-listings');
+    if (!res.ok) throw new Error(res.status);
+    const listings = await res.json();
+    if (listings.length === 0) {
+      grid.innerHTML = `<div style="grid-column:1/-1;text-align:center;padding:60px 24px;background:var(--cream-warm);border-radius:8px;"><p style="margin:0;font-family:var(--serif);font-style:italic;font-size:17px;color:var(--ink-soft);">No active listings right now — check back soon.</p></div>`;
+    } else {
+      grid.innerHTML = listings.map(cardHTML).join('');
+    }
+  } catch(e) {
+    console.error('Featured listings fetch failed:', e);
+  }
 })();
 </script>
 
