@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+<link rel="alternate icon" href="/favicon.ico" sizes="any" />
+<title>Page Not Found — Krishna Ambilwade</title>
+<meta name="robots" content="noindex" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;1,9..144,300;1,9..144,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --cream: #FAF7F2; --ink: #1A1A1A; --ink-soft: #3A3A3A; --line: #E5E0D7;
+    --forest: #1F3A2E; --forest-deep: #14271F; --gold: #D9B978;
+    --serif: 'Fraunces', Georgia, serif; --sans: 'Inter', -apple-system, sans-serif;
+    --ease: cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  *, *::before, *::after { box-sizing: border-box; }
+  html, body { margin: 0; height: 100%; font-family: var(--sans); color: var(--ink); background: var(--cream); -webkit-font-smoothing: antialiased; }
+  a { color: inherit; text-decoration: none; }
+
+  .nav { position: fixed; top: 0; left: 0; right: 0; z-index: 50; padding: 14px 40px; display: flex; align-items: center; justify-content: space-between; background: rgba(250,247,242,0.94); backdrop-filter: blur(14px); box-shadow: 0 1px 0 rgba(26,26,26,0.06); }
+  .wordmark { display: flex; flex-direction: column; line-height: 1; }
+  .wordmark__name { font-family: var(--serif); font-weight: 400; font-size: 22px; letter-spacing: -0.01em; }
+  .wordmark__tag { font-size: 9px; font-weight: 500; letter-spacing: 0.22em; text-transform: uppercase; margin-top: 4px; opacity: 0.85; }
+  .cta { display: inline-flex; align-items: center; gap: 8px; padding: 11px 20px; background: var(--forest); color: var(--cream); border-radius: 999px; font-size: 12.5px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; transition: background 250ms var(--ease); }
+  .cta:hover { background: var(--forest-deep); }
+
+  .page { display: flex; align-items: center; justify-content: center; min-height: 100vh; padding: 120px 40px 80px; text-align: center; }
+  .inner { max-width: 560px; }
+  .num { font-family: var(--serif); font-size: clamp(80px, 18vw, 160px); font-weight: 300; line-height: 1; color: var(--forest); opacity: 0.12; margin: 0; }
+  h1 { font-family: var(--serif); font-size: clamp(28px, 5vw, 48px); font-weight: 300; margin: -20px 0 16px; line-height: 1.2; }
+  h1 em { font-style: italic; }
+  p { font-size: 15px; color: var(--ink-soft); line-height: 1.65; margin: 0 0 36px; }
+  .links { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; }
+  .btn { display: inline-flex; align-items: center; gap: 8px; padding: 12px 24px; border-radius: 999px; font-size: 13px; font-weight: 500; transition: background 200ms, color 200ms; }
+  .btn--primary { background: var(--forest); color: var(--cream); }
+  .btn--primary:hover { background: var(--forest-deep); }
+  .btn--ghost { border: 1px solid var(--line); color: var(--ink-soft); }
+  .btn--ghost:hover { border-color: var(--forest); color: var(--forest); }
+</style>
+</head>
+<body>
+<nav class="nav">
+  <a href="/" class="wordmark">
+    <span class="wordmark__name">Krishna Ambilwade</span>
+    <span class="wordmark__tag">Saskatoon Real Estate</span>
+  </a>
+  <a href="/cal/" target="_blank" rel="noopener" class="cta">Book a Call</a>
+</nav>
+
+<main class="page">
+  <div class="inner">
+    <p class="num">404</p>
+    <h1>This page doesn't <em>exist.</em></h1>
+    <p>The link might be broken, or the page may have moved. Head back home and find what you're looking for.</p>
+    <div class="links">
+      <a href="/" class="btn btn--primary">Go home →</a>
+      <a href="/buy/" class="btn btn--ghost">Browse listings</a>
+      <a href="/cal/" class="btn btn--ghost">Book a call</a>
+    </div>
+  </div>
+</main>
+</body>
+</html>
