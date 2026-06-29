@@ -3,17 +3,27 @@ const https = require('https');
 const MRP_URL =
   'https://private-office.myrealpage.com/wps/-/tmpl~v2,noframe~true/mylistings/67223/mylistings.def/SearchResults.form?vow-skip-logging=true&vow.logout=true&ignore_sort_cookie=true';
 
-// Simple redirect-following fetch
+// Redirect-following fetch with browser-like headers
 function get(url, redirects = 5) {
   return new Promise((resolve, reject) => {
     const lib = url.startsWith('https') ? https : require('http');
-    lib.get(url, { headers: { 'User-Agent': 'Mozilla/5.0' } }, res => {
-      if ((res.statusCode === 301 || res.statusCode === 302) && res.headers.location && redirects > 0) {
-        return get(res.headers.location, redirects - 1).then(resolve).catch(reject);
+    const opts = {
+      headers: {
+        'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36',
+        'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+        'Accept-Language': 'en-US,en;q=0.9',
+        'Accept-Encoding': 'identity',
+        'Cache-Control': 'no-cache',
+      },
+    };
+    lib.get(url, opts, res => {
+      if ([301, 302, 303, 307, 308].includes(res.statusCode) && res.headers.location && redirects > 0) {
+        const next = res.headers.location.startsWith('http') ? res.headers.location : new URL(res.headers.location, url).href;
+        return get(next, redirects - 1).then(resolve).catch(reject);
       }
       let body = '';
       res.on('data', c => (body += c));
-      res.on('end', () => resolve(body));
+      res.on('end', () => resolve({ status: res.statusCode, body }));
     }).on('error', reject);
   });
 }
@@ -64,7 +74,11 @@ function parseListing(block) {
 
 exports.handler = async () => {
   try {
-    const html = await get(MRP_URL);
+    const { status, body: html } = await get(MRP_URL);
+
+    if (status !== 200) {
+      return { statusCode: 502, body: JSON.stringify({ error: `MRP returned ${status}`, preview: html.slice(0, 300) }) };
+    }
 
     // Split on listing boundaries
     const blocks = html.split('<li class="mrp-listing-result').slice(1);
