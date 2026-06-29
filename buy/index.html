@@ -799,28 +799,44 @@
 </section>
 
 <script>
-/* Load both myRealPage widgets into separate containers.
-   Sequential load avoids the duplicate id="mrpscript" conflict. */
+/* Both myRealPage scripts share id="mrpscript".
+   Load sequentially: wait for widget-featured to render content,
+   then rename its id and load the market widget. */
 (function() {
-  function loadWidget(containerId, src, delay) {
-    setTimeout(function() {
-      var s = document.createElement('script');
-      s.id = 'mrpscript';
-      s.src = src;
-      s.async = true;
-      document.getElementById(containerId).appendChild(s);
-    }, delay);
+  var marketSrc = 'https://idx.myrealpage.com/wps/rest/67223/l/idx2/recip/tmpl~v2,idx_v2_map_pos~52.13827684214377%7C-106.64499521841373,idx_v2_map_radius~8/-/idx.browse.searchform/in.js';
+
+  function loadMarket() {
+    var old = document.getElementById('mrpscript');
+    if (old) old.id = 'mrpscript-featured';
+    var s = document.createElement('script');
+    s.id = 'mrpscript';
+    s.src = marketSrc;
+    document.getElementById('widget-market').appendChild(s);
   }
-  loadWidget(
-    'widget-featured',
-    'https://idx.myrealpage.com/wps/rest/67223/l/idx2/mylistings/tmpl~v2,noframe~true/-/mylistings.def/in.js',
-    0
-  );
-  loadWidget(
-    'widget-market',
-    'https://idx.myrealpage.com/wps/rest/67223/l/idx2/recip/tmpl~v2,idx_v2_map_pos~52.13827684214377%7C-106.64499521841373,idx_v2_map_radius~8/-/idx.browse.searchform/in.js',
-    800
-  );
+
+  // Watch widget-featured for injected content, then load market widget
+  var observer = new MutationObserver(function(mutations) {
+    var container = document.getElementById('widget-featured');
+    if (container && container.querySelector('div,table,ul')) {
+      observer.disconnect();
+      loadMarket();
+    }
+  });
+  observer.observe(document.getElementById('widget-featured'), { childList: true, subtree: true });
+
+  // Fallback: load market after 6s regardless
+  setTimeout(function() {
+    if (document.getElementById('widget-market') && !document.getElementById('widget-market').querySelector('div,table,ul')) {
+      observer.disconnect();
+      loadMarket();
+    }
+  }, 6000);
+
+  // Load featured widget
+  var s1 = document.createElement('script');
+  s1.id = 'mrpscript';
+  s1.src = 'https://idx.myrealpage.com/wps/rest/67223/l/idx2/mylistings/tmpl~v2,noframe~true/-/mylistings.def/in.js';
+  document.getElementById('widget-featured').appendChild(s1);
 })();
 </script>
 
