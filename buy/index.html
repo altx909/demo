@@ -99,6 +99,41 @@
     bottom: -2px; left: 0; right: 0;
     height: 1px; background: var(--forest);
   }
+
+  /* BUY DROPDOWN */
+  .nav__dropdown { position: relative; }
+  .nav__dropdown-toggle {
+    font-size: 13px; padding: 6px 0; cursor: pointer;
+    display: inline-flex; align-items: center; gap: 4px;
+    color: var(--forest); font-weight: 500; position: relative;
+  }
+  .nav__dropdown-toggle::after {
+    content: ""; position: absolute; bottom: -2px; left: 0; right: 0;
+    height: 1px; background: var(--forest);
+  }
+  .nav__dropdown-toggle svg { transition: transform 250ms var(--ease); }
+  .nav__dropdown:hover .nav__dropdown-toggle svg { transform: rotate(180deg); }
+  .nav__dropdown-menu {
+    position: absolute; top: calc(100% + 14px); left: 50%;
+    transform: translateX(-50%) translateY(-6px);
+    background: var(--cream); border: 1px solid var(--line);
+    border-radius: 10px; padding: 6px; min-width: 170px;
+    box-shadow: 0 8px 32px rgba(26,26,26,0.10);
+    opacity: 0; pointer-events: none;
+    transition: opacity 200ms var(--ease), transform 200ms var(--ease);
+  }
+  .nav__dropdown:hover .nav__dropdown-menu {
+    opacity: 1; pointer-events: auto;
+    transform: translateX(-50%) translateY(0);
+  }
+  .nav__dropdown-menu a {
+    display: flex; align-items: center; gap: 10px;
+    padding: 10px 14px; font-size: 12.5px; color: var(--ink-soft);
+    border-radius: 6px; transition: background 150ms, color 150ms;
+  }
+  .nav__dropdown-menu a:hover { background: var(--sage-pale); color: var(--forest); }
+  .nav__dropdown-menu a.active { color: var(--forest); font-weight: 500; }
+
   .nav__utils { display: flex; gap: 20px; align-items: center; }
   .nav__utils .util {
     font-size: 12px; font-weight: 500; letter-spacing: 0.08em;
@@ -654,6 +689,57 @@
   .faq__item.open .faq__a { max-height:600px; }
   @media (max-width:640px){ .faq { padding:72px 20px; } .faq__q { font-size:17px; } }
 
+  /* ---------------- EXPLORE CARDS ---------------- */
+  .explore-cards {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 24px; max-width: 1000px; margin: 0 auto;
+  }
+  .explore-card {
+    border-radius: 16px; overflow: hidden; display: block;
+    position: relative; text-decoration: none;
+    transition: transform 300ms var(--ease), box-shadow 300ms var(--ease);
+    box-shadow: 0 4px 20px rgba(26,26,26,0.08);
+  }
+  .explore-card:hover { transform: translateY(-4px); box-shadow: 0 16px 48px rgba(26,26,26,0.14); }
+  .explore-card__img {
+    width: 100%; height: 220px;
+    background-size: cover; background-position: center;
+    position: relative;
+  }
+  .explore-card__img::after {
+    content: ""; position: absolute; inset: 0;
+    background: linear-gradient(to bottom, rgba(20,39,31,0.18) 0%, rgba(20,39,31,0.55) 100%);
+  }
+  .explore-card__body {
+    background: var(--cream); padding: 28px 28px 32px;
+  }
+  .explore-card__label {
+    display: inline-block; font-size: 10px; font-weight: 600;
+    letter-spacing: 0.26em; text-transform: uppercase;
+    color: var(--forest); margin-bottom: 12px;
+  }
+  .explore-card__title {
+    font-family: var(--serif); font-weight: 300;
+    font-size: 24px; line-height: 1.12; letter-spacing: -0.01em;
+    color: var(--ink); margin: 0 0 10px;
+  }
+  .explore-card__title em { font-style: italic; color: var(--forest); }
+  .explore-card__sub {
+    font-size: 14px; font-weight: 300; line-height: 1.6;
+    color: var(--ink-soft); margin: 0 0 22px;
+  }
+  .explore-card__cta {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-size: 12px; font-weight: 500; letter-spacing: 0.14em;
+    text-transform: uppercase; color: var(--forest);
+    transition: gap 200ms var(--ease);
+  }
+  .explore-card:hover .explore-card__cta { gap: 12px; }
+  @media (max-width: 720px) {
+    .explore-cards { grid-template-columns: 1fr; }
+    .explore-card__img { height: 180px; }
+  }
+
   /* ---------------- MLS SECTIONS ---------------- */
   .mls-section {
     padding: 100px 40px;
@@ -697,7 +783,17 @@
     <span class="wordmark__tag">Saskatoon Real Estate</span>
   </a>
   <div class="nav__links">
-    <a href="/buy/" class="active">Buy</a>
+    <div class="nav__dropdown">
+      <span class="nav__dropdown-toggle">
+        Buy
+        <svg width="10" height="6" viewBox="0 0 10 6" fill="none"><path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </span>
+      <div class="nav__dropdown-menu">
+        <a href="/buy/" class="active">Featured Listings</a>
+        <a href="/map-search/">Map Search</a>
+        <a href="/listings/">All Listings</a>
+      </div>
+    </div>
     <a href="/sell/">Sell</a>
     <a href="/rent/">Rent</a>
     <a href="/property-management/">Property Management</a>
@@ -726,6 +822,9 @@
     </svg>
   </button>
   <a href="/buy/">Buy</a>
+  <a href="/buy/" class="sub" style="font-family:var(--sans);font-size:16px;padding:8px 0 8px 18px;opacity:0.7;border-bottom:none;">Featured Listings</a>
+  <a href="/map-search/" class="sub" style="font-family:var(--sans);font-size:16px;padding:8px 0 8px 18px;opacity:0.7;border-bottom:none;">Map Search</a>
+  <a href="/listings/" class="sub" style="font-family:var(--sans);font-size:16px;padding:8px 0 8px 18px;opacity:0.7;border-bottom:1px solid rgba(250,247,242,0.12);">All Listings</a>
   <a href="/sell/">Sell</a>
   <a href="/rent/">Rent</a>
   <a href="/property-management/">Property Management</a>
@@ -782,27 +881,45 @@
   </div>
 </section>
 
-<!-- ============================================ MAP CTA ============================================ -->
+<!-- ============================================ EXPLORE CARDS ============================================ -->
 <section class="mls-section mls-section--market" id="market">
   <div class="mls-section__inner">
     <div class="mls-section__head">
-      <span class="mls-eyebrow">Saskatoon MLS · Map View</span>
-      <h2 class="mls-title">Find your neighbourhood, <em>visually.</em></h2>
-      <p class="mls-sub">Browse all 1,000+ active listings on an interactive map. Click any cluster to zoom in, tap a pin to see the listing.</p>
+      <span class="mls-eyebrow">Explore Saskatoon</span>
+      <h2 class="mls-title">Find your next home, <em>your way.</em></h2>
+      <p class="mls-sub">Explore the city on a map or filter the full MLS by price, type, and neighbourhood.</p>
     </div>
-    <div style="text-align:center; display:flex; gap:14px; justify-content:center; flex-wrap:wrap;">
-      <a href="/map-search/" class="cta" style="font-size:13px; padding: 14px 28px;">
-        Open map search
-        <svg class="arrow" width="14" height="10" viewBox="0 0 14 10" fill="none">
-          <path d="M1 5h11M8 1l4 4-4 4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
+
+    <div class="explore-cards">
+
+      <!-- Map Search Card -->
+      <a href="/map-search/" class="explore-card">
+        <div class="explore-card__img" style="background-image:url('/images/hero-saskatoon.jpg')"></div>
+        <div class="explore-card__body">
+          <span class="explore-card__label">Map Search</span>
+          <h3 class="explore-card__title">Find your neighbourhood, <em>visually.</em></h3>
+          <p class="explore-card__sub">Explore Saskatoon's communities on an interactive map. Click any area to zoom in and start browsing.</p>
+          <span class="explore-card__cta">
+            Open map search
+            <svg width="14" height="10" viewBox="0 0 14 10" fill="none"><path d="M1 5h11M8 1l4 4-4 4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </span>
+        </div>
       </a>
-      <a href="/listings/" class="btn-secondary" style="font-size:12px; padding: 13px 24px;">
-        Search by filters
-        <svg width="14" height="10" viewBox="0 0 14 10" fill="none">
-          <path d="M1 5h11M8 1l4 4-4 4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
+
+      <!-- All Listings Card -->
+      <a href="/listings/" class="explore-card">
+        <div class="explore-card__img" style="background-image:url('/images/buy-property-saskatoon.webp')"></div>
+        <div class="explore-card__body">
+          <span class="explore-card__label">All Listings</span>
+          <h3 class="explore-card__title">Search the full market, <em>filtered.</em></h3>
+          <p class="explore-card__sub">Filter every active Saskatoon listing by price, property type, bedrooms, and more. 1,000+ homes, live.</p>
+          <span class="explore-card__cta">
+            Browse all listings
+            <svg width="14" height="10" viewBox="0 0 14 10" fill="none"><path d="M1 5h11M8 1l4 4-4 4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </span>
+        </div>
       </a>
+
     </div>
   </div>
 </section>
