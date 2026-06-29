@@ -782,7 +782,9 @@
       <h2 class="mls-title">Krishna's active <em>listings.</em></h2>
       <p class="mls-sub">Personally selected properties — each one representing honest value in today's Saskatoon market.</p>
     </div>
-    <div class="mls-widget" id="widget-featured"></div>
+    <div class="mls-widget">
+      <script id="mrpscript" src="https://idx.myrealpage.com/wps/rest/67223/l/idx2/mylistings/tmpl~v2,noframe~true/-/mylistings.def/in.js" async></script>
+    </div>
   </div>
 </section>
 
@@ -794,51 +796,17 @@
       <h2 class="mls-title">Browse the full <em>market.</em></h2>
       <p class="mls-sub">Every active listing in Saskatoon. Filter by price, property type, bedrooms, and more.</p>
     </div>
-    <div class="mls-widget" id="widget-market"></div>
+    <iframe
+      src="/buy/market/"
+      title="Saskatoon MLS Search"
+      width="100%"
+      height="1000"
+      frameborder="0"
+      style="border:none; display:block; width:100%; min-height:1000px;"
+      loading="lazy"
+    ></iframe>
   </div>
 </section>
-
-<script>
-/* Both myRealPage scripts share id="mrpscript".
-   Load sequentially: wait for widget-featured to render content,
-   then rename its id and load the market widget. */
-(function() {
-  var marketSrc = 'https://idx.myrealpage.com/wps/rest/67223/l/idx2/recip/tmpl~v2,idx_v2_map_pos~52.13827684214377%7C-106.64499521841373,idx_v2_map_radius~8/-/idx.browse.searchform/in.js';
-
-  function loadMarket() {
-    var old = document.getElementById('mrpscript');
-    if (old) old.id = 'mrpscript-featured';
-    var s = document.createElement('script');
-    s.id = 'mrpscript';
-    s.src = marketSrc;
-    document.getElementById('widget-market').appendChild(s);
-  }
-
-  // Watch widget-featured for injected content, then load market widget
-  var observer = new MutationObserver(function(mutations) {
-    var container = document.getElementById('widget-featured');
-    if (container && container.querySelector('div,table,ul')) {
-      observer.disconnect();
-      loadMarket();
-    }
-  });
-  observer.observe(document.getElementById('widget-featured'), { childList: true, subtree: true });
-
-  // Fallback: load market after 6s regardless
-  setTimeout(function() {
-    if (document.getElementById('widget-market') && !document.getElementById('widget-market').querySelector('div,table,ul')) {
-      observer.disconnect();
-      loadMarket();
-    }
-  }, 6000);
-
-  // Load featured widget
-  var s1 = document.createElement('script');
-  s1.id = 'mrpscript';
-  s1.src = 'https://idx.myrealpage.com/wps/rest/67223/l/idx2/mylistings/tmpl~v2,noframe~true/-/mylistings.def/in.js';
-  document.getElementById('widget-featured').appendChild(s1);
-})();
-</script>
 
 <!-- ============================================ BUYER MATCHMAKER QUIZ ============================================ -->
 <section class="quiz" id="quiz">
