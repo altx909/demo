@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="robots" content="noindex,follow" />
+<title>Your Experience — Krishna Ambilwade</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;1,9..144,300;1,9..144,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+
+<style>
+  :root {
+    --cream:      #FAF7F2;
+    --cream-warm: #F2EDE4;
+    --ink:        #1A1A1A;
+    --ink-soft:   #3A3A3A;
+    --muted:      #6B6B6B;
+    --line:       #E5E0D7;
+    --forest:     #1F3A2E;
+    --forest-deep:#14271F;
+    --sage:       #C8D5C0;
+    --sage-pale:  #E4EAE0;
+    --clay:       #B5654A;
+
+    --serif: 'Fraunces', 'Cormorant Garamond', Georgia, serif;
+    --sans:  'Inter', -apple-system, BlinkMacSystemFont, 'Helvetica Neue', sans-serif;
+    --ease:  cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  *, *::before, *::after { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: var(--sans);
+    color: var(--ink);
+    background: var(--cream);
+    -webkit-font-smoothing: antialiased;
+    line-height: 1.55;
+  }
+  a { color: inherit; }
+
+  /* ---- header ---- */
+  .nav {
+    padding: 22px 40px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .wordmark { display: flex; flex-direction: column; line-height: 1; text-decoration: none; color: var(--ink); }
+  .wordmark__name { font-family: var(--serif); font-weight: 400; font-size: 20px; letter-spacing: -0.01em; }
+  .wordmark__tag { font-family: var(--sans); font-weight: 500; font-size: 9px; letter-spacing: 0.22em; text-transform: uppercase; margin-top: 4px; opacity: 0.6; }
+  .nav__phone { font-size: 13px; color: var(--muted); text-decoration: none; }
+  .nav__phone:hover { color: var(--forest); }
+
+  /* ---- wrap ---- */
+  .wrap { max-width: 760px; margin: 0 auto; padding: 70px 24px 100px; text-align: center; }
+
+  .eyebrow {
+    display: inline-flex; align-items: center; gap: 10px;
+    font-size: 11px; font-weight: 500; letter-spacing: 0.28em; text-transform: uppercase;
+    color: var(--forest); margin-bottom: 26px;
+    opacity: 0; transform: translateY(10px); animation: fadeUp 800ms var(--ease) 100ms forwards;
+  }
+  .eyebrow::before { content: ""; width: 24px; height: 1px; background: var(--forest); opacity: 0.6; }
+
+  h1 {
+    font-family: var(--serif); font-weight: 300; font-size: clamp(30px, 5vw, 48px);
+    line-height: 1.1; letter-spacing: -0.02em; color: var(--ink); margin: 0 0 20px;
+    opacity: 0; transform: translateY(16px); animation: fadeUp 900ms var(--ease) 220ms forwards;
+  }
+  h1 em { font-style: italic; font-weight: 300; color: var(--forest); }
+
+  .intro {
+    font-size: 16px; font-weight: 300; color: var(--ink-soft); line-height: 1.7;
+    max-width: 480px; margin: 0 auto 50px;
+    opacity: 0; transform: translateY(16px); animation: fadeUp 900ms var(--ease) 380ms forwards;
+  }
+  .intro strong { font-weight: 500; }
+  .intro .quiet { color: var(--muted); }
+
+  /* ---- two-option grid ---- */
+  .options {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    opacity: 0; transform: translateY(16px); animation: fadeUp 900ms var(--ease) 520ms forwards;
+  }
+  @media (max-width: 560px) { .options { grid-template-columns: 1fr; } }
+
+  .opt-card {
+    display: block;
+    background: var(--cream-warm);
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    padding: 40px 28px 32px;
+    text-decoration: none;
+    cursor: pointer;
+    transition: border-color 250ms var(--ease), transform 250ms var(--ease), box-shadow 250ms var(--ease);
+  }
+  .opt-card:hover { border-color: var(--forest); transform: translateY(-3px); box-shadow: 0 12px 28px rgba(20,39,31,0.10); }
+
+  .opt-icon {
+    width: 76px; height: 76px; margin: 0 auto 22px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    background: var(--sage-pale);
+    transition: background 250ms var(--ease);
+  }
+  .opt-card--positive .opt-icon { background: var(--sage-pale); }
+  .opt-card--negative .opt-icon { background: #F0E4DE; }
+  .opt-icon svg { width: 30px; height: 30px; }
+
+  .opt-title {
+    font-family: var(--serif); font-weight: 300; font-style: italic;
+    font-size: 24px; color: var(--ink); margin-bottom: 8px;
+  }
+  .opt-card--positive .opt-title { color: var(--forest); }
+  .opt-card--negative .opt-title { color: var(--clay); }
+
+  .opt-sub {
+    font-family: var(--sans); font-size: 11px; font-weight: 500;
+    letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted);
+    display: inline-flex; align-items: center; gap: 6px;
+  }
+  .opt-card:hover .opt-sub { color: var(--ink-soft); }
+  .opt-sub .arrow { transition: transform 300ms var(--ease); }
+  .opt-card:hover .opt-sub .arrow { transform: translateX(4px); }
+
+  /* ---- feedback form (revealed in place of the grid) ---- */
+  #screen-feedback, #screen-thanks { display: none; text-align: left; }
+  #screen-feedback.active, #screen-thanks.active { display: block; }
+  #screen-happy.hidden { display: none; }
+
+  .form-card {
+    background: var(--cream-warm);
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    padding: 44px 40px;
+    text-align: left;
+  }
+  @media (max-width: 480px) { .form-card { padding: 32px 24px; } }
+
+  .feedback-title {
+    font-family: var(--serif); font-weight: 300; font-style: italic;
+    font-size: 26px; color: var(--ink); margin-bottom: 8px; text-align: center;
+  }
+  .feedback-sub { font-size: 14px; font-weight: 300; color: var(--muted); margin-bottom: 30px; text-align: center; }
+
+  .form-group { display: flex; flex-direction: column; gap: 7px; margin-bottom: 18px; }
+  .form-group label { font-size: 11px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-soft); }
+  .form-group input, .form-group textarea {
+    padding: 13px 16px; border: 1px solid var(--line); border-radius: 8px;
+    font-family: var(--sans); font-size: 15px; color: var(--ink);
+    background: var(--cream); width: 100%; resize: vertical;
+    transition: border-color 200ms var(--ease);
+  }
+  .form-group input:focus, .form-group textarea:focus { outline: none; border-color: var(--forest); }
+
+  .btn-submit {
+    width: 100%; padding: 16px;
+    font-family: var(--sans); font-size: 12px; font-weight: 500;
+    letter-spacing: 0.20em; text-transform: uppercase;
+    background: var(--forest); color: var(--cream);
+    border: none; border-radius: 999px; cursor: pointer;
+    transition: background 200ms var(--ease);
+  }
+  .btn-submit:hover { background: var(--forest-deep); }
+
+  .btn-back-link {
+    display: block; text-align: center; margin-top: 20px;
+    font-size: 12px; color: var(--muted); text-decoration: underline;
+    text-underline-offset: 3px; cursor: pointer; background: none; border: none;
+  }
+
+  #screen-thanks .form-card { text-align: center; }
+  #screen-thanks h2 { font-family: var(--serif); font-weight: 300; font-style: italic; font-size: 28px; color: var(--forest); margin-bottom: 10px; }
+  #screen-thanks p { font-weight: 300; color: var(--muted); line-height: 1.6; }
+
+  footer { text-align: center; font-size: 12px; color: var(--muted); margin-top: 60px; }
+
+  @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <a href="https://meetkrishna.com" class="wordmark">
+    <span class="wordmark__name">Krishna Ambilwade</span>
+    <span class="wordmark__tag">Saskatoon Real Estate</span>
+  </a>
+  <a class="nav__phone" href="tel:13068506744">(306) 850-6744</a>
+</nav>
+
+<div class="wrap">
+
+  <div id="screen-happy">
+    <div class="eyebrow">Your Experience</div>
+    <h1>We hope it was a <em>great</em> one.</h1>
+    <p class="intro">Working with you means <strong>everything</strong> to me. If I helped make your buying, selling, or property management experience a good one, a quick review takes 30 seconds and helps other Saskatoon homeowners find me. <span class="quiet">And if something fell short — tell me, and I'll make it right.</span></p>
+
+    <div class="options" id="options-grid">
+      <a class="opt-card opt-card--positive" href="https://g.page/r/CSBDlVS7pA78EBM/review" target="_blank" rel="noopener">
+        <div class="opt-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#1F3A2E" stroke-width="1.5"><path d="M7 22V11M2 13v7a2 2 0 0 0 2 2h12.9a2 2 0 0 0 2-1.7l1.4-9A2 2 0 0 0 18.3 9H14V4a2 2 0 0 0-2-2l-3 7v11" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <div class="opt-title">I Loved It</div>
+        <div class="opt-sub">Leave a Google Review <span class="arrow">→</span></div>
+      </a>
+
+      <a class="opt-card opt-card--negative" onclick="showFeedback(); return false;" href="#">
+        <div class="opt-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#B5654A" stroke-width="1.5"><circle cx="12" cy="12" r="9" stroke-linecap="round"/><path d="M8.5 15.5c1-1 2.2-1.5 3.5-1.5s2.5.5 3.5 1.5M9 9.5h.01M15 9.5h.01" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <div class="opt-title">Not Really</div>
+        <div class="opt-sub">Tell Me What Happened <span class="arrow">→</span></div>
+      </a>
+    </div>
+  </div>
+
+  <div id="screen-feedback">
+    <div class="form-card">
+      <div class="feedback-title">I'm sorry to hear that.</div>
+      <p class="feedback-sub">Tell me what happened — I'll personally make it right.</p>
+      <form onsubmit="return submitFeedback(event)">
+        <div class="form-group">
+          <label for="f-name">Your Name</label>
+          <input type="text" id="f-name" required>
+        </div>
+        <div class="form-group">
+          <label for="f-email">Email <span style="text-transform:none;font-weight:400;color:var(--muted)">(optional)</span></label>
+          <input type="email" id="f-email">
+        </div>
+        <div class="form-group">
+          <label for="f-message">What happened?</label>
+          <textarea id="f-message" rows="4" required></textarea>
+        </div>
+        <button type="submit" class="btn-submit">Send Feedback</button>
+      </form>
+      <button class="btn-back-link" onclick="hideFeedback()">← Go back</button>
+    </div>
+  </div>
+
+  <div id="screen-thanks">
+    <div class="form-card">
+      <h2>Thank you.</h2>
+      <p>I'll be in touch soon to make things right.</p>
+    </div>
+  </div>
+
+  <footer>&copy; 2026 Krishna Ambilwade — Saskatoon, SK</footer>
+</div>
+
+<script>
+// ponytail: no backend wired — swap WEBHOOK_URL for a real endpoint (CRM/Zapier/etc); fetch fails silently by design so the UX never blocks on it
+const WEBHOOK_URL = "YOUR_WEBHOOK_URL_HERE";
+
+function showFeedback() {
+  document.getElementById('options-grid').style.display = 'none';
+  document.querySelector('.intro').style.display = 'none';
+  document.getElementById('screen-feedback').classList.add('active');
+}
+function hideFeedback() {
+  document.getElementById('screen-feedback').classList.remove('active');
+  document.getElementById('options-grid').style.display = 'grid';
+  document.querySelector('.intro').style.display = 'block';
+}
+function submitFeedback(e) {
+  e.preventDefault();
+  const payload = {
+    source: "review-gate",
+    name: document.getElementById('f-name').value.trim(),
+    email: document.getElementById('f-email').value.trim(),
+    message: document.getElementById('f-message').value.trim(),
+    submitted_at: new Date().toISOString()
+  };
+  fetch(WEBHOOK_URL, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(payload)
+  }).catch(() => {});
+  document.getElementById('screen-happy').classList.add('hidden');
+  document.getElementById('screen-feedback').classList.remove('active');
+  document.getElementById('screen-thanks').classList.add('active');
+  return false;
+}
+</script>
+</body>
+</html>
