@@ -251,8 +251,9 @@
 </div>
 
 <script>
-// ponytail: no backend wired — swap WEBHOOK_URL for a real endpoint (CRM/Zapier/etc); fetch fails silently by design so the UX never blocks on it
-const WEBHOOK_URL = "YOUR_WEBHOOK_URL_HERE";
+// Web3Forms — https://web3forms.com (submissions land in the inbox tied to this access key)
+const WEB3FORMS_ACCESS_KEY = "0f201243-e3e2-4ee4-a4bf-4c8056458968";
+const WEB3FORMS_URL = "https://api.web3forms.com/submit";
 
 function showFeedback() {
   document.getElementById('options-grid').style.display = 'none';
@@ -264,23 +265,38 @@ function hideFeedback() {
   document.getElementById('options-grid').style.display = 'grid';
   document.querySelector('.intro').style.display = 'block';
 }
-function submitFeedback(e) {
+async function submitFeedback(e) {
   e.preventDefault();
+  const btn = e.target.querySelector('.btn-submit');
+  btn.disabled = true;
+  btn.textContent = 'Sending…';
+
   const payload = {
-    source: "review-gate",
+    access_key: WEB3FORMS_ACCESS_KEY,
+    subject: "Not-really review feedback — meetkrishna.com",
+    from_name: "Krishna Review Page",
     name: document.getElementById('f-name').value.trim(),
-    email: document.getElementById('f-email').value.trim(),
-    message: document.getElementById('f-message').value.trim(),
-    submitted_at: new Date().toISOString()
+    email: document.getElementById('f-email').value.trim() || "not-provided@meetkrishna.com",
+    message: document.getElementById('f-message').value.trim()
   };
-  fetch(WEBHOOK_URL, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(payload)
-  }).catch(() => {});
-  document.getElementById('screen-happy').classList.add('hidden');
-  document.getElementById('screen-feedback').classList.remove('active');
-  document.getElementById('screen-thanks').classList.add('active');
+
+  try {
+    const res = await fetch(WEB3FORMS_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    });
+    const data = await res.json();
+    if (!data.success) throw new Error(data.message || 'Submission failed');
+
+    document.getElementById('screen-happy').classList.add('hidden');
+    document.getElementById('screen-feedback').classList.remove('active');
+    document.getElementById('screen-thanks').classList.add('active');
+  } catch (err) {
+    alert("Sorry, something went wrong sending your feedback. Please try again, or call (306) 850-6744.");
+    btn.disabled = false;
+    btn.textContent = 'Send Feedback';
+  }
   return false;
 }
 </script>
