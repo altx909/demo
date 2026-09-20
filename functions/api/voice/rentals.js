@@ -80,14 +80,18 @@ export async function onRequestPost({ env, request }) {
     }
     matches = match ? [match] : [];
   } else {
+    // GHL's Custom Action sends 0 (not null/omitted) for an optional
+    // number param the caller never gave a value for, so 0 has to mean
+    // "not specified" here too, or every real listing gets budget-
+    // filtered out by "rent > 0 + 200".
     const bedrooms = toInt(body.bedrooms);
     const maxBudget = toInt(body.maxBudget);
     const neighbourhood = body.neighbourhood ? String(body.neighbourhood).toLowerCase() : '';
     const pets = body.pets || 'none';
 
     matches = listings.filter((r) => {
-      if (bedrooms != null && r.bedrooms < bedrooms) return false;
-      if (maxBudget != null && r.monthlyRent > maxBudget + 200) return false;
+      if (bedrooms && r.bedrooms < bedrooms) return false;
+      if (maxBudget && r.monthlyRent > maxBudget + 200) return false;
       if (neighbourhood && !r.neighbourhood.toLowerCase().includes(neighbourhood)) return false;
       if (!petsCompatible(pets, r.pets)) return false;
       return true;
@@ -97,8 +101,8 @@ export async function onRequestPost({ env, request }) {
       // Fallback: widen budget/bedrooms, but never show an incompatible pet
       // policy or a neighbourhood the caller explicitly ruled out.
       matches = listings.filter((r) => {
-        if (maxBudget != null && r.monthlyRent > maxBudget + 400) return false;
-        if (bedrooms != null && r.bedrooms < Math.max(0, bedrooms - 1)) return false;
+        if (maxBudget && r.monthlyRent > maxBudget + 400) return false;
+        if (bedrooms && r.bedrooms < Math.max(0, bedrooms - 1)) return false;
         if (neighbourhood && !r.neighbourhood.toLowerCase().includes(neighbourhood)) return false;
         if (!petsCompatible(pets, r.pets)) return false;
         return true;
