@@ -8,7 +8,12 @@
  * Body: { mode: "search" | "lookup", ...params }
  *
  * mode "search":   { bedrooms?, maxBudget?, neighbourhood?, pets? } -> up to 3 listings
- * mode "lookup":   { slug? | address? | id? } -> single listing (or {found:false})
+ * mode "lookup":   { slug? | address? | id? } -> single listing (match_count 0 or 1)
+ *
+ * Response is flattened (property_1_*, property_2_*, property_3_*) rather
+ * than a nested array — GHL Voice AI Custom Actions select response data by
+ * fixed top-level path, and an array of objects isn't something its
+ * selectedPaths config can point at. See ADR note in commit message.
  *
  * Required Cloudflare environment variables (same as /api/rentals):
  *   SANITY_PROJECT_ID, SANITY_DATASET, SANITY_API_TOKEN
@@ -20,6 +25,7 @@
  */
 
 const SANITY_API_VERSION = 'v2024-01-01';
+const MAX_RESULTS = 3;
 
 const RENTAL_FIELDS = `
   _id,
@@ -42,14 +48,14 @@ const RENTAL_FIELDS = `
 
 export async function onRequestPost({ env, request }) {
   if (!env.SANITY_PROJECT_ID || !env.SANITY_DATASET) {
-    return json({ error: 'Sanity not configured' }, 500);
+    return json({ success: false, error: 'Sanity not configured' }, 500);
   }
 
   let body;
   try {
     body = await request.json();
   } catch (e) {
-    return json({ error: 'Invalid JSON body' }, 400);
+    return json({ success: false, error: 'Invalid JSON body' }, 400);
   }
 
   const mode = body.mode === 'lookup' ? 'lookup' : 'search';
@@ -59,9 +65,10 @@ export async function onRequestPost({ env, request }) {
     listings = await fetchListings(env);
   } catch (err) {
     console.error('voice/rentals fetch error:', err);
-    return json({ error: 'Server error', detail: err && err.message }, 500);
+    return json({ success: false, error: 'Server error', detail: err && err.message }, 500);
   }
 
+  let matches;
   if (mode === 'lookup') {
     const { slug, address, id } = body;
     let match = null;
@@ -71,36 +78,41 @@ export async function onRequestPost({ env, request }) {
       const needle = String(address).toLowerCase();
       match = listings.find((r) => r.address.toLowerCase().includes(needle));
     }
-    if (!match) return json({ found: false });
-    return json({ found: true, property: toVoiceShape(match) });
-  }
+    matches = match ? [match] : [];
+  } else {
+    const bedrooms = toInt(body.bedrooms);
+    const maxBudget = toInt(body.maxBudget);
+    const neighbourhood = body.neighbourhood ? String(body.neighbourhood).toLowerCase() : '';
+    const pets = body.pets || 'none';
 
-  // mode "search"
-  const bedrooms = toInt(body.bedrooms);
-  const maxBudget = toInt(body.maxBudget);
-  const neighbourhood = body.neighbourhood ? String(body.neighbourhood).toLowerCase() : '';
-  const pets = body.pets || 'none';
-
-  let matches = listings.filter((r) => {
-    if (bedrooms != null && r.bedrooms < bedrooms) return false;
-    if (maxBudget != null && r.monthlyRent > maxBudget + 200) return false;
-    if (neighbourhood && !r.neighbourhood.toLowerCase().includes(neighbourhood)) return false;
-    if (!petsCompatible(pets, r.pets)) return false;
-    return true;
-  });
-
-  if (matches.length < 3) {
     matches = listings.filter((r) => {
-      if (maxBudget != null && r.monthlyRent > maxBudget + 400) return false;
-      if (bedrooms != null && r.bedrooms < Math.max(0, bedrooms - 1)) return false;
+      if (bedrooms != null && r.bedrooms < bedrooms) return false;
+      if (maxBudget != null && r.monthlyRent > maxBudget + 200) return false;
+      if (neighbourhood && !r.neighbourhood.toLowerCase().includes(neighbourhood)) return false;
+      if (!petsCompatible(pets, r.pets)) return false;
       return true;
     });
+
+    if (matches.length < MAX_RESULTS) {
+      // Fallback: widen budget/bedrooms, but never show an incompatible pet
+      // policy or a neighbourhood the caller explicitly ruled out.
+      matches = listings.filter((r) => {
+        if (maxBudget != null && r.monthlyRent > maxBudget + 400) return false;
+        if (bedrooms != null && r.bedrooms < Math.max(0, bedrooms - 1)) return false;
+        if (neighbourhood && !r.neighbourhood.toLowerCase().includes(neighbourhood)) return false;
+        if (!petsCompatible(pets, r.pets)) return false;
+        return true;
+      });
+    }
   }
 
-  return json({
-    count: Math.min(matches.length, 3),
-    properties: matches.slice(0, 3).map(toVoiceShape)
-  });
+  matches = matches.slice(0, MAX_RESULTS);
+
+  const out = { success: true, mode, match_count: matches.length };
+  for (let i = 0; i < MAX_RESULTS; i++) {
+    Object.assign(out, flatFields(i + 1, matches[i] || null));
+  }
+  return json(out);
 }
 
 function petsCompatible(requested, listingPets) {
@@ -147,23 +159,23 @@ function normalize(r) {
   };
 }
 
-// Prospect-safe shape only — never includes internalNotes or any field not
+// Prospect-safe, flat shape only — never internalNotes or any field not
 // queried above (internalNotes isn't in RENTAL_FIELDS at all, so it can
-// never leak here regardless of downstream changes).
-function toVoiceShape(r) {
+// never leak here regardless of downstream changes). Empty strings (not
+// missing keys) when a slot is unfilled, so every selectedPaths entry
+// always resolves to something for GHL.
+function flatFields(n, r) {
+  const p = `property_${n}_`;
   return {
-    id: r.id,
-    title: r.title,
-    address: r.address,
-    neighbourhood: r.neighbourhood,
-    rent: r.monthlyRent,
-    bedrooms: r.bedrooms,
-    bathrooms: r.bathrooms,
-    pets: r.pets,
-    availableDate: r.availableDate,
-    shortDescription: r.shortDescription,
-    applicationLink: r.applicationLink || undefined,
-    slug: r.slug
+    [`${p}id`]: r ? r.id : '',
+    [`${p}title`]: r ? r.title : '',
+    [`${p}address`]: r ? r.address : '',
+    [`${p}rent`]: r ? r.monthlyRent : '',
+    [`${p}bedrooms`]: r ? r.bedrooms : '',
+    [`${p}bathrooms`]: r ? r.bathrooms : '',
+    [`${p}pets`]: r ? r.pets : '',
+    [`${p}available_date`]: r ? (r.availableDate || '') : '',
+    [`${p}slug`]: r ? r.slug : ''
   };
 }
 
