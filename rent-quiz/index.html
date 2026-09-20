@@ -827,6 +827,7 @@
     if (a.timing === 'now')      tags.push('tenant-hot');
     if (a.timing === '30')       tags.push('tenant-warm');
     if (a.timing === 'browsing') tags.push('tenant-cold');
+    if (a.timing === '60')       tags.push('tenant-cold');
     if (a.pets && a.pets !== 'none') tags.push('has-pets', `pet-${a.pets}`);
     if (a.income && a.income.includes('social-assistance')) tags.push('income-sa-review');
     if (a.currentStatus === 'out-of-town') tags.push('relocation');
