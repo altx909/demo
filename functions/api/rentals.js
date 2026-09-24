@@ -12,12 +12,20 @@
 
 const SANITY_API_VERSION = 'v2024-01-01';
 
+// ponytail: deterministic house-number check, no LLM involved — mirrors
+// schemas/rental.ts's looksLikeExactAddress(). Keep both in sync.
+function isSpecificAddress(value) {
+  if (!value) return false;
+  return /^\d+\s+\S/.test(String(value).trim());
+}
+
 const RENTAL_FIELDS = `
   _id,
   "slug": slug.current,
   title,
   unitNumber,
   streetAddress,
+  viewingAddress,
   neighbourhood,
   neighbourhoodCustom,
   postalCode,
@@ -120,6 +128,9 @@ function normalize(r) {
     address: formatAddress(r),
     streetAddress: r.streetAddress || '',
     postalCode: r.postalCode || '',
+    // true only when a real, specific viewing/street address exists — never
+    // an LLM guess. viewingAddress itself is intentionally NOT exposed here.
+    bookingReady: isSpecificAddress(r.viewingAddress) || isSpecificAddress(r.streetAddress),
     neighbourhood: (r.neighbourhood === 'Custom' && r.neighbourhoodCustom)
       ? r.neighbourhoodCustom
       : (r.neighbourhood || ''),

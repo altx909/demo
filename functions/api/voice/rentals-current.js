@@ -85,12 +85,20 @@ function formatForVoice(listings) {
     const neighbourhood = (r.neighbourhood === 'Custom' && r.neighbourhoodCustom)
       ? r.neighbourhoodCustom
       : (r.neighbourhood || 'Not specified');
+    // deterministic (non-LLM) address-quality signal, computed once here so
+    // the model doesn't have to judge for itself whether an address is
+    // real — see ABSOLUTE PROPERTY-FACT RULE / VIEWING BOOKING in the
+    // agent prompt, which this reinforces rather than replaces.
+    const exactAddressAvailable = isSpecificAddress(r.viewingAddress) || isSpecificAddress(r.streetAddress);
     const pets = petsText(r.pets, r.petsNote);
     const lines = [
       `PROPERTY ${i + 1}:`,
       `ID: ${r._id}`,
       `Address: ${address}`,
+      `Public location: ${address}`,
+      `Exact address available: ${exactAddressAvailable ? 'YES' : 'NO'}`,
       `Neighbourhood: ${neighbourhood}`,
+      `Booking ready: ${exactAddressAvailable ? 'YES' : 'NO'}`,
       `Rent: $${r.monthlyRent || 0}/month`,
       `Bedrooms: ${r.bedrooms ?? 'N/A'}`,
       `Bathrooms: ${r.bathrooms ?? 'N/A'}`,

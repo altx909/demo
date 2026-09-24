@@ -27,12 +27,20 @@
 const SANITY_API_VERSION = 'v2024-01-01';
 const MAX_RESULTS = 3;
 
+// ponytail: deterministic house-number check, no LLM involved — mirrors
+// schemas/rental.ts's looksLikeExactAddress(). Keep both in sync.
+function isSpecificAddress(value) {
+  if (!value) return false;
+  return /^\d+\s+\S/.test(String(value).trim());
+}
+
 const RENTAL_FIELDS = `
   _id,
   "slug": slug.current,
   title,
   unitNumber,
   streetAddress,
+  viewingAddress,
   neighbourhood,
   neighbourhoodCustom,
   bedrooms,
@@ -150,6 +158,8 @@ function normalize(r) {
     slug: r.slug || '',
     title: r.title || '',
     address: parts.join(' — '),
+    // never exposed downstream — only used to compute bookingReady below.
+    bookingReady: isSpecificAddress(r.viewingAddress) || isSpecificAddress(r.streetAddress),
     neighbourhood: (r.neighbourhood === 'Custom' && r.neighbourhoodCustom) ? r.neighbourhoodCustom : (r.neighbourhood || ''),
     bedrooms: r.bedrooms ?? 0,
     bathrooms: r.bathrooms ?? 0,
@@ -178,6 +188,7 @@ function flatFields(n, r) {
     [`${p}bedrooms`]: r ? r.bedrooms : '',
     [`${p}bathrooms`]: r ? r.bathrooms : '',
     [`${p}pets`]: r ? r.pets : '',
+    [`${p}booking_ready`]: r ? (r.bookingReady ? 'YES' : 'NO') : '',
     [`${p}available_date`]: r ? (r.availableDate || '') : '',
     [`${p}slug`]: r ? r.slug : ''
   };
