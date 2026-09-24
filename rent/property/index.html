@@ -1425,7 +1425,9 @@
     // 1. Path-based slug: /rent/property/<slug>/
     const pathMatch = window.location.pathname.match(/\/property\/([^\/]+?)\/?$/);
     if (pathMatch && pathMatch[1] && pathMatch[1] !== 'index.html') {
-      return pathMatch[1];
+      // Pathname is percent-encoded; decode so a slug with spaces/punctuation
+      // isn't double-encoded when we call /api/rentals/<slug> below.
+      try { return decodeURIComponent(pathMatch[1]); } catch (e) { return pathMatch[1]; }
     }
     // 2. Query fallback: ?id=<slug>
     const params = new URLSearchParams(window.location.search);
@@ -2045,7 +2047,7 @@
         property_of_interest: [property.title, property.address].filter(Boolean).join(' — '),
         property_address: property.address || '',
         property_slug: property.slug || '',
-        property_url: property.slug ? ('https://meetkrishna.com/rent/property/' + property.slug + '/') : '',
+        property_url: property.slug ? ('https://meetkrishna.com/rent/property/' + encodeURIComponent(property.slug) + '/') : '',
         property_id: property.id || ''
       },
       tags,
