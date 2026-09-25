@@ -58,6 +58,15 @@ export async function onRequestPost({ env }) {
   });
 }
 
+// ponytail: deterministic house-number check, no LLM involved — mirrors
+// schemas/rental.ts's looksLikeExactAddress(). Keep both in sync.
+// (was missing from this file — formatForVoice() called it as if it
+// were defined below, which would throw ReferenceError at runtime.)
+function isSpecificAddress(value) {
+  if (!value) return false;
+  return /\d+\s+\S/.test(String(value).trim());
+}
+
 async function fetchListings(env) {
   const query = `*[_type == "rental" && status == "available"] | order(featured desc, _createdAt desc) { ${RENTAL_FIELDS} }`;
   const url = `https://${env.SANITY_PROJECT_ID}.api.sanity.io/${SANITY_API_VERSION}/data/query/${env.SANITY_DATASET}?query=${encodeURIComponent(query)}&perspective=published`;

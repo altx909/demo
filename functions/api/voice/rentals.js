@@ -31,7 +31,7 @@ const MAX_RESULTS = 3;
 // schemas/rental.ts's looksLikeExactAddress(). Keep both in sync.
 function isSpecificAddress(value) {
   if (!value) return false;
-  return /^\d+\s+\S/.test(String(value).trim());
+  return /\d+\s+\S/.test(String(value).trim());
 }
 
 const RENTAL_FIELDS = `
